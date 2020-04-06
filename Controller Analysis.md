@@ -1,5 +1,6 @@
 # ContController.ts
- ' [typescript]import * as express from "express";
+
+'import * as express from "express";
 /* req, res 설정 */
 export abstract class Controller {
 
@@ -10,6 +11,5 @@ export abstract class Controller {
         this.req = req;
         this.res = res;
     }
-
 }
 '
