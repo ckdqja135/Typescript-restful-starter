@@ -53,4 +53,4 @@ import { Router } from "./Router";
 > * .get("/:id", ...) - get방식에서 '/'옆에 id값을 입력 시 해당 id값의 데이터를 출력시켜준다. <br /> ex: http://localhost:8080/2 <br />
 > * .post("/", ...) - post방식에서 Sample.schemas.ts의 형식에 맞게 json값을 입력 시 id, text, eamil 값이 DB에 생성된다. <br /> 
      (현재는 임의적인    text값만 주면 생성된다.) <br />
-> .put("/", ...) - put 방식에서 id값을 json방식으로 입력 시 해당 id값이 삭제된다. (routes/Sample.route.ts에서 ) <br />
+> * .put("/", ...) - put 방식에서 id값을 json방식으로 입력 시 해당 id값이 삭제된다. (routes/Sample.route.ts에서 ) <br />
