@@ -3,3 +3,4 @@
 ### 3. [코드 분석 - model](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/Model_Analysis.md)
 ### 4. [코드 분석 - repository](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/Repository_Analysis.md)
 ### 5. [코드 분석 - routes](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/Routes_Analysis.md)
+### 6. [코드 분석 - schemas](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/Schemas_Analysis.md)
