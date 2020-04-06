@@ -54,3 +54,17 @@ import { Router } from "./Router";
 > * .post("/", ...) - post방식에서 Sample.schemas.ts의 형식에 맞게 json값을 입력 시 id, text, eamil 값이 DB에 생성된다. <br /> 
      (현재는 임의적인    text값만 주면 생성된다.) <br />
 > * .put("/", ...) - put 방식에서 id값을 json방식으로 입력 시 해당 id값이 삭제된다. (routes/Sample.route.ts에서 ) <br />
+
+```typescript
+export class SampleRouter extends Router {
+    constructor() {
+        super(SampleController);
+        this.router
+            .get("/", this.handler(SampleController.prototype.all))
+            .get("/:id", this.handler(SampleController.prototype.find))
+            .post("/", [ Validator(createSample) ], this.handler(SampleController.prototype.create))
+            .put("/", [ Validator(updateSample) ],  this.handler(SampleController.prototype.update))
+            .delete("/", [ Validator(deleteSample) ], this.handler(SampleController.prototype.delete));
+    }
+}
+```
