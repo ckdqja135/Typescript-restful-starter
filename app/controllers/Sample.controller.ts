@@ -14,6 +14,7 @@ export class SampleController extends Controller {
         this.sampleService = new SampleService();
     }
 
+    // 생성된 데이터 리스트 출력
     public async all(): Promise<Response> {
         const sampleList = await this.sampleService.find();
         return this.res.send(sampleList);
