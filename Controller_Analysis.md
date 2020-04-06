@@ -1,3 +1,5 @@
+## app/controllers
+
 # ContController.ts
 ### req, res 설정 부분
 ```typescript
