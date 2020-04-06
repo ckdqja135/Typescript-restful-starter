@@ -16,7 +16,7 @@ export abstract class Controller {
 ```
 # Jwt.controller.ts
 ### JWT 설정 부분
-'''typescript
+```typescript
 import { Request, Response } from "express";
 import { JwtService } from "../services";
 import { Controller } from "./Controller";
@@ -37,11 +37,11 @@ export class JWTController extends Controller {
     }
 
 }
-'''
+```
 
 # Sample.controller.ts
 ### SampleController 클래스 생성
-'''typescript
+```typescript
 export class SampleController extends Controller {
 
     private sampleService: SampleService;
@@ -52,10 +52,10 @@ export class SampleController extends Controller {
         this.sample = new Sample();
         this.sampleService = new SampleService();
 }
-'''
+```
 
 ### SampleController안에 정의된 컨트롤러들
-'''typescript
+```typescript
   // 생성된 데이터 리스트 출력
     public async all(): Promise<Response> {
         const sampleList = await this.sampleService.find();
@@ -117,4 +117,4 @@ export class SampleController extends Controller {
             return this.res.status(404).send({ text: "ERROR" });
         }
     }
-'''
+```
