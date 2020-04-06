@@ -14,6 +14,14 @@ export abstract class Controller {
     }
 }
 ```
+# index.ts
+```typescript
+import { JWTController } from "./Jwt.controller";
+import { SampleController } from "./Sample.controller";
+
+export { JWTController, SampleController };
+```
+
 # Jwt.controller.ts
 ### JWT 설정 부분
 ```typescript
