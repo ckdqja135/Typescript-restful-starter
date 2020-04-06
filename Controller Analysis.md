@@ -1,4 +1,5 @@
 # ContController.ts
+### req, res 설정 부분
 ```typescript
 import * as express from "express";
 /* req, res 설정 */
