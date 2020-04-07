@@ -67,3 +67,28 @@ access 토큰이 만료되었을 때, Refresh 토큰으로 서벙새로운 acces
  * 서버 데이터베이스에 Refresh Token이 저장되어 있을때 클라이언트가 블랙리스트에 포함되어 있다면, <br>
    access 토큰을 발급해주는 것을 막을 수 있다.
  * Refresh Token으로 access 토큰이 만료되면 알아서 갱신한다.
+
+### 토큰 처리 flow
+<img src="https://cdn-images-1.medium.com/max/800/1*IlZ9mxtgE6HsAHik_0GC-g.png" width="70%"></img>
+<img src="https://cdn-images-1.medium.com/max/800/1*QCm08rvLhxfTg4oK9dbG5A.png" width="70%"></img>
+
+### 웹과 모바일에서의 JWT 저장
+React-Native로 개발한 모바일 앱에서는 KeyChain이나 KeyStore에서 암호화되게 JWT를 저장할 수 있는 라이브러리가 있다.
+
+하지만 웹에서는 2가지의 선택이 있다.
+ * Cookies
+ * local/session storage.
+ 
+### local/session storage
+동일한 도메인의 JavaScript를 통해 접근할 수 있으므로 XSS(크로스 사이트 스크립팅)공격에 취약하다.
+
+### Cookies
+쿠키는 <code>http-only</code> 플래그를 사용해 암호화된 쿠키가 https로만 통신하도록 설정해 XSS의 문제를 완화시킬 수 있다.
+하지만 <code>CSRF</code> 공격의 위험이 있다.
+<code>CSRF</code>는 최근에 인증된 사용자가 웹 프로그램에서 원치 않는 행위를 하도록 한다.
+<code>CSURF</code> 같은 라이브러리를 사용하면 예방할 수 있다.
+그래서 보안을 위해 보통 Cookie 사용을 권장한다.
+
+> 참조
+> [Our Considerations on Token Design & Session Management](https://blog.gds-gov.tech/our-considerations-on-token-design-session-management-c2fa96198e6d)
+> [Where to Store your JWTs – Cookies vs HTML5 Web Storage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)
