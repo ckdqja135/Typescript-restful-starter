@@ -30,6 +30,17 @@ JWT(Json Web Token)은 토큰 기반 인증 방식으로,
 > * Signature (zzzzz)— header에서 지정한 알고리즘과 secret 키, 서명으로 payload와 header를 담는다.
 
 ### payload 내용
-JWT는 내용을 해독해 볼 수 있으므로 중요한 데이터를 포함해선 안된다.
+JWT는 내용을 해독해 볼 수 있으므로 중요한 데이터를 포함해선 안된다. <br />
 [이곳](https://jwt.io/)에서 jwt를 해독할 수 있다.
 
+### JWT 보안 위험
+JWT는 자체 내에 정보를 가지고 있기 때문에 클라이언트가 해독해 정보를 볼 수 있다. 
+하지만 받는 자가 secret 키를 알고 있어야만 수정이 가능하다.
+
+* 작동 원리
+> 1. A가 B에게 JWT를 보내려한다.
+> 2. A, B 둘다 암호화한 secret 키를 알고 있다.
+> 3. C는 secret 키를 알지 못하지만 A, B 사이의 JWT를 몰래 변경하려한다.
+> 4. A는 이를 방지하기 위해 signature 부분에 (payload+secret key)를 특정 알고리즘으로 해시화해 추가했다.
+> 5. C가 이 JWT를 변경하려해도 secret key를 몰라 멋대로 변경할 수 없다.
+> 6. B는 C가 변경한 JWT를 받으면 서명이 다르기 때문에 받지 않는다.
