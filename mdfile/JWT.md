@@ -202,7 +202,7 @@ OAuth 2.0의 인증 방식은 크게 4가지 입니다.
 > 11. 만일 Refresh token도 만료되었을 경우, Resource Owner는 새로운 Authorization Grant를 Client에게 넘겨야합니다. (이는 다시 사용자가 
 >     다시 로그인 하라는 말입니다.)
 
-  * 여기서 2편의 Access Token + Refresh Token 편을 보신 독자분들이라면 인증 과정이 유사하다는 것을 알 수 있습니다. 
+  * 여기서 [여기](http://tansfil.tistory.com/59)를 보셨다면 인증 과정이 유사하다는 것을 알 수 있습니다. 
     Access Token, Refresh Token을 이용한 인증 방식은 한 서버에서 모두 관리하는 반면, 
     여기 OAuth에서는 Authorization Server에서 인증+권한 관리를 하고 Resource Server에서는 자원에 대한 관리만 합니다. 
   * 9~11의 과정은 [여기](http://tansfil.tistory.com/59)을 보셨다면 쉽게 이해하실 수 있을겁니다. 
