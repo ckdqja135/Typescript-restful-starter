@@ -1,6 +1,6 @@
 ### 서비스에서 인자로 전달받은 EntityManager를 통해 쿼리를 수행한다.
 
-# ContController.ts
+# Controller.ts
 ### index
 ```typescript
 import { SampleRepository } from "./Sample.repository";
