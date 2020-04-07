@@ -38,7 +38,22 @@ TypeORM <code>Connection</code>은 데이터베이스 연결을 설정하지 않
 가장 간단하고 일반적인 방법은 사용하는 것입니다. 
 <code>createConnection</code>및 <code>createConnections</code>기능을합니다.
 
-### createConnection 단일연결 예제
+### createConnection 단일연결 예제(await 사용)
+```typescript
+     import {createConnection, Connection} from "typeorm";
+
+     const connection = await createConnection({
+         type: "postgres",
+         host: "localhost",
+         port: 5432,
+         username: "test",
+         password: "test",
+         database: "test"
+     });
+```
+
+
+### createConnection 단일연결 예제(await 미사용)
 ```typescript
 import { createConnection } from "typeorm";
 import { Sample } from "../app/models";
