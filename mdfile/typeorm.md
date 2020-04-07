@@ -56,4 +56,32 @@ export const Connection = createConnection({
     username: config.DATABASE.USER_DB,
 });
 ```
+### 1-2 CreateConnections 다중연결 예제
+```typescript
+    import {createConnections, Connection} from "typeorm";
 
+         const connections = await createConnections([{
+             name: "default",
+             type: "mysql",
+             host: "localhost",
+             port: 3306,
+             username: "test",
+             password: "test",
+             database: "test"
+         }, {
+             name: "test2-connection",
+             type: "mysql",
+             host: "localhost",
+             port: 3306,
+             username: "test",
+             password: "test",
+             database: "test2"
+         }]);
+```
+
+```text
+이 두 함수는 <code>Connection</code>전달하고 <code>connect</code>메서드를 호출하는 연결 옵션을 기반으로 만듭니다. 
+프로젝트의 루트에 <code>ormconfig.json</code> 파일을 작성할 수 있으며 이러한 옵션을 사용하여 
+연결 옵션을 자동으로 이 파일에서 읽을 수 있습니다.
+```
+### 1-3. 연결성공시 getConnection함수를 사용하여 앱에서 어디에서나 연결할 수 있습니다.
