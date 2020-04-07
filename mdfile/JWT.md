@@ -86,17 +86,17 @@ Refresh Token의 유효기간은 2주, Access Token의 유효기간은 1시간�
 그러면 Refresh Token의 유효기간 전까지는 Access Token을 새롭게 발급받을 수 있습니다. 
 
 * Access Token은 탈취당하면 정보가 유출되는건 동일합니다. 다만 짧은 유효기간 안에만 사용이 가능하기에 더 안전하다는 의미입니다.
-* Refresh Token의 유효기간이 만료됐다면, 사용자는 새로 로그인해야 합니다. Refresh Token도 탈취될 가능성이 있기 때문에 적절한 유효기간 설정이 필요해보입니다(보통 2주로 많이 잡더군요)
+* Refresh Token의 유효기간이 만료됐다면, 사용자는 새로 로그인해야 합니다. Refresh Token도 탈취될 가능성이 있기 때문에 적절한 유효기간 설정이 필요해보입니다.(보통 2주로 많이 잡더군요)
 
 ### 필요성
  * 서버 데이터베이스에 Refresh Token이 저장되어 있을때 클라이언트가 블랙리스트에 포함되어 있다면, <br>
-   access 토큰을 발급해주는 것을 막을 수 있다.
- * Refresh Token으로 access 토큰이 만료되면 알아서 갱신한다.
+   access 토큰을 발급해주는 것을 막을 수 있습니다.
+ * Refresh Token으로 access 토큰이 만료되면 알아서 갱신합니다.
 
 ### 토큰 처리 flow
 <img src="https://t1.daumcdn.net/cfile/tistory/99DB8C475B5CA1C936" width="70%"></img>
 > 1. 사용자가 ID , PW를 통해 로그인합니다.
-> 2. 서버에서는 회원 DB에서 값을 비교합니다(보통 PW는 일반적으로 암호화해서 들어갑니다)
+> 2. 서버에서는 회원 DB에서 값을 비교합니다(보통 PW는 일반적으로 암호화해서 들어갑니다.)
 > 3~4. 로그인이 완료되면 Access Token, Refresh Token을 발급합니다. 이때 일반적으로 회원DB에 Refresh Token을 저장해둡니다.
 > 5. 사용자는 Refresh Token은 안전한 저장소에 저장 후, Access Token을 헤더에 실어 요청을 보냅니다.
 > 6~7. Access Token을 검증하여 이에 맞는 데이터를 보냅니다.
@@ -109,6 +109,8 @@ Refresh Token의 유효기간은 2주, Access Token의 유효기간은 1시간�
 >     따라서 프론트엔드 단에서 API 요청 전에 토큰이 만료됐다면 바로 재발급 요청을 할 수도 있습니다.
 > 
 > 12. 사용자는 Refresh Token과 Access Token을 함께 서버로 보냅니다.
+>  *  이 때 굳이 만료된 AccessToken을 같이 보내는 이유는 이전의 사용하던 Token을 같이 보내야만 기존의 사용자라는 걸 인식하고 
+>     새 토큰을 발행해주기 때문입니다.
 > 13. 서버는 받은 Access Token이 조작되지 않았는지 확인한후, Refresh Token과 사용자의 DB에 저장되어 있던 Refresh Token을 비교합니다.
 >     Token이 동일하고 유효기간도 지나지 않았다면 새로운 Access Token을 발급해줍니다.
 > 14. 서버는 새로운 Access Token을 헤더에 실어 다시 API 요청을 진행합니다. 
@@ -144,6 +146,6 @@ React-Native로 개발한 모바일 앱에서는 KeyChain이나 KeyStore에서 �
 
 > ### 참조
 > [Our Considerations on Token Design & Session Management](https://blog.gds-gov.tech/our-considerations-on-token-design-session-management-c2fa96198e6d) <br />
-> [Where to Store your JWTs – Cookies vs HTML5 Web Storage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)
-> [JWT 서버 인증](https://brownbears.tistory.com/440)
-> [쉽게 알아보는 서버 인증](https://tansfil.tistory.com/59?category=255594)
+> [Where to Store your JWTs – Cookies vs HTML5 Web Storage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)<br />
+> [JWT 서버 인증](https://brownbears.tistory.com/440)<br />
+> [쉽게 알아보는 서버 인증](https://tansfil.tistory.com/59?category=255594)<br />
