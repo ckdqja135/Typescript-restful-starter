@@ -191,7 +191,9 @@ const connection: Connection = await createConnection({
 백업을 필수로 하고, 테스트 DB에서 수행하는 것이 좋겠습니다.
 <br />
 2-2. 기본열
-각 <code>Entity</code>에는 최소한 하나의 기본 열이 있어야합니다. 기본 열의 몇 가지 유형이 있습니다. <br />
+각 <code>Entity</code>에는 최소한 하나의 기본 열이 있어야합니다. 
+기본 열의 몇 가지 유형이 있습니다. <br />
+
 ```typescript
 import { IsEmail } from "class-validator";
 import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
@@ -210,6 +212,7 @@ export class Sample extends BaseEntity {
     public email: string;
 }
 ```
+
 <code>@PrimaryColumn()</code>모든 유형의 값을 취하는 기본 열을 만듭니다. 
 열 유형을 지정할 수 있습니다. 
 열 유형을 지정하지 않으면 특성 유형에서 유추됩니다.
