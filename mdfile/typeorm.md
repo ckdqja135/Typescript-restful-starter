@@ -172,7 +172,7 @@ const connection: Connection = await createConnection({
 * 데이터가 들어있는 컬럼(필드)은 함부로 수정하지 않는다.
 컬럼의 이름의 수정할 수 있겠지만 지우거나 한다면 데이터가 전부 제거됩니다. 
 백업을 필수로 하고, 테스트 DB에서 수행하는 것이 좋겠습니다.
-
+<br />
 2-2. 기본열
 각 <code>Entity</code>에는 최소한 하나의 기본 열이 있어야합니다. 기본 열의 몇 가지 유형이 있습니다.
 ```typescript
