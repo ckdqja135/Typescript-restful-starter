@@ -76,3 +76,13 @@ repository layer 에는 ORM을 활용한 Query문이 들어간다는 것입니�
 이러한 비지니스 로직은 service layer에 작성하고, 
 세세한 ORM query는 repository layer 에 추가 되는 걸로 알고 있습니다.
 ```
+
+* A
+```text
+repository는 기술적인 영역을 추상화하는데 사용합니다.
+위에서는 manager를 통해 sql을 실행하는 역할을 하고 있네요. 
+만약에 sql을 실행하는 모듈이 바뀌거나 sql이 아니라 네트워크로 바뀌더라도
+repository 구현만 변경하는 식으로 결합도를 낮출 수 있습니다.
+여기서 서비스는 사실상 dao나 다름없는 역할을 하고 있는 것으로 보여지네요.
+특별한 기능이 없어서 그런 것일수도 있구요.
+```
