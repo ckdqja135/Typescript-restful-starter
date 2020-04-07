@@ -84,3 +84,147 @@ export const Connection = createConnection({
 연결 옵션을 자동으로 이 파일에서 읽을 수 있습니다.
 
 ### 1-3. 연결성공시 getConnection함수를 사용하여 앱에서 어디에서나 연결할 수 있습니다.
+```typescript
+import {getConnection} from "typeorm";
+
+const connection = getConnection();
+const secondConnection = getConnection("test2-connection");
+```
+
+### 2. Entity
+<code>Entity</code>는 데이터베이스 테이블 (또는 MongoDB를 사용할 때 컬렉션)에 매핑되는 클래스입니다. 
+새로운 클래스를 정의하여 <code>Entity</code>를 생성하고이를 다음과 <code>@Entity()</code>같이 표시 할 수 있습니다.
+
+### Sample.model.ts
+```typescript
+import { IsEmail } from "class-validator";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity("sample")
+export class Sample extends BaseEntity {
+
+    @PrimaryGeneratedColumn() // 인덱스 자동 증가.
+    public id: number;
+
+    @Column("text")
+    public text: string;
+
+    @Column("text")
+    @IsEmail()
+    public email: string;
+}
+```
+위와같은 코드를 입력 할 경우 다음과 같은 데이터베이스 테이블이 생성됩니다.
+<img src="https://user-images.githubusercontent.com/33046341/78640725-2c0e3e00-78eb-11ea-98be-80267b0ffe27.png" width="50%"></img>
+
+기본 엔티티는 열과 관계로 구성됩니다. 
+각 엔티티는 반드시 (MongoDB를 사용중인 경우 또는 ObjectId가 열) 주 열을 갖습니다. 
+각 개체는 연결 옵션에 등록해야합니다.
+
+### 2-1. 연결옵션 설정
+```typescript
+import { createConnection } from "typeorm";
+import { Sample } from "../app/models";
+import { config, DIALECT } from "../config";
+
+export const Connection = createConnection({
+    database: config.DATABASE.DB,
+    entities: [
+        Sample,
+    ],
+    host: config.DATABASE.SERVER,
+    logging: false,
+    password: config.DATABASE.PASSWORD,
+    port: config.DATABASE.PORT_DB,
+    synchronize: true,
+    type: DIALECT,
+    username: config.DATABASE.USER_DB,
+});
+```
+또는 모든 <code>Entity</code>가 포함 된 디렉토리 전체를 지정할 수 있으며 모든 <code>Entity</code>가로드됩니다.
+```typescript
+import {createConnection, Connection} from "typeorm";
+const connection: Connection = await createConnection({
+     type: "mysql",
+     host: "localhost",
+     port: 3306,
+     username: "test",
+     password: "test",
+     database: "test",
+     entities: ["entity/*.js"]
+ });
+```
+
+2-2. 기본열
+각 <code>Entity</code>에는 최소한 하나의 기본 열이 있어야합니다. 기본 열의 몇 가지 유형이 있습니다.
+```typescript
+import { IsEmail } from "class-validator";
+import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+
+@Entity("sample")
+export class Sample extends BaseEntity {
+
+    @PrimaryColumn()
+    public id: number;
+
+    @Column("text")
+    public text: string;
+
+    @Column("text")
+    @IsEmail()
+    public email: string;
+}
+```
+<code>@PrimaryColumn()</code>모든 유형의 값을 취하는 기본 열을 만듭니다. 
+열 유형을 지정할 수 있습니다. 
+열 유형을 지정하지 않으면 특성 유형에서 유추됩니다.
+아래 예제는 <code>int</code>저장하기 전에 수동으로 지정해야하는 유형으로 <code>ID</code>를 만듭니다.
+```typescript
+import { IsEmail } from "class-validator";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity("sample")
+export class Sample extends BaseEntity {
+
+    @PrimaryGeneratedColumn() // 인덱스 자동 증가.
+    public id: number;
+
+    @Column("text")
+    public text: string;
+
+    @Column("text")
+    @IsEmail()
+    public email: string;
+
+}
+```
+<code>@PrimaryGeneratedColumn(“uuid”)</code>값이 자동으로 생성되는 기본 열을 만듭니다. 
+<code>uuid.Uuid</code>는 고유 한 문자열 ID입니다. 
+저장하기 전에 값을 수동으로 지정할 필요가 없습니다. 
+값이 자동으로 생성됩니다.
+
+```typescript
+import { IsEmail } from "class-validator";
+import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+
+@Entity("sample")
+export class Sample extends BaseEntity {
+
+    @PrimaryColumn()
+    public id: number;
+
+    @Column("text")
+    public text: string;
+
+    @Column("text")
+    @IsEmail()
+    public email: string;
+}
+```
+<code>Entity</code>를 사용하여 <code>Entity</code>를 저장 save하면 항상 주어진 <code>Entity</code> ID (또는 ID)로 엔티티를 데이터베이스에서 찾습니다. id / id가 발견되면 데이터베이스에서이 행을 갱신합니다. id / ids 행이없는 경우 새 행이 삽입된다.
+
+### 3. 기타설정
+
+대부분의 경우 연결 옵션을 편리하고 관리하기 용이하게, 별도의 구성 파일에 저장하려고 합니다. 
+TypeORM은 여러 구성 소스를 지원하며, <code>ormconfig.[format]</code> 파일을 만들고 
+<code> createConnection()</code> 구성을 전달하지 않고 응용 프로그램 호출에 구성을 저장하기만 하면 됩니다.
