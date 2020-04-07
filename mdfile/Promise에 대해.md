@@ -20,3 +20,4 @@ public async find(): Promise<Response> {
 이외에도 Promise가 쓰이는 곳이 많은데 Promise가 뭔가요?
 
 ## A. [Promise에 대해](https://joshua1988.github.io/web-development/javascript/promise-for-beginners/)
+## A. [콜백부터 async await까지 비동기 처리](https://velog.io/@ashnamuh/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%BD%9C%EB%B0%B1%EB%B6%80%ED%84%B0-async-await%EA%B9%8C%EC%A7%80-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%A)
