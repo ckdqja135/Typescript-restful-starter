@@ -1,3 +1,5 @@
+## services에 있는 코드와 repository에 있는 코드의 차이점에 대해.
+
 ### Sample.repository.ts
 ```typescript
 import { EntityRepository, Repository } from "typeorm";
