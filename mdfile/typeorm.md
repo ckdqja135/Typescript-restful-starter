@@ -1,8 +1,7 @@
 ### TypeOrm (object Relational Mapping)
 ```text
-TypeORM 에서 ORM 기본, NativeScript, 박람회 및 전자 플랫폼 반응, NodeJS, 브라우저, 
-코르도바, 폰갭, 이온 성에서 실행할 수 있으며, 타이프 라이터와 
-자바 스크립트 (ES5, ES6, ES7, ES8)와 함께 사용할 수 있습니다.
+TypeORM 에서 ORM 기본, NativeScript, 박람회 및 전자 플랫폼 반응, NodeJS, 브라우저, 코르도바, 폰갭, 이온 성에서 실행할 수 있으며, 
+타이프 라이터와 자바 스크립트 (ES5, ES6, ES7, ES8)와 함께 사용할 수 있습니다.
 이 솔루션의 목표는 항상 최신 JavaScript 기능을 지원하고 
 몇 가지 테이블이있는 소규모 응용 프로그램부터 
 여러 데이터베이스가있는 대규모 엔터프라이즈 응용 프로그램에 이르기까지 
