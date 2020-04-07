@@ -28,3 +28,8 @@ JWT(Json Web Token)은 토큰 기반 인증 방식으로,
 >   Base64Url로 인코딩되어있다.
 > * Payload (yyyyy)— 클라이언트에 대한 정보나, meta Data같은 내용이 들어있고, Base64Url로 인코딩되어있다.
 > * Signature (zzzzz)— header에서 지정한 알고리즘과 secret 키, 서명으로 payload와 header를 담는다.
+
+### payload 내용
+JWT는 내용을 해독해 볼 수 있으므로 중요한 데이터를 포함해선 안된다.
+[이곳](https://jwt.io/)에서 jwt를 해독할 수 있다.
+
