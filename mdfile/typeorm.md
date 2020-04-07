@@ -51,7 +51,7 @@ TypeORM <code>Connection</code>은 데이터베이스 연결을 설정하지 않
          database: "test"
      });
 ```
-
+* await문이 있으면 createConnection()에서 블록킹 되지않게 됨.
 
 ### createConnection 단일연결 예제(await 미사용)
 ```typescript
