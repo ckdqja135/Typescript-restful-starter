@@ -79,9 +79,8 @@ export const Connection = createConnection({
          }]);
 ```
 
-```text
 이 두 함수는 <code>Connection</code>전달하고 <code>connect</code>메서드를 호출하는 연결 옵션을 기반으로 만듭니다. 
 프로젝트의 루트에 <code>ormconfig.json</code> 파일을 작성할 수 있으며 이러한 옵션을 사용하여 
 연결 옵션을 자동으로 이 파일에서 읽을 수 있습니다.
-```
+
 ### 1-3. 연결성공시 getConnection함수를 사용하여 앱에서 어디에서나 연결할 수 있습니다.
