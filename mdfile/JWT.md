@@ -21,3 +21,4 @@ JWT(Json Web Token)은 토큰 기반 인증 방식으로,
 
 ### 기본 구성
 |xxxxx.yyyyy.zzzzz|
+|-----------------|
