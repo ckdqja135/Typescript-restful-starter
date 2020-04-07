@@ -145,10 +145,10 @@ React-Native로 개발한 모바일 앱에서는 KeyChain이나 KeyStore에서 �
 그래서 보안을 위해 보통 Cookie 사용을 권장한다.
 
 > ### 참조
-> [Our Considerations on Token Design & Session Management](https://blog.gds-gov.tech/our-considerations-on-token-design-session-management-c2fa96198e6d) <br />
-> [Where to Store your JWTs – Cookies vs HTML5 Web Storage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)<br />
-> [JWT 서버 인증](https://brownbears.tistory.com/440)<br />
-> [쉽게 알아보는 서버 인증](https://tansfil.tistory.com/59?category=255594)<br />
+> * [Our Considerations on Token Design & Session Management](https://blog.gds-gov.tech/our-considerations-on-token-design-session-management-c2fa96198e6d) <br />
+> * [Where to Store your JWTs – Cookies vs HTML5 Web Storage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)<br />
+> * [JWT 서버 인증](https://brownbears.tistory.com/440)<br />
+> * [쉽게 알아보는 서버 인증](https://tansfil.tistory.com/59?category=255594)<br />
 
 ### Oauth
 Oauth 는 외부서비스의 인증 및 권한부여를 관리하는 범용적인 프로토콜입니다. 
@@ -240,3 +240,6 @@ SNS 로그인은 간단하게 봤을 때 OAuth2.0 + 서버 인증(세션/쿠키 
 ### SNS 로그인의 장점
 > 1. 회원가입이라는 귀찮은 절차를 없애고, 사용자가 빠르게 회원가입을 할 수 있다.
 > 2. 접근하고 싶은 정보들은 사용자들이 미리 권한 내용을 확인하고 허락하기에 쉽게 접근할 수 있다.
+
+### 참조
+> * [OAuth2.0, SNS 로그인](https://tansfil.tistory.com/60?category=255594)
