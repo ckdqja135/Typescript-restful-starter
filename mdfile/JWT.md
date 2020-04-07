@@ -55,13 +55,22 @@ JWT의 수명을 짧게 하고 정기적으로 재발급을 요구하면 원치 
 > 3. 서버는 access 토큰을 해독해 확인하고 검증되면 해당 api 기능을 수행한다.
 > 4. 기한이 만료되었으면 access 토큰을 지워주고 재로그인을 하게 한다.
 
+### 장점
+ * JWT는 발급한 후 토큰 검증만 하면 되기 때문에 추가 저장소가 필요 없다.
+ * 서버를 확장하거나 유지, 보수하는데 유리하다.
+ * 토큰 기반으로 하는 다른 인증 시스템에 접근이 가능하다.
+   * 예를 들어 Facebook 로그인, Google 로그인 등은 모두 토큰을 기반으로 인증한다. <br />
+     선택적으로 이름이나 이메일 등을 받을 수 있다.
+
 ### 문제점
  * 클라이언트가 계속 시스템을 이용하다가 access 토큰 기한이 만료된다면 사용중에 갑자기 로그인을 하라고 할 것이다.
  * 수명이 짧다면 만료될때마다 로그인 해주어야 한다.
  * 수명이 길면 해커에게 해독되어 사용될 가능성이 높아진다.
+ * payload 정보가 제한적 payload는 따로 암호화되지 않기 때문에 디코딩하면 누구나 정보를 확인할 수 있어서 담는 데이터가 제한적이다.
+ * 세션/쿠키 방식에 비해 JWT길이가 기므로 인증이 필요한 요청이 많아질수록 서버의 자원낭비가 발생한다.
 
 ### Refresh Token
-access 토큰이 만료되었을 때, Refresh 토큰으로 서벙새로운 access 토큰을 발급받을 수 있다.
+access 토큰이 만료되었을 때, Refresh 토큰으로 새로운 access 토큰을 발급받을 수 있다.
 
 ### 필요성
  * 서버 데이터베이스에 Refresh Token이 저장되어 있을때 클라이언트가 블랙리스트에 포함되어 있다면, <br>
@@ -92,3 +101,4 @@ React-Native로 개발한 모바일 앱에서는 KeyChain이나 KeyStore에서 �
 > ### 참조
 > [Our Considerations on Token Design & Session Management](https://blog.gds-gov.tech/our-considerations-on-token-design-session-management-c2fa96198e6d) <br />
 > [Where to Store your JWTs – Cookies vs HTML5 Web Storage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)
+> [JWT 서버 인증](https://brownbears.tistory.com/440)
