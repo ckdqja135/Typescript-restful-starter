@@ -22,3 +22,9 @@ JWT(Json Web Token)은 토큰 기반 인증 방식으로,
 ### 기본 구성
 |xxxxx.yyyyy.zzzzz|
 |-----------------|
+
+3가지로 나눠진다.
+
+Header (xxxxx)— JWT인 토큰의 유형이나 HMAC SHA256 또는 RSA와 같이 사용되는 해시 알고리즘이 무엇으로 사용했는지 등 정보가 담긴다. Base64Url로 인코딩되어있다.
+Payload (yyyyy)— 클라이언트에 대한 정보나, meta Data같은 내용이 들어있고, Base64Url로 인코딩되어있다.
+Signature (zzzzz)— header에서 지정한 알고리즘과 secret 키, 서명으로 payload와 header를 담는다.
