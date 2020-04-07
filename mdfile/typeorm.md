@@ -240,4 +240,4 @@ export class Sample extends BaseEntity {
 TypeORM은 여러 구성 소스를 지원하며, <code>ormconfig.[format]</code> 파일을 만들고 
 <code> createConnection()</code> 구성을 전달하지 않고 응용 프로그램 호출에 구성을 저장하기만 하면 됩니다.
 
-#[참고사이트](https://dkant.net/2019/06/17/typeorm/)
+# [참고사이트](https://dkant.net/2019/06/17/typeorm/)
