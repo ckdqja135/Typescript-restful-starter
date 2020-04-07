@@ -154,16 +154,16 @@ const connection: Connection = await createConnection({
      entities: ["entity/*.js"]
  });
 ```
-> @ Entity
+> @ Entity <br />
 > 선언된 부분의 아래 부분부터 model 부분이 된다는 의미로 쓰입니다.
 >
-> @ BaseEntity
+> @ BaseEntity <br />
 > save 를 쉽게 사용하기 위함입니다. 다른 용도도 있겠지만 우선은 그렇습니다.
 >
-> @ PrimaryGeneratedColumn 
+> @ PrimaryGeneratedColumn  <br />
 > primary key 를 적용시킨 컬럼 이라고 보시면 되겠습니다. 그리고 추가적으로 auto increase도 자동으로 설정이 됩니다.
 >
-> @ Column
+> @ Column <br />
 > 말그대로 컬럼 다른말로 필드라고 합니다. name 에 맞게 데이터가 들어가는 곳이죠.
 
 2-2. 기본열
