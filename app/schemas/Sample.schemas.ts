@@ -3,7 +3,7 @@ import { number, object, string } from "joi";
 /* 구조 정의 */ 
 export const createSample = object().keys({
     text: string().required(),
-    // email: string().required(),
+    email: string().required(),
 });
 
 export const updateSample = object().keys({

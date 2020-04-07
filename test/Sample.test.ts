@@ -13,6 +13,7 @@ dotenv.config({ path: resolve() + "/.env" });
 let token: string;
 let IdRecord: number;
 let IdRecordTwo: number;
+let text: string;
 const server: Server = new Server();
 let app: express.Application;
 
@@ -76,6 +77,18 @@ describe("Sample route", () => {
 
     it("Can search for Sample by Id", (done) => {
         supertest(app).get(`/${IdRecord}`)
+            .set("Authorization", `bearer ${token}`).set("Accept", "application/json")
+            .end((err: Error, res: supertest.Response) => {
+                chai.expect(res.status).to.eq(200);
+                chai.expect(res.body).to.be.a("object");
+                chai.expect(res.body).to.have.all.keys("id", "text", "email");
+                chai.expect(res.body.text).to.be.a("string");
+                done();
+            });
+    });
+    
+    it("Can search for Sample by Text", (done) => {
+        supertest(app).get(`/${text}`)
             .set("Authorization", `bearer ${token}`).set("Accept", "application/json")
             .end((err: Error, res: supertest.Response) => {
                 chai.expect(res.status).to.eq(200);

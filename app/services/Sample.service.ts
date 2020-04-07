@@ -18,8 +18,8 @@ export class SampleService {
 
     public find(): Promise<Sample[]> {
         return getCustomRepository(SampleRepository).find();
-    }
-
+    } 
+    
     public remove(sample: Sample): Promise<Sample> {
         return getCustomRepository(SampleRepository).remove(sample);
     }
