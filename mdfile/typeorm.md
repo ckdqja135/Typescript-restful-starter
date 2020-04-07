@@ -31,3 +31,9 @@ SQL 의 절차 , 순차적인 접근 방식이 아닌 객체 접근 방식이다
 데이터베이스와의 상호 작용은 일단 연결을 설정 한 후에만 가능합니다.<br />
 TypeORM <code>Connection</code>은 데이터베이스 연결을 설정하지 않고 연결 풀을 설정합니다.
 
+### 1-1 CreateConnection
+연결을 생성하는 방법에는 여러 가지가 있습니다. 
+가장 간단하고 일반적인 방법은 사용하는 것입니다. 
+<code>createConnection</code>및 <code>createConnections</code>기능을합니다.
+
+createConnection 단일연결 예제
