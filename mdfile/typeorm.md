@@ -1,5 +1,5 @@
 # [참고사이트](https://dkant.net/2019/06/17/typeorm/)
-------
+
 ## TypeOrm (object Relational Mapping)
 ```text
 TypeORM 에서 ORM 기본, NativeScript, 박람회 및 전자 플랫폼 반응, 
