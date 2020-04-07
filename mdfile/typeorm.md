@@ -36,4 +36,24 @@ TypeORM <code>Connection</code>은 데이터베이스 연결을 설정하지 않
 가장 간단하고 일반적인 방법은 사용하는 것입니다. 
 <code>createConnection</code>및 <code>createConnections</code>기능을합니다.
 
-createConnection 단일연결 예제
+### createConnection 단일연결 예제
+```typescript
+import { createConnection } from "typeorm";
+import { Sample } from "../app/models";
+import { config, DIALECT } from "../config";
+
+export const Connection = createConnection({
+    database: config.DATABASE.DB,
+    entities: [
+        Sample,
+    ],
+    host: config.DATABASE.SERVER,
+    logging: false,
+    password: config.DATABASE.PASSWORD,
+    port: config.DATABASE.PORT_DB,
+    synchronize: true,
+    type: DIALECT,
+    username: config.DATABASE.USER_DB,
+});
+```
+
