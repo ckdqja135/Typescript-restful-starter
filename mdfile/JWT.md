@@ -70,7 +70,23 @@ JWT의 수명을 짧게 하고 정기적으로 재발급을 요구하면 원치 
  * 세션/쿠키 방식에 비해 JWT길이가 기므로 인증이 필요한 요청이 많아질수록 서버의 자원낭비가 발생한다.
 
 ### Refresh Token
-access 토큰이 만료되었을 때, Refresh 토큰으로 새로운 access 토큰을 발급받을 수 있다.
+Access Token(JWT)를 통한 인증 방식의 문제는 만일 제 3자에게 탈취당할 경우 보안에 취약하다는 점입니다.
+유효기간이 짧은 Token의 경우 그만큼 사용자는 로그인을 자주 해서 새롭게 Token을 발급받아야 하므로 불편합니다. 
+그러나 유효기간을 늘리자면, 토큰을 탈취당했을 때 보안에 더 취약해지게 됩니다. 
+
+이때 “그러면 유효기간을 짧게 하면서  좋은 방법이 있지는 않을까?”라는 질문의 답이 바로 "Refresh Token"입니다. 
+Refresh Token은 Access Token과 똑같은 형태의 JWT입니다. 
+처음에 로그인을 완료했을 때 Access Token과 동시에 발급되는 Refresh Token은 
+긴 유효기간을 가지면서, Access Token이 만료됐을 때 새로 발급해주는 열쇠가 됩니다.
+(여기서 만료라는 개념은 그냥 유효기간을 지났다는 의미입니다.) 
+
+사용 예를 간단히 들어보겠습니다.
+Refresh Token의 유효기간은 2주, Access Token의 유효기간은 1시간이라 하겠습니다. 
+사용자는 API 요청을 신나게 하다가 1시간이 지나게 되면, 가지고 있는 Access Token은 만료됩니다. 
+그러면 Refresh Token의 유효기간 전까지는 Access Token을 새롭게 발급받을 수 있습니다. 
+
+* Access Token은 탈취당하면 정보가 유출되는건 동일합니다. 다만 짧은 유효기간 안에만 사용이 가능하기에 더 안전하다는 의미입니다.
+* Refresh Token의 유효기간이 만료됐다면, 사용자는 새로 로그인해야 합니다. Refresh Token도 탈취될 가능성이 있기 때문에 적절한 유효기간 설정이 필요해보입니다(보통 2주로 많이 잡더군요)
 
 ### 필요성
  * 서버 데이터베이스에 Refresh Token이 저장되어 있을때 클라이언트가 블랙리스트에 포함되어 있다면, <br>
@@ -78,8 +94,27 @@ access 토큰이 만료되었을 때, Refresh 토큰으로 새로운 access 토�
  * Refresh Token으로 access 토큰이 만료되면 알아서 갱신한다.
 
 ### 토큰 처리 flow
-<img src="https://cdn-images-1.medium.com/max/800/1*IlZ9mxtgE6HsAHik_0GC-g.png" width="70%"></img>
-<img src="https://cdn-images-1.medium.com/max/800/1*QCm08rvLhxfTg4oK9dbG5A.png" width="70%"></img>
+<img src="https://t1.daumcdn.net/cfile/tistory/99DB8C475B5CA1C936" width="70%"></img>
+> 1. 사용자가 ID , PW를 통해 로그인합니다.
+> 2. 서버에서는 회원 DB에서 값을 비교합니다(보통 PW는 일반적으로 암호화해서 들어갑니다)
+> 3~4. 로그인이 완료되면 Access Token, Refresh Token을 발급합니다. 이때 일반적으로 회원DB에 Refresh Token을 저장해둡니다.
+> 5. 사용자는 Refresh Token은 안전한 저장소에 저장 후, Access Token을 헤더에 실어 요청을 보냅니다.
+> 6~7. Access Token을 검증하여 이에 맞는 데이터를 보냅니다.
+> 8. 시간이 지나 Access Token이 만료됐다고 보겠습니다.
+> 9. 사용자는 이전과 동일하게 Access Token을 헤더에 실어 요청을 보냅니다.
+> 10~11. 서버는 Access Token이 만료됨을 확인하고 권한없음을 신호로 보냅니다.
+> 
+>  * Access Token 만료가 될 때마다 계속 과정 9~11을 거칠 필요는 없습니다.
+>     사용자(프론트엔드)에서 Access Token의 Payload를 통해 유효기간을 알 수 있습니다. 
+>     따라서 프론트엔드 단에서 API 요청 전에 토큰이 만료됐다면 바로 재발급 요청을 할 수도 있습니다.
+> 
+> 12. 사용자는 Refresh Token과 Access Token을 함께 서버로 보냅니다.
+> 13. 서버는 받은 Access Token이 조작되지 않았는지 확인한후, Refresh Token과 사용자의 DB에 저장되어 있던 Refresh Token을 비교합니다.
+>     Token이 동일하고 유효기간도 지나지 않았다면 새로운 Access Token을 발급해줍니다.
+> 14. 서버는 새로운 Access Token을 헤더에 실어 다시 API 요청을 진행합니다. 
+
+Refresh Token이 들어가면서 과정이 좀 복잡해졌습니다. 
+하지만 Access Token의 약점을 보완해주기 때문에 보안이 중요한 프로젝트에서는 사용하기를 권장합니다. 
 
 ### 웹과 모바일에서의 JWT 저장
 React-Native로 개발한 모바일 앱에서는 KeyChain이나 KeyStore에서 암호화되게 JWT를 저장할 수 있는 라이브러리가 있다.
