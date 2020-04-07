@@ -89,6 +89,6 @@ React-Native로 개발한 모바일 앱에서는 KeyChain이나 KeyStore에서 �
 <code>CSURF</code> 같은 라이브러리를 사용하면 예방할 수 있다.
 그래서 보안을 위해 보통 Cookie 사용을 권장한다.
 
-> ### 참조 <br />
+> ### 참조
 > [Our Considerations on Token Design & Session Management](https://blog.gds-gov.tech/our-considerations-on-token-design-session-management-c2fa96198e6d) <br />
 > [Where to Store your JWTs – Cookies vs HTML5 Web Storage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)
