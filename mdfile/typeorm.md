@@ -158,7 +158,9 @@ export const Connection = createConnection({
     username: config.DATABASE.USER_DB,
 });
 ```
+
 또는 모든 <code>Entity</code>가 포함 된 디렉토리 전체를 지정할 수 있으며 모든 <code>Entity</code>가로드됩니다.
+
 ```typescript
 import {createConnection, Connection} from "typeorm";
 const connection: Connection = await createConnection({
