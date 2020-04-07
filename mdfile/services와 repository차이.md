@@ -65,7 +65,7 @@ export class SampleService {
   }
 }
 ```
-* A. 
+* A
 ```text
 제가 이해하고 있는 바는 service layer 에는 비지니스 로직이 들어가고 
 repository layer 에는 ORM을 활용한 Query문이 들어간다는 것입니다.
