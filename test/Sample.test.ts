@@ -7,32 +7,36 @@ import { Sample } from "../app/models";
 import { JwtService } from "../app/services/Jwt.service";
 import { SampleService } from "../app/services/Sample.service";
 import { Server } from "../config/Server";
+import { text } from "body-parser";
 
 dotenv.config({ path: resolve() + "/.env" });
 
 let token: string;
 let IdRecord: number;
 let IdRecordTwo: number;
-let text: string;
+let textRecord: string;
+let emailRecord: string;
+
 const server: Server = new Server();
 let app: express.Application;
 
 const sampleService = new SampleService();
 /*
-    실행 json -> {
-        "text" : "임의 텍스트(영문으로)"
+    create 실행 json -> {
+        "text" : "임의 텍스트(영문으로)",
+        "email" : "임의 텍스트(영문으로)"
     }
 */
 describe("Sample route", () => {
 
-    before((done) => {
+    before((done) => { // 선택한 요소 앞에 컨텐츠 삽입
         const sample = new Sample();
-        sample.text = "SAMPLE TEXT";
+        sample.text = "SANPLE TEXT";
         sample.email = "SAMPLE EMAIL";
         server.start().then(() => {
             app = server.App();
             Promise.all([
-                new JwtService().signToken({ name: "name", role: "rol" }),
+                new JwtService().signToken({ name: "name", role: "rol"}),
                 sampleService.save(sample),
             ]).then((res) => {
                 token = res[0];
@@ -42,7 +46,8 @@ describe("Sample route", () => {
         });
     });
 
-    after(async () => {
+    after(async () => { // 선택한 요소 뒤에 컨텐츠 삽입
+        // const sampleOne = await sampleService.findOneById(IdRecord);
         const sampleOne = await sampleService.findOneById(IdRecord);
         const sampleTwo = await sampleService.findOneById(IdRecordTwo);
         if (sampleOne) {
@@ -52,6 +57,7 @@ describe("Sample route", () => {
             await sampleService.remove(sampleTwo);
         }
     });
+
     /* 각 기능 예제들 */
     it("Random Url gives 404", (done) => {
         supertest(app).get("/random-url")
@@ -76,7 +82,7 @@ describe("Sample route", () => {
     });
 
     it("Can search for Sample by Id", (done) => {
-        supertest(app).get(`/${IdRecord}`)
+        supertest(app).get(`/find/id/:${IdRecord}`)
             .set("Authorization", `bearer ${token}`).set("Accept", "application/json")
             .end((err: Error, res: supertest.Response) => {
                 chai.expect(res.status).to.eq(200);
@@ -86,9 +92,9 @@ describe("Sample route", () => {
                 done();
             });
     });
-    
+
     it("Can search for Sample by Text", (done) => {
-        supertest(app).get(`/${text}`)
+        supertest(app).get(`/find/text/:${textRecord}`)
             .set("Authorization", `bearer ${token}`).set("Accept", "application/json")
             .end((err: Error, res: supertest.Response) => {
                 chai.expect(res.status).to.eq(200);
@@ -98,6 +104,19 @@ describe("Sample route", () => {
                 done();
             });
     });
+
+    it("Can search for Sample by Email", (done) => {
+        supertest(app).get(`/find/email/:${emailRecord}`)
+            .set("Authorization", `bearer ${token}`).set("Accept", "application/json")
+            .end((err: Error, res: supertest.Response) => {
+                chai.expect(res.status).to.eq(200);
+                chai.expect(res.body).to.be.a("object");
+                chai.expect(res.body).to.have.all.keys("id", "text", "email");
+                chai.expect(res.body.text).to.be.a("string");
+                done();
+            });
+    });
+
 
     it("Can create a new Sample", (done) => {
         supertest(app).post("/")

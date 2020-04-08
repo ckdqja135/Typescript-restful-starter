@@ -9,6 +9,7 @@ export const createSample = object().keys({
 export const updateSample = object().keys({
     id: number().required(),
     text: string().required(),
+    email: string().required(),
 });
 
 export const deleteSample = object().keys({

@@ -17,6 +17,10 @@ export class SampleRepository extends Repository<Sample> {
         return this.manager.find(Sample, {where: {text}});
     }
 
+    public findByEmail(email: string): Promise<Sample[]> {
+        return this.manager.find(Sample, {where: {email}});
+    }
+
     public findOneById(id: number): Promise<Sample> {
         return this.manager.findOne(Sample, {where: {id}});
     }

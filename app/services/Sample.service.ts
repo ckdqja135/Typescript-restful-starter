@@ -8,6 +8,10 @@ export class SampleService {
         return getCustomRepository(SampleRepository).findByText(text);
     }
 
+    public findByEmail(email: string): Promise<Sample[]> {
+        return getCustomRepository(SampleRepository).findByEmail(email);
+    }
+
     public bulkCreate(Samples: Sample[]): Promise<Sample[]> {
         return getCustomRepository(SampleRepository).bulkCreate(Samples);
     }
@@ -18,8 +22,8 @@ export class SampleService {
 
     public find(): Promise<Sample[]> {
         return getCustomRepository(SampleRepository).find();
-    } 
-    
+    }
+
     public remove(sample: Sample): Promise<Sample> {
         return getCustomRepository(SampleRepository).remove(sample);
     }

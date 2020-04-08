@@ -22,6 +22,17 @@ export class SampleController extends Controller {
 
     // select -> routes/Sample.route.ts 참조.
     public async find(): Promise<Response> {
+        const { text } = this.req.params as unknown as { text: string };
+        const sample = await this.sampleService.findByText(text);
+        if (sample) {
+            return this.res.status(200).send(sample);
+        } else {
+            return this.res.status(404).send({ text: "not found" });
+        }
+    }
+
+    // select -> routes/Sample.route.ts 참조.
+    public async find2(): Promise<Response> {
         const { id } = this.req.params as unknown as { id: number };
         const sample = await this.sampleService.findOneById(id);
         if (sample) {
@@ -31,16 +42,16 @@ export class SampleController extends Controller {
         }
     }
 
-    // // select -> routes/Sample.route.ts 참조.
-    // public async find2(): Promise<Response> {
-    //     const { text } = this.req.params as unknown as { text: string };
-    //     const sample = await this.sampleService.findByText(text);
-    //     if (sample) {
-    //         return this.res.status(200).send(sample);
-    //     } else {
-    //         return this.res.status(404).send({ text: "not found" });
-    //     }
-    // }
+    // select -> routes/Sample.route.ts 참조.
+    public async find3(): Promise<Response> {
+        const { email } = this.req.params as unknown as { email: string };
+        const sample = await this.sampleService.findByEmail(email);
+        if (sample) {
+            return this.res.status(200).send(sample);
+        } else {
+            return this.res.status(404).send({ text: "not found" });
+        }
+    }
     
     // input -> routes/Sample.route.ts 참조. 
     public async create(): Promise<Response> {
