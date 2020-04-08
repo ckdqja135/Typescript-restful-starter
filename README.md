@@ -10,3 +10,4 @@
 ### 8. [실행 화면](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/%EC%8B%A4%ED%96%89%ED%99%94%EB%A9%B4.md)
 ----------
 ### [2020-04-07](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-07.md)
+### [2020-04-08](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-08.md)
