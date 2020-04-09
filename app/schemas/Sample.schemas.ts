@@ -4,6 +4,7 @@ import { number, object, string } from "joi";
 export const createSample = object().keys({
     text: string().required(),
     email: string().required(),
+    name: string().required(),
 });
 
 export const updateSample = object().keys({

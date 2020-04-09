@@ -11,6 +11,9 @@ export class Sample extends BaseEntity {
     public text: string;
 
     @Column("text")
+    public name: string;
+
+    @Column("text")
     @IsEmail()
     public email: string;
 
