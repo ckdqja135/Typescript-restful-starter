@@ -214,7 +214,7 @@ sports, players 컬렉션과 soccer, 13(13번인 선수)를 의미하는 도큐�
 500 |	서버에 문제가 있을 경우 사용하는 응답 코드 |
 
 ## Reference
-* https://ko.wikipedia.org/wiki/REST
-* http://blog.remotty.com/blog/2014/01/28/lets-study-rest/
-* https://yangbongsoo.gitbooks.io/study/content/restc758_c774_d574_c640_c124_acc4.html
-* http://spoqa.github.io/2012/02/27/rest-introduction.html
+> * https://ko.wikipedia.org/wiki/REST
+> * http://blog.remotty.com/blog/2014/01/28/lets-study-rest/
+> * https://yangbongsoo.gitbooks.io/study/content/restc758_c774_d574_c640_c124_acc4.html
+> * http://spoqa.github.io/2012/02/27/rest-introduction.html
