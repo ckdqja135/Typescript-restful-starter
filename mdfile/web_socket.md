@@ -151,7 +151,7 @@ wsServer.on('request', function(request) {
 **WebSocket**에서는 새로운 **URL** 스키마를 사용한다고 간단히 언급했습니다. 
 실제로 <code>ws://</code> 및 <code>wss://</code>라는 두 가지 새로운 스키마가 도입되었습니다.
 
-**URL**에는 각 스키마마다 특정한 문법이 있습니다. **WebSocket URL**은 앵커 **(**예를 들어 <code>#sample_anchor</code>**)**를 지원하지 않는다는 점이 특이합니다.
+**URL**에는 각 스키마마다 특정한 문법이 있습니다. **WebSocket URL**은 앵커 **(** 예를 들어 <code>#sample_anchor</code> **)** 를 지원하지 않는다는 점이 특이합니다.
 **WebSocket** 스타일의 **URL**에도 **HTTP** 스타일 **URL**과 동일한 규칙이 적용됩니다. 
 <code>ws</code>는 암호화되지 않은 상태이며 포트 **80**이 기본 포트이고 <code>wss</code>는 **TLS** 암호화가 필요하며 포트 **443**이 기본값으로 사용됩니다.
 
