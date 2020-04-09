@@ -18,21 +18,23 @@ HTTP를 사용하여 클라이언트가 페이지를 로드하면 사용자가 �
 서버는 전송할 새로운 데이터가 생길 때 마다 이를 응답으로 전송합니다.
 매우 간단한 롱폴링 예제 코드를 살펴보겠습니다.
 ```javascript
-(function poll(){
-     setTimeout(function(){
-        $.ajax({ 
-          url: 'https://api.example.com/endpoint', 
-          success: function(data) { 
-            // Do something with `data`
-            // ...
 
-            //Setup the next poll recursively
-            poll();
-          }, 
-          dataType: 'json'
-        });
-    }, 10000);
-})();
+     (function poll(){
+          setTimeout(function(){
+             $.ajax({ 
+               url: 'https://api.example.com/endpoint', 
+               success: function(data) { 
+                 // Do something with `data`
+                 // ...
+
+                 //Setup the next poll recursively
+                 poll();
+               }, 
+               dataType: 'json'
+             });
+         }, 10000);
+     })();
+
 ```
 이것은 기본적으로 자가실행되는 함수로서 첫 실행은 자동으로 시작됩니다. 
 10초 간격이 설정되어 있고 서버에 대한 각각의 비동기 Ajax 호출 후에 콜백은 다시 Ajax 호출을 합니다.
@@ -54,8 +56,10 @@ XHR 멀티파트 요청과 소위 **htmlfile**을 사용하기도 합니다.
 WebSocket 연결을 클라이언트 측에서 어떻게 여는지 보겠습니다.
 
 ```javascript
+
   // Create a new WebSocket with an encrypted connection.
   var socket = new WebSocket('ws://websocket.example.com');
+  
 ```
 
 > WebSocket URL은 <code>ws</code> 스키마를 사용합니다. 
@@ -78,35 +82,35 @@ WebSocket 연결을 클라이언트 측에서 어떻게 여는지 보겠습니�
 
 ```javascript
 
-// We'll be using the https://github.com/theturtle32/WebSocket-Node
-// WebSocket implementation
-var WebSocketServer = require('websocket').server;
-var http = require('http');
+     // We'll be using the https://github.com/theturtle32/WebSocket-Node
+     // WebSocket implementation
+     var WebSocketServer = require('websocket').server;
+     var http = require('http');
 
-var server = http.createServer(function(request, response) {
-  // process HTTP request. 
-});
-server.listen(1337, function() { });
+     var server = http.createServer(function(request, response) {
+       // process HTTP request. 
+     });
+     server.listen(1337, function() { });
 
-// create the server
-wsServer = new WebSocketServer({
-  httpServer: server
-});
+     // create the server
+     wsServer = new WebSocketServer({
+       httpServer: server
+     });
 
-// WebSocket server
-wsServer.on('request', function(request) {
-  var connection = request.accept(null, request.origin);
+     // WebSocket server
+     wsServer.on('request', function(request) {
+       var connection = request.accept(null, request.origin);
 
-  // This is the most important callback for us, we'll handle
-  // all messages from users here.
-  connection.on('message', function(message) {
-      // Process WebSocket message
-  });
+       // This is the most important callback for us, we'll handle
+       // all messages from users here.
+       connection.on('message', function(message) {
+           // Process WebSocket message
+       });
 
-  connection.on('close', function(connection) {
-    // Connection closes
-  });
-});
+       connection.on('close', function(connection) {
+         // Connection closes
+       });
+     });
 
 ```
 
@@ -199,17 +203,55 @@ wsServer.on('request', function(request) {
    * <code>0x09</code>: 이 프레임은 핑 **(ping)** 입니다.
    * <code>0x0a</code>: 이 프레임은 퐁 **(pong)** 입니다.
      **(** 이처럼 사용되지 않는 충분한 값이 존재하며 이들은 나중에 사용하기 위해 예약되어 있습니다. **)**
-* mask (1 비트): 연결이 마스크되었는지 여부를 나타냅니다. 지금은 클라이언트에서 서버로 보내는 모든 메시지를 마스크 처리해야하며, 스펙에서는 마스크 해제 된 경우 연결을 종료하도록 되어 있습니다.
-payload_len (7 비트): 페이로드의 길이. WebSocket 프레임은 다음과 같은 범위로 표현됩니다.
-0~125는 페이로드의 길이를 나타냅니다. 126은 다음 2 바이트가 길이를 나타내고, 127은 다음 8 바이트가 길이를 나타냄을 의미합니다. 따라서 페이로드의 길이는 ~ 7 비트, 16 비트 및 64 비트가 됩니다.
-masking-key (32 비트) : 클라이언트에서 서버로 전송 된 모든 프레임은 프레임에 포함 된 32 비트 값으로 마스크됩니다.
-payload: 대개는 마스크 처리가 되어 있는 실제 데이터입니다. 길이는 payload_len의 길이입니다.
-WebSockets은 스트림 기반이 아닌 프레임 기반인 이유는 무엇일까요? 이것은 필자도 모르겠습니다. 여러분과 같이 저도 이 부분에 대해서 더 많은 것을 알고 싶습니다. 그래서 혹시 이 부분에 대해 아시는 것이 있으시다면, 아래의 답변에 코멘트와 링크를 자유롭게 추가 해주시기 바랍니다. 또한 HackerNews에서 이 주제에 대한 좋은 토론을 할 수 있습니다.
+* <code>mask</code> **(1 비트):** 연결이 마스크되었는지 여부를 나타냅니다. 
+지금은 클라이언트에서 서버로 보내는 모든 메시지를 마스크 처리해야하며, 스펙에서는 마스크 해제 된 경우 연결을 종료하도록 되어 있습니다.
 
+* <code>payload_len</code> **(7 비트):** 페이로드의 길이. WebSocket 프레임은 다음과 같은 범위로 표현됩니다.
+**0 ~ 125**는 페이로드의 길이를 나타냅니다.
+**126**은 다음 **2** 바이트가 길이를 나타내고, **127**은 다음 **8** 바이트가 길이를 나타냄을 의미합니다. 
+따라서 페이로드의 길이는 **~ 7** 비트, **16** 비트 및 **64** 비트가 됩니다.
 
+* <code>masking-key</code> **(32 비트) :** 클라이언트에서 서버로 전송 된 모든 프레임은 프레임에 포함 된 **32** 비트 값으로 마스크됩니다.
 
+* <code>payload</code>: 대개는 마스크 처리가 되어 있는 실제 데이터입니다. 길이는 <code>payload_len</code>의 길이입니다.
 
+**WebSockets**은 스트림 기반이 아닌 프레임 기반인 이유는 무엇일까요? 이것은 필자도 모르겠습니다. 여러분과 같이 저도 이 부분에 대해서 더 많은
+것을 알고 싶습니다. 그래서 혹시 이 부분에 대해 아시는 것이 있으시다면, 아래의 답변에 코멘트와 링크를 자유롭게 추가 해주시기 바랍니다. 또한
+<u>HackerNews에서 이 주제에 대한 좋은 토론</u>을 할 수 있습니다.
 
+## 프레임의 데이터
+위에서 언급했듯이 데이터는 여러 프레임으로 분할 될 수 있습니다. 
+데이터를 전송하는 첫 번째 프레임에는 전송중인 데이터의 종류를 나타내는 <code>opcode</code>가 있습니다. 
+이것은 **JavaScript**가 스펙을 처음으로 정하기 시작했을 때는 **2**진 데이터에 대한 지원을 거의 하지 않았기 때문입니다. 
+<code>0x01</code>은 **utf-8**로 인코딩 된 텍스트 데이터를 나타내며, <code>0x02</code>는 바이너리 데이터입니다. 
+대부분의 사람들은 **JSON**을 전송할 것이고, 이 경우에는 텍스트 연산 코드를 선택하기를 원할 것입니다. 
+바이너리 데이터를 보내면 브라우저 특정 <u>Blob</u>으로 표시됩니다.
+
+**WebSocket**을 통해 데이터를 보내기위한 API는 매우 간단합니다.
+
+```javascript
+
+     var socket = new WebSocket('ws://websocket.example.com');
+     socket.onopen = function(event) {
+       socket.send('Some message'); // Sends data to server.
+     };
+
+```
+
+**WebSocket**이 **(** 클라이언트 측에서 **)** 데이터를 수신하면 <code>message</code> 이벤트가 시작됩니다. 이 이벤트에는 메시지 내용에 액세스하는 데 사용할 수있는 <code>data</code>라는 속성이 있습니다.
+
+```javascript
+
+     // Handle messages sent by the server.
+     socket.onmessage = function(event) {
+       var message = event.data;
+       console.log(message);
+     };
+
+```
+
+**Chrome DevTools**의 네트워크 탭을 사용하여 **WebSocket** 연결의 각 프레임에 있는 데이터를 쉽게 탐색 할 수 있습니다.
+<img src ="https://miro.medium.com/max/1400/1*Sz4wI2ukt91vRrgf8UonWw.png width="90%"></img>
 
 
 * reference 
