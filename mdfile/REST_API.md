@@ -46,5 +46,14 @@ EST API 설계 시 가장 중요한 항목은 다음의 2가지로 요약할 수
 
 ## 4-1. REST API 중심 규칙
 1) URI는 정보의 자원을 표현해야 한다. (리소스명은 동사보다는 명사를 사용) <br />
-<code>GET /members/delete/1</code>
+<code>
+  GET /members/delete/1
+</code>
 
+위와 같은 방식은 REST를 제대로 적용하지 않은 URI입니다. URI는 자원을 표현하는데 중점을 두어야 합니다. delete와 같은 행위에 대한 표현이 들어가서는 안됩니다.
+
+2) 자원에 대한 행위는 HTTP Method(GET, POST, PUT, DELETE 등)로 표현  <br />
+위의 잘못 된 URI를 HTTP Method를 통해 수정해 보면
+    DELETE /members/1
+으로 수정할 수 있겠습니다.
+회원정보를 가져올 때는 GET, 회원 추가 시의 행위를 표현하고자 할 때는 POST METHOD를 사용하여 표현합니다.
