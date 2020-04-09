@@ -90,3 +90,21 @@ PUT | PUT를 통해 해당 리소스를 수정합니다. |
 DELETE | DELETE를 통해 리소스를 삭제합니다. |
 
 다음과 같은 식으로 URI는 자원을 표현하는 데에 집중하고 행위에 대한 정의는 HTTP METHOD를 통해 하는 것이 REST한 API를 설계하는 중심 규칙입니다.
+
+## 4-2. URI 설계 시 주의할 점
+
+**1) 슬래시 구분자(/)는 계층 관계를 나타내는 데 사용** <br />
+``` text
+
+   http://restapi.example.com/houses/apartments
+   http://restapi.example.com/animals/mammals/whales
+    
+```
+**2) URI 마지막 문자로 슬래시(/)를 포함하지 않는다.** <br />
+URI에 포함되는 모든 글자는 리소스의 유일한 식별자로 사용되어야 하며 URI가 다르다는 것은 리소스가 다르다는 것이고, 역으로 리소스가 다르면 URI도 달라져야 합니다. REST API는 분명한 URI를 만들어 통신을 해야 하기 때문에 혼동을 주지 않도록 URI 경로의 마지막에는 슬래시(/)를 사용하지 않습니다.
+``` text
+
+http://restapi.example.com/houses/apartments/ (X)
+http://restapi.example.com/houses/apartments  (0)
+    
+```
