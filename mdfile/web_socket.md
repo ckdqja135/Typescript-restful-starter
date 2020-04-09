@@ -438,7 +438,7 @@ TCP 패키지가 임의의 순서로 도착하는 경우에 대비하기 위해�
 
 <img src ="https://miro.medium.com/proxy/1*kEQmoMuNBDfZKNSBh0tvRA.png" width="90%">
 
-* reference 
+## reference 
 > * [참고자료](https://blog.sessionstack.com/how-javascript-works-deep-dive-into-websockets-and-http-2-with-sse-how-to-pick-the-right-path-584e6b8e3bf7)
 > * [참고자료](https://engineering.huiseoul.com/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%9E%91%EB%8F%99%ED%95%98%EB%8A%94%EA%B0%80-%EC%9B%B9%EC%86%8C%EC%BC%93-%EB%B0%8F-http-2-sse-1ccde9f9dc51)
 > * [참고자료](https://lucumr.pocoo.org/2012/9/24/websockets-101/)
