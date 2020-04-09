@@ -251,6 +251,7 @@ WebSocket 연결을 클라이언트 측에서 어떻게 여는지 보겠습니�
 ```
 
 **Chrome DevTools**의 네트워크 탭을 사용하여 **WebSocket** 연결의 각 프레임에 있는 데이터를 쉽게 탐색 할 수 있습니다.
+
 <img src ="https://miro.medium.com/max/1400/1*Sz4wI2ukt91vRrgf8UonWw.png width="90%"></img>
 
 
