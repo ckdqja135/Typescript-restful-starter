@@ -47,6 +47,7 @@ XHR 멀티파트 요청과 소위 **htmlfile**을 사용하기도 합니다.
 ## WebSocket 소개
 [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)의 사양에는 웹 브라우저와 서버 간에 “소켓” 연결을 설정하는 API가 정의되어 있습니다. 
 간단히 말하면 클라이언트와 서버 사이에 지속적인 연결이 설정되며 양측은 언제든지 데이터를 보낼 수 있습니다. <br />
+
 <img src = "https://user-images.githubusercontent.com/33046341/78872274-ff415e80-7a83-11ea-9a58-d2c0b011021e.png" width="90%"></img>
 
 클라이언트는 WebSocket 핸드셰이크라는 프로세스를 통해 WebSocket 연결을 설정합니다. 
@@ -371,15 +372,87 @@ TCP 패키지가 임의의 순서로 도착하는 경우에 대비하기 위해�
 
 <img src ="https://miro.medium.com/max/1400/1*pSh7IORJoUXbwCjyJ7fM9A.png" width="90%">
 
-SSE는 HTTP 기반이라는 것을 기억해야합니다. 
-즉, HTTP/2를 사용하면 여러 SSE 스트림을 단일 TCP 연결에서 구현할 수 있을뿐만 아니라 
-여러 SSE 스트림 (서버에서 클라이언트 푸시)과 여러 클라이언트 요청 (클라이언트에서 서버로의 조합)을 사용하여 구현할 수도 있습니다. 
-HTTP/2 및 SSE 덕분에 애플리케이션 코드를 서버 푸시에 등록 할 수 있는 간단한 API로 순수한 HTTP 양방향 연결을 사용할 수 있게 되었습니다. 
-SSE와 WebSocket을 비교할 때 양방향 기능이 부족하다는 사실이 종종 큰 결점으로 인식되었습니다. 하
-지만 HTTP/2 덕분에 더 이상 그렇지 않습니다. 
-이렇게 하면 WebSockets를 건너 뛰고 대신 HTTP 기반 시그널링을 사용할 수있는 기회가 열립니다.
+**SSE**는 **HTTP** 기반이라는 것을 기억해야합니다. 
+즉, **HTTP/2**를 사용하면 여러 **SSE** 스트림을 단일 **TCP** 연결에서 구현할 수 있을뿐만 아니라 
+여러 **SSE** 스트림 **(서버에서 클라이언트 푸시)** 과 여러 클라이언트 요청 **(클라이언트에서 서버로의 조합)** 을 사용하여 구현할 수도 있습니다. 
+**HTTP/2** 및 **SSE** 덕분에 애플리케이션 코드를 서버 푸시에 등록 할 수 있는 간단한 **API**로 순수한 **HTTP** 양방향 연결을 사용할 수 있게 되었습니다. 
+**SSE**와 **WebSocket**을 비교할 때 양방향 기능이 부족하다는 사실이 종종 큰 결점으로 인식되었습니다. 
+하지만 **HTTP/2** 덕분에 더 이상 그렇지 않습니다. 
+이렇게 하면 **WebSockets**를 건너 뛰고 대신 **HTTP** 기반 시그널링을 사용할 수있는 기회가 열립니다.
+
+## WebSocket과 HTTP/2 중에서 무엇을 택할까?
+**WebSocket**은 **HTTP/2 + SSE**가 지배하는 세상이 와도 확실히 살아남을 것입니다. 
+많이 사용되는 기술이기도 하고 특정 상황에서는 **HTTP/2** 보다도 이점이 있기 때문입니다. 예를 들어, 오버 헤드가 적은 양방향 기능을 구축하는 경우에 그렇습니다.
+
+연결의 양쪽 끝에서 방대한 양의 메시지가 필요한 대규모 멀티 플레이어 온라인 게임을 만들고 싶다고합시다. 
+이 경우 **WebSocket**은 훨씬 더 나은 성능을 발휘합니다.
+
+일반적으로 클라이언트와 서버 간의 **지연 시간이 정말로 낮아야** 할 때, 실시간에 가까워야 할 때 **WebSocket**을 사용하십시오. 
+이를 위해서는 서버 측 응용 프로그램의 구조를 다시 생각할 필요가 있을 뿐만 아니라 
+이벤트 대기열과 같은 기술로 초점을 이동해야 할 수도 있습니다.
+
+만약 실시간 시장 뉴스, 시장 데이터, 채팅 응용 프로그램 등을 표시해야하는 경우라면 
+**HTTP/2 + SSE**를 사용했을 때 효율적인 양방향 통신 채널을 제공하면서 **HTTP** 세계에 머물러 있는 이점을 누릴 수 있습니다.
+
+ * 웹 소켓은 **HTTP** 연결을 **HTTP**와 전혀 다른 프로토콜로 업그레이드하므로 기존 웹 인프라와의 호환성을 고려할 때 이런 점은 종종 고통의 근원이 될 수 있습니다.
+
+ * 확장 성 및 보안: 웹 구성 요소**(방화벽, 침입 탐지,로드 밸런서)** 는 복원력, 보안 및 확장 성 측면에서 크고 중요한 응용 프로그램이 선호하는 환경 인 **HTTP**를 염두에두고 구축, 유지 관리 및 구성됩니다.
+ 
+또한 브라우저 지원을 고려해야합니다. 아래 **WebSocket**의 경우를 살펴보십시오.
+
+<img src ="https://miro.medium.com/max/1400/1*YFr59cEF2qxzjjleebvbcQ.png" width="90%">
+
+꽤 좋은 상황이라고 할 수 있습니다.
+그러나 **HTTP/2**의 상황은 동일하지 않습니다.
+
+<img src ="https://miro.medium.com/max/1400/1*C1VWSKOx89vqdiSiflDRJw.png" width="90%">
+
+ * **TLS** 전용(그렇게 나쁘지는 않습니다.)
+ * **IE 11**에서 부분적으로 지원되지만 **Windows 10**에서만 지원됩니다.
+ * **Safari**는 **OSX 10.11** 이상에서만 지원됩니다.
+ * **ALPN**을 통해 협상 할 수있는 경우에만 **HTTP/2**가 지원됩니다(서버가 명시 적으로 지원해야 함).
+
+하지만 **SSE** 지원은 더 좋습니다.
+
+<img src ="https://miro.medium.com/max/1400/1*9ryMUEZhtbTg7lECHVz0fw.png" width="90%">
+
+**IE/Edge**만 **SSE**를 지원하지 않습니다(오페라 미니는 **SSE**도 웹 소켓도 지원하지 않으므로 논외로 하겠습니다). 
+**IE/Edge**에는 **SSE** 지원을 위한 꽤 괜찮은 폴리필이 있습니다.
+
+## SessionStack에서는 무엇을 쓸지 어떻게 결정합니까?
+
+[SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=Post-5-websockets-outro)에서는 웹 소켓과 **HTTP**를 모두 사용합니다. 
+**SessionStack**을 웹 애플리케이션에 통합하면 모든 **DOM** 변경 사항, 사용자 상호 작용, **JavaScript** 예외, 스택 추적, 실패한 네트워크
+요청 및 디버그 메시지가 기록되기 시작하여 웹 앱의 문제를 동영상처럼 재생하고 발생한 모든 사항을 볼 수 있습니다. 
+모든 것이 **실시간**으로 이루어지기 때문에 웹 앱의 성능에 아무런 영향을 미치지 않아야 합니다.
+
+즉 이것은 사용자가 브라우저에있는 동안 사용자 세션에 **실시간**으로 참여할 수 있습니다는 뜻입니다. 
+이 시나리오에서는 양방향 통신이 없기 때문에 **(서버가 브라우저에 데이터를 “스트리밍”하기 때문에)** **HTTP**를 사용하도록 선택했습니다.
+이 경우 **WebSocket**은 실제로 과하며 관리 및 확장이 더 어려울 것입니다.
+
+그러나 웹 애플리케이션에 통합 된 **SessionStack** 라이브러리는 **WebSocket**을 사용합니다(혹시 이것이 불가능하다면 HTTP로 폴백 됩니다). 
+일괄 통신이기도 한 데이터를 일괄 처리하고 서버로 보내는 것입니다. 
+이 경우 로드맵에있는 제품 기능 중 일부는 양방향 통신이 필요하기 때문에 **WebSocket**을 선택했습니다.
+
+**SessionStack**을 사용하여 웹 앱의 기술 및 UX 문제를 이해하고 재현하려는 경우 바로 시작할 수있는 [무료 계획](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=Post-5-websockets-getStarted)을 제공합니다.
+
+<img src ="https://miro.medium.com/proxy/1*kEQmoMuNBDfZKNSBh0tvRA.png" width="90%">
 
 
-<img src ="https://user-images.githubusercontent.com/33046341/78871827-45e28900-7a83-11ea-9ab4-ebbbd19fe667.png" width="90%">
+
+
+<img src ="https://miro.medium.com/max/1400/1*9ryMUEZhtbTg7lECHVz0fw.png" width="90%">
+<img src ="https://miro.medium.com/max/1400/1*9ryMUEZhtbTg7lECHVz0fw.png" width="90%">
+<img src ="https://miro.medium.com/max/1400/1*9ryMUEZhtbTg7lECHVz0fw.png" width="90%">
+<img src ="https://miro.medium.com/max/1400/1*9ryMUEZhtbTg7lECHVz0fw.png" width="90%">
+<img src ="https://miro.medium.com/max/1400/1*9ryMUEZhtbTg7lECHVz0fw.png" width="90%">
+<img src ="https://miro.medium.com/max/1400/1*9ryMUEZhtbTg7lECHVz0fw.png" width="90%">
+<img src ="https://miro.medium.com/max/1400/1*9ryMUEZhtbTg7lECHVz0fw.png" width="90%">
+<img src ="https://miro.medium.com/max/1400/1*9ryMUEZhtbTg7lECHVz0fw.png" width="90%">
+
 * reference 
-> * [참고자료](https://blog.sessionstack.com/how-javascript-works-deep-dive-into-websockets-and-http-2-with-sse-how-to-pick-the-right-path-584e6b8e3bf7?gi=4edd32a09780)
+> * [참고자료](https://blog.sessionstack.com/how-javascript-works-deep-dive-into-websockets-and-http-2-with-sse-how-to-pick-the-right-path-584e6b8e3bf7)
+> * [참고자료](https://engineering.huiseoul.com/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%9E%91%EB%8F%99%ED%95%98%EB%8A%94%EA%B0%80-%EC%9B%B9%EC%86%8C%EC%BC%93-%EB%B0%8F-http-2-sse-1ccde9f9dc51)
+> * [참고자료](https://lucumr.pocoo.org/2012/9/24/websockets-101/)
+> * [참고자료](http://blog.teamtreehouse.com/an-introduction-to-websockets)
+> * [참고자료](https://tools.ietf.org/html/rfc6455)
