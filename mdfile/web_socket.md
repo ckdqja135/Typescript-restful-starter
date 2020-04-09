@@ -252,7 +252,7 @@ WebSocket 연결을 클라이언트 측에서 어떻게 여는지 보겠습니�
 
 **Chrome DevTools**의 네트워크 탭을 사용하여 **WebSocket** 연결의 각 프레임에 있는 데이터를 쉽게 탐색 할 수 있습니다.
 
-<img src ="https://user-images.githubusercontent.com/33046341/78871827-45e28900-7a83-11ea-9ab4-ebbbd19fe667.png width="90%"></img>
+<img src ="https://user-images.githubusercontent.com/33046341/78871827-45e28900-7a83-11ea-9ab4-ebbbd19fe667.png width="90%">
 
 ## 파편화
 페이로드 데이터는 여러 개별 프레임으로 나눌 수 있습니다. 
