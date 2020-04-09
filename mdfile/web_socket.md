@@ -444,3 +444,4 @@ TCP 패키지가 임의의 순서로 도착하는 경우에 대비하기 위해�
 > * [참고자료](https://lucumr.pocoo.org/2012/9/24/websockets-101/)
 > * [참고자료](http://blog.teamtreehouse.com/an-introduction-to-websockets)
 > * [참고자료](https://tools.ietf.org/html/rfc6455)
+> * [웹 소켓 기본 예제 및 설명](https://niceman.tistory.com/109)
