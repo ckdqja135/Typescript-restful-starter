@@ -13,6 +13,6 @@ REST는 Representational State Transfer라는 용어의 약자로서 2000년도�
 ## 2. REST 구성
 쉽게 말해 REST API는 다음의 구성으로 이루어져있습니다. 자세한 내용은 밑에서 설명하도록 하겠습니다.
 
-* 자원(RESOURCE)<bold> - URI
-* 행위(Verb) - HTTP METHOD
-* 표현(Representations)
+* **자원(RESOURCE)** - URI
+* **행위(Verb)** - HTTP METHOD
+* **표현(Representations)**
