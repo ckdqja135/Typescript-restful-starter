@@ -47,7 +47,7 @@ XHR 멀티파트 요청과 소위 **htmlfile**을 사용하기도 합니다.
 ## WebSocket 소개
 [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)의 사양에는 웹 브라우저와 서버 간에 “소켓” 연결을 설정하는 API가 정의되어 있습니다. 
 간단히 말하면 클라이언트와 서버 사이에 지속적인 연결이 설정되며 양측은 언제든지 데이터를 보낼 수 있습니다.
-<img src ="https://user-images.githubusercontent.com/33046341/78872274-ff415e80-7a83-11ea-9a58-d2c0b011021e.png width="90%"></img>
+<img src = "https://user-images.githubusercontent.com/33046341/78872274-ff415e80-7a83-11ea-9a58-d2c0b011021e.png width="90%"></img>
 
 클라이언트는 WebSocket 핸드셰이크라는 프로세스를 통해 WebSocket 연결을 설정합니다. 
 이 프로세스는 클라이언트가 서버에 일반 HTTP 요청을 보내는 것으로 시작합니다. 
