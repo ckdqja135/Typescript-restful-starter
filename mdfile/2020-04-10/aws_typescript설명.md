@@ -215,7 +215,7 @@ npm install aws-sdk
 ```
 
 이 명령은 [3단계: 코드 실행](https://docs.aws.amazon.com/cloud9/latest/user-guide/sample-typescript.html#sample-typescript-run)의 <code>node_modules</code> 폴더에 여러 폴더를 추가합니다. 
-이러한 폴더에는 Node.js의 JavaScript용 AWS SDK에 대한 소스 코드 및 종속성이 포함되어 있습니다. 자세한 내용은 AWS SDK for JavaScript 개발자 가이드에서 [SDK for JavaScript 설치](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/installing-jssdk.html)를 참조하시기 바랍니다.
+이러한 폴더에는 Node.js의 JavaScript용 AWS SDK에 대한 소스 코드 및 종속성이 포함되어 있습니다. 자세한 내용은 AWS SDK for JavaScript 개발자 가이드에서 [SDK for JavaScript 설치](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/installing-jssdk.html)를 참조하시기 바랍니다. 
   
 # 환경에서 자격 증명 관리를 설정하려면
 Node.js에서 AWS SDK for JavaScript를 사용하여 AWS 서비스를 호출 할 때마다 호출과 함께 자격 증명 세트를 제공해야합니다. 
@@ -227,20 +227,121 @@ Node.js에서 AWS SDK for JavaScript를 사용하여 AWS 서비스를 호출 할
 
 자세한 내용 은 AWS SDK for JavaScript 개발자 안내서의 [Node.js](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html)에서 [자격 증명 설정](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html)을 참조하십시오 .  
 
+# 5 단계 : AWS SDK 코드 추가
+이 단계에서는 코드를 추가합니다. 
+이번에는 Amazon S3와 상호 작용하여 버킷을 생성하고 사용 가능한 버킷을 나열한 다음 방금 생성 한 버킷을 삭제합니다. 
+나중에이 코드를 실행합니다.
   
+  1. AWS Cloud9 IDE는 이전 단계의 <code>hello.js</code> 파일과 동일한 디렉토리에 <code>s3.ts</code>라는 파일을 생성합니다.
   
+  2. AWS Cloud9 IDE의 터미널에서 <code>s3.ts</code> 파일과 동일한 디렉토리에 있는 코드가 <code>npm</code>을 두 번 실행하여 TypeScript용 비동기 라이브러리와 JavaScript용 비동기 라이브러리를 설치하여 Amazon S3 작업을 비동기식으로 호출하도록 설정합니다.
   
+  ```typescript
   
+  npm install @types/async # For TypeScript.
+  npm install async        # For JavaScript.
   
+  ```
   
+  3. <code>s3.ts</code> 파일에 다음 코드를 추가합니다.
+   ```typescript
   
+  import * as async from 'async';
+  import * as AWS from 'aws-sdk';
+
+  if (process.argv.length < 4) {
+    console.log('Usage: node s3.js <the bucket name> <the AWS Region to use>\n' +
+      'Example: node s3.js my-test-bucket us-east-2');
+    process.exit(1);
+  }
+
+  const AWS = require('aws-sdk'); // To set the AWS credentials and AWS Region.
+  const async = require('async'); // To call AWS operations asynchronously.
+
+  const s3: AWS.S3 = new AWS.S3({apiVersion: '2006-03-01'});
+  const bucket_name: string = process.argv[2];
+  const region: string = process.argv[3];
+
+  AWS.config.update({
+    region: region
+  });
+
+  const create_bucket_params: any = {
+    Bucket: bucket_name,
+    CreateBucketConfiguration: {
+      LocationConstraint: region
+    }
+  };
+
+  const delete_bucket_params: any = {
+    Bucket: bucket_name
+  };
+
+  // List all of your available buckets in this AWS Region.
+  function listMyBuckets(callback): void {
+    s3.listBuckets(function(err, data) {
+      if (err) {
+
+      } else {
+        console.log("My buckets now are:\n");
+
+        for (let i: number = 0; i < data.Buckets.length; i++) {
+          console.log(data.Buckets[i].Name);
+        }
+      }
+
+      callback(err);
+    });
+  }
+
+  // Create a bucket in this AWS Region.
+  function createMyBucket(callback): void {
+    console.log("\nCreating a bucket named '" + bucket_name + "'...\n");
+
+    s3.createBucket(create_bucket_params, function(err, data) {
+      if (err) {
+        console.log(err.code + ": " + err.message);
+      }
+
+      callback(err);
+    });
+  }
+
+  // Delete the bucket you just created.
+  function deleteMyBucket(callback): void {
+    console.log("\nDeleting the bucket named '" + bucket_name + "'...\n");
+
+    s3.deleteBucket(delete_bucket_params, function(err, data) {
+      if (err) {
+        console.log(err.code + ": " + err.message);
+      }
+
+      callback(err);
+    });
+  }
+
+  // Call the AWS operations in the following order.
+  async.series([
+    listMyBuckets,
+    createMyBucket,
+    listMyBuckets,
+    deleteMyBucket,
+    listMyBuckets
+  ]);
   
+  ```
+
+# 6 단계 : AWS SDK 코드 실행
+  1. 터미널에서 <code>s3.ts</code> 파일과 동일한 디렉토리에서 TypeScript 컴파일러를 실행합니다. 
+     포함할 <code>s3.ts</code> 파일과 추가 라이브러리를 지정합니다.
+     
+  ```typescript
   
+  tsc s3.ts --lib es6
   
+  ```
   
-  
-  
-  
+  TypeScript는 <code>s3.ts</code> 파일, Node.js의 AWS SDK for JavaScript, 비동기 라이브러리 및 일련의 ECMAScript 6(ES6) 라이브러리 파일을 사용하여 <code>s3.ts</code> 파일의 TypeScript 코드를 <code>s3.ts</code>라는 파일의 동등한 JavaScript 코드로 변환합니다.
   
   
   
