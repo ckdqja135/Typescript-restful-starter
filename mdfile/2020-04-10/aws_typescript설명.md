@@ -141,8 +141,8 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
 
 ```  
 
-  이로써 <code>hello.ts</code> 파일과 동일한 디렉토리에 <code>node_modules/@types/node<code> 폴더가 추가됩니다.
-  이 새 폴더에는 나중에 <code>hello.ts<code> 파일에 추가할 <code>console.log<code> 및 <code>process.argv<code> 속성에 대해 TypeScript에 필요한 Node.js 유형 정의가 포함되어 있습다.
+  이로써 <code>hello.ts</code> 파일과 동일한 디렉토리에 <code>node_modules/@types/node</code> 폴더가 추가됩니다.
+  이 새 폴더에는 나중에 <code>hello.ts</code> 파일에 추가할 <code>console.log</code> 및 <code>process.argv</code> 속성에 대해 TypeScript에 필요한 Node.js 유형 정의가 포함되어 있습다.
   
   
   
