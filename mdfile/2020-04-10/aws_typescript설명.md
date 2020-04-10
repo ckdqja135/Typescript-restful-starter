@@ -341,8 +341,13 @@ Node.js에서 AWS SDK for JavaScript를 사용하여 AWS 서비스를 호출 할
   
   ```
   
-  TypeScript는 <code>s3.ts</code> 파일, Node.js의 AWS SDK for JavaScript, 비동기 라이브러리 및 일련의 ECMAScript 6(ES6) 라이브러리 파일을 사용하여 <code>s3.ts</code> 파일의 TypeScript 코드를 <code>s3.ts</code>라는 파일의 동등한 JavaScript 코드로 변환합니다.
+  TypeScript는 <code>s3.ts</code> 파일, Node.js의 AWS SDK for JavaScript, 비동기 라이브러리 및 일련의 ECMAScript 6(ES6) 라이브러리 파일을 사용하여 <code>s3.ts</code> 파일의 TypeScript 코드를 <code>s3.js</code>라는 파일의 동등한 JavaScript 코드로 변환합니다.
   
+  2. 환경 창에서 <code>s3.js</code> 파일을 엽니다.
   
+  3. 메뉴 모음에서 **실행**, **실행 구성**, **새 실행 구성**을 선택합니다.
   
+  4. **[New]** - **Idle** 탭에서 **Runner:자동**을 선택한 다음 **Node.js**를 선택합니다.
+  
+  5. **명령**에 <code>s3.js</code> YOUR_BUKET_NAME THE_AWS_REGION을 입력합니다. 여기서 YOUR_BUKet_NAME은 생성 후 삭제하려는 버킷의 이름이고, THE_AWS_REGION은 버킷을 생성할 AWS 영역의 ID입니다. 예를 들어, 미국 동부(오하이오) 지역의 경우 us-east-2를 사용합니다. 자세한 ID는 Amazon Web Services General Reference에서 Amazon S3(Amazon Simple Storage Service)를 참조하시기 바랍니다.
   
