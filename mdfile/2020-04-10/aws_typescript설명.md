@@ -349,5 +349,31 @@ Node.js에서 AWS SDK for JavaScript를 사용하여 AWS 서비스를 호출 할
   
   4. **[New]** - **Idle** 탭에서 **Runner:자동**을 선택한 다음 **Node.js**를 선택합니다.
   
-  5. **명령**에 <code>s3.js</code> YOUR_BUKET_NAME THE_AWS_REGION을 입력합니다. 여기서 YOUR_BUKet_NAME은 생성 후 삭제하려는 버킷의 이름이고, THE_AWS_REGION은 버킷을 생성할 AWS 영역의 ID입니다. 예를 들어, 미국 동부(오하이오) 지역의 경우 us-east-2를 사용합니다. 자세한 ID는 Amazon Web Services General Reference에서 Amazon S3(Amazon Simple Storage Service)를 참조하시기 바랍니다.
+  5. **명령**에 <code>s3.js YOUR_BUKET_NAME THE_AWS_REGION</code>을 입력합니다. 
+  여기서 <code>YOUR_BUKet_NAME</code>은 생성 후 삭제하려는 버킷의 이름이고, <code>THE_AWS_REGION</code>은 버킷을 생성할 AWS 영역의 ID입니다. 
+  예를 들어, 미국 동부(오하이오) 지역의 경우 <code>us-east-2</code>를 사용합니다. 
+  자세한 ID는 Amazon Web Services General Reference에서 [Amazon Simple Storage Service(Amazon S3)](https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region) 참조하시기 바랍니다.
+  * Note
+  Amazon S3 버킷 이름은 AWS 계정뿐만 아니라 AWS 전체에서 고유해야 합니다.
   
+  6. Choose **Run**, and compare your output. When you're done, choose **Stop**.
+  
+  ```text
+  
+  My buckets now are:
+
+  Creating a new bucket named 'my-test-bucket'...
+
+  My buckets now are:
+
+  my-test-bucket
+
+  Deleting the bucket named 'my-test-bucket'...
+
+  My buckets now are:
+
+  ```
+
+# 7 단계 : 정리
+이 샘플을 사용한 후 **AWS**계정에 계속 청구되는 것을 방지하려면 환경을 삭제해야합니다. 
+지침은 [AWS Cloud9에서 환경 삭제](https://docs.aws.amazon.com/cloud9/latest/user-guide/delete-environment.html)를 참조하십시오 .
