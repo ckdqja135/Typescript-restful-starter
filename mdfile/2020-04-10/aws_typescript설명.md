@@ -54,18 +54,18 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
   
   3. (Amazon Linux)에 대한 <code>yum update</code> 또는 (Ubuntu Server) 명령에 대한 <code>apt update</code>를 실행하여 최신 보안 업데이트 및 버그 수정을 설치하십시오.
 
-  Amazon Linux의 경우 :
-```typescript
+    Amazon Linux의 경우 :
+  ```typescript
 
-  sudo yum -y update
-  
-```
-  우분투 서버의 경우 :
-```typescript
-  
-  sudo apt update
+    sudo yum -y update
 
-```
+  ```
+    우분투 서버의 경우 :
+  ```typescript
+
+    sudo apt update
+
+  ```
 
 
 
