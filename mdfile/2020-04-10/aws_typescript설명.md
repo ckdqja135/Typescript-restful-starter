@@ -134,7 +134,15 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
   1. AWS Cloud9 IDE에서라는 파일을 생성하십시오 <code>hello.ts</code>. <br />
   (파일을 만들려면 메뉴 막대에서 **파일** , **새 파일**을 선택 하십시오 . 파일을 저장하려면 **파일 , 저장**을 선택 하십시오 .)
   
-  
+  2. IDE의 터미널에서 <code>hello.ts</code> 파일과 동일한 디렉토리에서 <code>npm</code>을 실행하여 <code>@types/node</code> 라이브러리를 설치하십시오.
+```typescript
+
+    npm install @types/node
+
+```  
+
+  이로써 <code>hello.ts</code> 파일과 동일한 디렉토리에 <code>node_modules/@types/node<code> 폴더가 추가됩니다.
+  이 새 폴더에는 나중에 <code>hello.ts<code> 파일에 추가할 <code>console.log<code> 및 <code>process.argv<code> 속성에 대해 TypeScript에 필요한 Node.js 유형 정의가 포함되어 있습다.
   
   
   
