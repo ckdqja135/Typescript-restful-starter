@@ -195,8 +195,14 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
    * IDE에서 새 실행 구성을 생성하는 대신 터미널에서 <code>hello.js</code> 5 9 명령 노드를 실행하여 이 코드를 실행할 수도 있습니다.
   
   
-  
-  
+# 4 단계 : Node.js에서 AWS SDK for JavaScript 설치 및 구성
+
+Node.js에서 AWS SDK for JavaScript를 사용하여 Amazon S3 버킷을 생성하고 사용 가능한 버킷을 나열한 다음 방금 생성 한 버킷을 삭제하도록이 샘플을 향상시킬 수 있습니다.
+
+이 단계에서는 Node.js에서 AWS SDK for JavaScript를 설치하고 구성합니다. 
+SDK는 JavaScript 코드에서 Amazon S3와 같은 AWS 서비스와 편리하게 상호 작용할 수있는 방법을 제공합니다. 
+Node.js에 JavaScript 용 AWS SDK를 설치 한 후 환경에서 자격 증명 관리를 설정해야합니다. 
+SDK는 AWS 서비스와 상호 작용하려면 이러한 자격 증명이 필요합니다.
   
   
   
