@@ -36,11 +36,21 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
   1. AWS Cloud9 IDE의 터미널 세션에서 <code>--version</code>옵션 과 함께 명령 줄 TypeScript 컴파일러를 실행하여 TypeScript가 이미 설치되어 있는지 확인하십시오 . <br />
   새 터미널 세션을 시작하려면 메뉴 표시 줄에서 Window , New Terminal을 선택하십시오 . 성공하면 출력에 TypeScript 버전 번호가 포함됩니다. TypeScript가 설치된 경우 [2 단계 : 코드 추가](https://docs.aws.amazon.com/cloud9/latest/user-guide/sample-typescript.html#sample-typescript-code)로 건너 뜁니다 . 
 
+  ```typescript
 
+    tsc --version
 
+  ```
 
+  2. <code>--version </code>옵션으로 실행하여 <code>npm</code>이 이미 설치되어 있는지 확인 하십시오. 
+  성공하면 출력에 <code>npm</code>버전 번호가 포함됩니다. 
+  <code>npm</code>가 설치되어 있으면 이 절차의 10단계로 건너뛰어 <code>npm</code>을 사용하여 TypeScript를 설치하십시오.
 
+  ```typescript
 
+    npm --version
+
+  ```
 
 
 
