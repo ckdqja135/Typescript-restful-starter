@@ -113,8 +113,8 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
 
    ```
      
-  10. <code>-g</code> 옵션으로 <code>npm</cope> 을 실행하여 TypeScript를 설치하십시오. 이것은 환경에 TypeScript를 글로벌 패키지로 설치한
-  다.
+  10. <code>-g</code> 옵션으로 <code>npm</code> 을 실행하여 TypeScript를 설치하십시오. 
+  이것은 환경에 TypeScript를 글로벌 패키지로 설치합니다.
    ```typescript
 
      npm install -g typescript
