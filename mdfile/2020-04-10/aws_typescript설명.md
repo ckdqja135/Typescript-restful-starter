@@ -91,42 +91,43 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
    ```
   
   7. <code>nvm</code>을 실행하여 최신 버전의 Node.js를 설치하십시오(<code>npm</code>은 Node.js에 포함됨).
-      ```typescript
+  ```typescriptz
 
      nvm install node
 
-     ```
+   ```
   
   8. <code>--version</code> 옵션을 사용하여 Node.js의 명령줄 버전을 실행하여 Node.js가 설치되었는지 확인하십시오.
   
-     ```typescript
+   ```typescript
 
      node --version
 
-     ```
+   ```
   
   9. <code>--version</code> 옵션을 사용하여 <code>npm</code>을 실행하여 <code>npm</code>이(가) 설치되었는지 확인하십시오.
   
-     ```typescript
+   ```typescript
 
      npm --version
 
-     ```
+   ```
      
-  10. <code>-g</code> 옵션으로 <code>npm</cope> 을 실행하여 TypeScript를 설치하십시오. 이것은 환경에 TypeScript를 글로벌 패키지로 설치한다.   
-     ```typescript
+  10. <code>-g</code> 옵션으로 <code>npm</cope> 을 실행하여 TypeScript를 설치하십시오. 이것은 환경에 TypeScript를 글로벌 패키지로 설치한
+  다.
+   ```typescript
 
      npm install -g typescript
 
-     ```
+   ```
     
   11. 명령줄 TypeScript 컴파일러를 <code>-version</code> 옵션으로 실행하여 TypeScript가 설치되었는지 확인하십시오.
     
-    ```typescript
+  ```typescript
 
     tsc --version
 
-     ```  
+  ```  
   
 # 2 단계 : 코드 추가
 
