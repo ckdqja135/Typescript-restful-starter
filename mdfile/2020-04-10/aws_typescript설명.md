@@ -192,6 +192,7 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
   
   <img src= "https://docs.aws.amazon.com/cloud9/latest/user-guide/images/ide-nodejs-simple.png" width = 90%></img>
   
+   * IDE에서 새 실행 구성을 생성하는 대신 터미널에서 <code>hello.js</code> 5 9 명령 노드를 실행하여 이 코드를 실행할 수도 있습니다.
   
   
   
