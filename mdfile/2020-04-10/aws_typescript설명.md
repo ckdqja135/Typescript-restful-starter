@@ -144,10 +144,37 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
   이로써 <code>hello.ts</code> 파일과 동일한 디렉토리에 <code>node_modules/@types/node</code> 폴더가 추가됩니다.
   이 새 폴더에는 나중에 <code>hello.ts</code> 파일에 추가할 <code>console.log</code> 및 <code>process.argv</code> 속성에 대해 TypeScript에 필요한 Node.js 유형 정의가 포함되어 있습다.
   
+  3. <code>hello.ts</code> 파일에 다음 코드를 추가하십시오.
+  ```typescript
+
+    console.log('Hello, World!');
+
+    console.log('The sum of 2 and 3 is 5.');
+
+    const sum: number = parseInt(process.argv[2], 10) + parseInt(process.argv[3], 10);
+
+    console.log('The sum of ' + process.argv[2] + ' and ' +
+      process.argv[3] + ' is ' + sum + '.');
+      
+  ```  
   
+# 3 단계 : 코드 실행
+
+  1. 터미널에서 <code>hello.ts</code> 파일과 동일한 디렉토리에서 TypeScript 컴파일러를 실행합니다. 
+  포함할 <code>hello.ts</code> 파일과 추가 라이브러리를 지정합니다.
+      
+  ```typescript
+
+    tsc hello.ts --lib es6
+
+  ```  
+  TypeScript는 <code>hello.ts</code> 파일과 일련의 ECMAScript 6(ES6) 라이브러리 파일을 사용하여 <code>hello.ts</code> 파일의 TypeScript 코드를 <code>hello.ks</code>라는 파일에 해당하는 JavaScript 코드로 변환합니다.
   
+  2. **환경** 창에서 <code>hello.js</code> 파일을 엽니다.
   
+  3. 메뉴 모음에서 **실행**, **실행 구성**, **새 실행** **구성**을 선택합니다.
   
+  4. [New] - Idle탭에서 Runner:자동을 선택한 다음 Node.js를 선택합니다.
   
   
   
