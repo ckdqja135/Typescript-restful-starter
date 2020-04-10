@@ -204,11 +204,29 @@ SDK는 JavaScript 코드에서 Amazon S3와 같은 AWS 서비스와 편리하게
 Node.js에 JavaScript 용 AWS SDK를 설치 한 후 환경에서 자격 증명 관리를 설정해야합니다. 
 SDK는 AWS 서비스와 상호 작용하려면 이러한 자격 증명이 필요합니다.
   
+# Node.js에서 AWS SDK for JavaScript를 설치하려면
+
+AWS Cloud9 IDE의 터미널 세션에서 [3단계: 코드 실행](https://docs.aws.amazon.com/cloud9/latest/user-guide/sample-typescript.html#sample-typescript-run)의 <code>hello.js</code> 파일과 동일한 디렉토리에서 npm을 실행하여 Node.js에 JavaScript용 AWS SDK를 설치합니다.  
   
+```typescript
+
+npm install aws-sdk
+
+```
+
+이 명령은 [3단계: 코드 실행](https://docs.aws.amazon.com/cloud9/latest/user-guide/sample-typescript.html#sample-typescript-run)의 <code>node_modules</code> 폴더에 여러 폴더를 추가합니다. 
+이러한 폴더에는 Node.js의 JavaScript용 AWS SDK에 대한 소스 코드 및 종속성이 포함되어 있습니다. 자세한 내용은 AWS SDK for JavaScript 개발자 가이드에서 [SDK for JavaScript 설치](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/installing-jssdk.html)를 참조하시기 바랍니다.
   
-  
-  
-  
+# 환경에서 자격 증명 관리를 설정하려면
+Node.js에서 AWS SDK for JavaScript를 사용하여 AWS 서비스를 호출 할 때마다 호출과 함께 자격 증명 세트를 제공해야합니다. 
+이 자격 증명은 Node.js의 AWS SDK for JavaScript가 해당 호출을 수행 할 수있는 적절한 권한을 가지고 있는지 여부를 결정합니다. 
+자격 증명에 적절한 권한이 없으면 통화가 실패합니다.
+
+이 단계에서는 환경 내에 자격 증명을 저장합니다. 
+이렇게하려면 [AWS Cloud9 환경에서 AWS 서비스 호출](https://docs.aws.amazon.com/cloud9/latest/user-guide/credentials.html)의 지침을 따른 다음이 주제로 돌아갑니다.
+
+자세한 내용 은 AWS SDK for JavaScript 개발자 안내서의 [Node.js](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html)에서 [자격 증명 설정](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html)을 참조하십시오 .  
+
   
   
   
