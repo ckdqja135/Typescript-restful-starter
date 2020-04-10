@@ -90,7 +90,7 @@ export class SampleController extends Controller {
     public async create(): Promise<Response> {
         // const { text } = this.req.body as { text: string };
         // Sample.schemas.ts에서 따로 email의 입력 받는 틀을 잡아주면 아래의 코드를 사용할 수 있다.
-        const { text, email,} = this.req.body as { text: string, email: string, name: string, age: number, phone: string };
+        const { text, email,name, age, phone } = this.req.body as { text: string, email: string, name: string, age: number, phone: string };
         this.sample.text = text;
         this.sample.email = email; 
         this.sample.name = name;
