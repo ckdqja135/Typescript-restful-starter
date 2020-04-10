@@ -176,6 +176,43 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
   
   4. [New] - Idle탭에서 Runner:자동을 선택한 다음 Node.js를 선택합니다.
   
+  5. 명령에 <code>hello.js</code> 5 9를 입력합니다. 
+  코드에서 <code>5</code>는 <code>process.argv[2]</code>를 나타내고 <code>9</code>는 <code>process.argv[3]</code>을 나타냅니다. 
+  (<code>process.argv[0]</code>은 런타임(<code>노드</code>)의 이름을 나타내고 <code>process.argv[1]</code>은 파일 이름(<code>hello.js</code>)을 나타냅니다.
+  
+  6. **실행**을 선택하고 출력을 비교합니다. 완료되면 **중지**를 선택합니다.
+  
+  ```text
+  
+  Hello, World!
+  The sum of 2 and 3 is 5.
+  The sum of 5 and 9 is 14.
+
+  ```
+  
+  <img src= "https://docs.aws.amazon.com/cloud9/latest/user-guide/images/ide-nodejs-simple.png" width = 90%></img>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
