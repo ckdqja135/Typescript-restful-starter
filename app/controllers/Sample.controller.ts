@@ -64,6 +64,28 @@ export class SampleController extends Controller {
         }
     }
 
+    // select -> routes/Sample.route.ts 참조.
+    public async find5(): Promise<Response> {
+        const { age } = this.req.params as unknown as { age: number };
+        const sample = await this.sampleService.findByAge(age);
+        if (sample) {
+            return this.res.status(200).send(sample);
+        } else {
+            return this.res.status(404).send({ text: "not found" });
+        }
+    }
+
+    // select -> routes/Sample.route.ts 참조.
+    public async find6(): Promise<Response> {
+        const { phone } = this.req.params as unknown as { phone: string };
+        const sample = await this.sampleService.findByPhone(phone);
+        if (sample) {
+            return this.res.status(200).send(sample);
+        } else {
+            return this.res.status(404).send({ text: "not found" });
+        }
+    }
+
     // input -> routes/Sample.route.ts 참조. 
     public async create(): Promise<Response> {
         // const { text } = this.req.body as { text: string };
