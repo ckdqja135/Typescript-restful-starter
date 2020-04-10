@@ -18,11 +18,11 @@
 # 전제 조건
 이 샘플을 사용하기 전에 다음 요구 사항을 충족해야합니다.
 
-* **기존 AWS Cloud9 EC2 개발 환경이 있어야합니다. ** 
+* **기존 AWS Cloud9 EC2 개발 환경이 있어야합니다.** <br />
 이 샘플에서는 Amazon Linux 또는 Ubuntu Server를 실행하는 Amazon EC2 인스턴스에 연결된 EC2 환경이 이미 있다고 가정합니다. 
 다른 유형의 환경 또는 운영 체제가있는 경우 관련 도구를 설정하기 위해이 샘플의 지시 사항을 조정해야합니다.
 자세한 내용 은 [AWS Cloud9에서 환경 생성](https://docs.aws.amazon.com/cloud9/latest/user-guide/create-environment.html) 을 참조하십시오.
 
-* **기존 환경에 대한 AWS Cloud9 IDE가 이미 열려 있습니다.** 
+* **기존 환경에 대한 AWS Cloud9 IDE가 이미 열려 있습니다.** <br />
 환경을 열면 AWS Cloud9가 웹 브라우저에서 해당 환경에 대한 IDE를 엽니다. 
 자세한 내용은 [AWS Cloud9에서 환경 열기](https://docs.aws.amazon.com/cloud9/latest/user-guide/open-environment.html) 를 참조하십시오.
