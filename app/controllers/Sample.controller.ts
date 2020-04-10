@@ -52,15 +52,28 @@ export class SampleController extends Controller {
             return this.res.status(404).send({ text: "not found" });
         }
     }
-    
+
+    // select -> routes/Sample.route.ts 참조.
+    public async find4(): Promise<Response> {
+        const { name } = this.req.params as unknown as { name: string };
+        const sample = await this.sampleService.findByName(name);
+        if (sample) {
+            return this.res.status(200).send(sample);
+        } else {
+            return this.res.status(404).send({ text: "not found" });
+        }
+    }
+
     // input -> routes/Sample.route.ts 참조. 
     public async create(): Promise<Response> {
         // const { text } = this.req.body as { text: string };
         // Sample.schemas.ts에서 따로 email의 입력 받는 틀을 잡아주면 아래의 코드를 사용할 수 있다.
-        const { text, email,name } = this.req.body as { text: string, email: string, name: string };
+        const { text, email,name, age, phone } = this.req.body as { text: string, email: string, name: string, age: number, phone: string };
         this.sample.text = text;
         this.sample.email = email; 
         this.sample.name = name;
+        this.sample.age = age;
+        this.sample.phone = phone;
         // this.sample.email = "someone@somewhere.com";
         try {
             const result = await this.sampleService.save(this.sample);

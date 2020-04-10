@@ -12,6 +12,18 @@ export class SampleService {
         return getCustomRepository(SampleRepository).findByEmail(email);
     }
 
+    public findByName(name: string): Promise<Sample[]> {
+        return getCustomRepository(SampleRepository).findByName(name);
+    }
+
+    public findByAge(age: number): Promise<Sample[]> {
+        return getCustomRepository(SampleRepository).findByAge(age);
+    }
+
+    public findByPhone(phone: string): Promise<Sample[]> {
+        return getCustomRepository(SampleRepository).findByPhone(phone);
+    }
+
     public bulkCreate(Samples: Sample[]): Promise<Sample[]> {
         return getCustomRepository(SampleRepository).bulkCreate(Samples);
     }

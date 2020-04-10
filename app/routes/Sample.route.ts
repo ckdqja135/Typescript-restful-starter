@@ -19,6 +19,7 @@ export class SampleRouter extends Router {
             .get("/find/text/:text", this.handler(SampleController.prototype.find))
             .get("/find/id/:id", this.handler(SampleController.prototype.find2))
             .get("/find/email/:email", this.handler(SampleController.prototype.find3))
+            .get("/find/name/:name", this.handler(SampleController.prototype.find4))
             .post("/", [ Validator(createSample) ], this.handler(SampleController.prototype.create))
             .put("/", [ Validator(updateSample) ],  this.handler(SampleController.prototype.update))
             .delete("/", [ Validator(deleteSample) ], this.handler(SampleController.prototype.delete));

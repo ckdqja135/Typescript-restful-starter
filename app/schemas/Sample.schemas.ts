@@ -5,12 +5,17 @@ export const createSample = object().keys({
     text: string().required(),
     email: string().required(),
     name: string().required(),
+    age: number().required(),
+    phone: string().required(),
 });
 
 export const updateSample = object().keys({
     id: number().required(),
     text: string().required(),
     email: string().required(),
+    name: string().required(),
+    age: number().required(),
+    phone: string().required(),
 });
 
 export const deleteSample = object().keys({

@@ -14,6 +14,12 @@ export class Sample extends BaseEntity {
     public name: string;
 
     @Column("text")
+    public age: number;
+
+    @Column("text")
+    public phone: string;
+
+    @Column("text")
     @IsEmail()
     public email: string;
 
