@@ -76,8 +76,12 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
 
   ```
 
+  5. <code>nvm</code> 사용을 시작하려면 터미널 세션을 닫고 다시 시작하거나,<code>nvm</code>을 로드하는 명령이 포함된 <code>~/.bashrc</code> 파일을 소스화하십시오.
+  ```typescript
 
+ . ~/.bashrc
 
+  ```
 
 
 
