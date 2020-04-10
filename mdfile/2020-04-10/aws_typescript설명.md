@@ -26,3 +26,27 @@
 * **기존 환경에 대한 AWS Cloud9 IDE가 이미 열려 있습니다.** <br />
 환경을 열면 AWS Cloud9가 웹 브라우저에서 해당 환경에 대한 IDE를 엽니다. 
 자세한 내용은 [AWS Cloud9에서 환경 열기](https://docs.aws.amazon.com/cloud9/latest/user-guide/open-environment.html) 를 참조하십시오.
+
+# 1 단계 : 필요한 도구 설치
+
+이 단계에서는 Node Package Manager (<code>npm</code>)를 사용하여 TypeScript를 설치 합니다. 
+code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 사용하십시오. 
+<code>nvm</code>이없는 경우 먼저이 단계에서 설치하십시오.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
