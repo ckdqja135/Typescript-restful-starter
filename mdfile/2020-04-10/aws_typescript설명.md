@@ -376,4 +376,7 @@ Node.js에서 AWS SDK for JavaScript를 사용하여 AWS 서비스를 호출 할
 
 # 7 단계 : 정리
 이 샘플을 사용한 후 **AWS**계정에 계속 청구되는 것을 방지하려면 환경을 삭제해야합니다. 
-지침은 [AWS Cloud9에서 환경 삭제](https://docs.aws.amazon.com/cloud9/latest/user-guide/delete-environment.html)를 참조하십시오 .
+지침은 [AWS Cloud9에서 환경 삭제](https://docs.aws.amazon.com/cloud9/latest/user-guide/delete-environment.html)를 참조하십시오.
+
+# Refrence
+[참고자료](https://docs.aws.amazon.com/cloud9/latest/user-guide/sample-typescript.html)
