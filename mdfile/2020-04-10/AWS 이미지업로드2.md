@@ -140,7 +140,7 @@ export class AppModule {}
 응용 프로그램이 실행되고 나면 postman을 사용하여 이미지 업로드를 테스트할 수 있습니다.
 
 # postman을 사용한 테스팅
-양식 데이터를 선택하고 업로드로 키를 입력한 다음 파일을 선택하여 서버로 요청을 전송해야 합니다. 
+양식 데이터를 선택하고 업로드로 키를 입력한 다음 파일을 선택하여 서버로 요청을 전송해야 합니다. <br />
 AWS 자격 증명 및 버킷 이름을 올바르게 지정한 경우 이미지가 S3에 업로드되고 이미지 URL이 응답으로 표시됩니다.
 <img src = "https://miro.medium.com/max/1400/1*dZevsdJEaLS41Xg5tUhSew.png" width = 90%></img>
 
