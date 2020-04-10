@@ -146,5 +146,5 @@ AWS 자격 증명 및 버킷 이름을 올바르게 지정한 경우 이미지�
 <img src = "https://miro.medium.com/max/1400/1*dZevsdJEaLS41Xg5tUhSew.png" width = 90%></img>
 
 # Reference
-> [참고자료](https://medium.com/@shamnad.p.s/image-upload-to-aws-s3-using-nestjs-and-typescript-b32c079963e1)
+> [참고자료](https://medium.com/@shamnad.p.s/image-upload-to-aws-s3-using-nestjs-and-typescript-b32c079963e1) <br />
 > [참고자료](https://github.com/shamnadps/Image_upload_typescript)
