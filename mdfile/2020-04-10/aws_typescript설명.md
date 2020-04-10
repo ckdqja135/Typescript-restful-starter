@@ -70,7 +70,11 @@ code>npm</code>을 설치하려면 Node Version Manager (<code>nvm</code>)를 �
   4. <code>npm</code>을(를) 설치하려면 먼저 다음 명령을 실행하여 노드 버전 관리자(<code>nvm</code>)를 다운로드하십시오. <br />
      (<code>nvm</code>)는 노드.js 버전을 설치하고 관리하는 데 유용한 간단한 Bash 셸 스크립트입니다. <br />
      자세한 내용은 GitHub 웹 사이트의 [노드 버전 관리자](https://github.com/nvm-sh/nvm/blob/master/README.md)를 참조하십시오.)
+  ```typescript
 
+   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+
+  ```
 
 
 
