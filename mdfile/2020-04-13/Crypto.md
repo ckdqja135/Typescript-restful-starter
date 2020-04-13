@@ -181,3 +181,4 @@ vPwzzznk4gezbixB1Fr9wA==
 # reference
 > * [참고자료](https://m.blog.naver.com/PostView.nhn?blogId=tpgns8488&logNo=221336473460&proxyReferer=https:%2F%2Fwww.google.com%2F)
 > * [암호와 알고리즘](https://namu.wiki/w/%EC%95%94%ED%98%B8%20%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98)
+> * [ZeroCho crypto모듈](https://www.zerocho.com/category/NodeJS/post/593a487c2ed1da0018cff95d)
