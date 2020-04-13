@@ -2,12 +2,15 @@ import { Request, Response } from "express";
 import { Sample } from "../models";
 import { SampleService } from "../services";
 import { Controller } from "./Controller";
+const crypto = require('crypto');
+const timestamp = new Date().getTime();
+const cid = 'softwiz';
 
 export class SampleController extends Controller {
-
+    
     private sampleService: SampleService;
     private sample: Sample;
-
+    
     constructor(req: Request, res: Response) {
         super(req, res);
         this.sample = new Sample();
@@ -90,12 +93,13 @@ export class SampleController extends Controller {
     public async create(): Promise<Response> {
         // const { text } = this.req.body as { text: string };
         // Sample.schemas.ts에서 따로 email의 입력 받는 틀을 잡아주면 아래의 코드를 사용할 수 있다.
-        const { text, email,name, age, phone } = this.req.body as { text: string, email: string, name: string, age: number, phone: string };
+        const { text, email,name, age, phone } = this.req.body as { text: string, email: string, name: string, age: number, phone: string};
         this.sample.text = text;
         this.sample.email = email; 
         this.sample.name = name;
         this.sample.age = age;
         this.sample.phone = phone;
+        this.sample.token2 = crypto.createHash('sha256').update(timestamp+cid+phone).digest('base64');
         // this.sample.email = "someone@somewhere.com";
         try {
             const result = await this.sampleService.save(this.sample);
@@ -117,6 +121,7 @@ export class SampleController extends Controller {
         try {
             const sample = await this.sampleService.save(this.sample);
             if (sample) {
+                // console.log(timestamp);
                 return this.res.status(200).send();
             } else {
                 return this.res.status(404).send({ text: "not found" });
@@ -126,11 +131,22 @@ export class SampleController extends Controller {
         }
     }
 
-     // update -> routes/Sample.route.ts 참조.
+     // delete -> routes/Sample.route.ts 참조.
     public async delete(): Promise<Response> {
         const { id } = this.req.body as { id: number };
         try {
             await this.sampleService.removeById(id);
+            return this.res.status(204).send();
+        } catch (ex) {
+            return this.res.status(404).send({ text: "ERROR" });
+        }
+    }
+
+    // Tokendelete -> routes/Sample.route.ts 참조.
+    public async Tokendelete(): Promise<Response> {
+        const { token2 } = this.req.body as { token2: string };
+        try {
+            await this.sampleService.removeByToken(token2);
             return this.res.status(204).send();
         } catch (ex) {
             return this.res.status(404).send({ text: "ERROR" });

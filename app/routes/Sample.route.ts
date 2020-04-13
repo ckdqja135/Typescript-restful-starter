@@ -1,6 +1,6 @@
 import { SampleController } from "../controllers";
 import { Validator } from "../middlewares";
-import { createSample, deleteSample, updateSample } from "../schemas";
+import { createSample, deleteSample, updateSample, tokendeleteSample } from "../schemas";
 import { Router } from "./Router";
 
 /*  Method 방식에 따른 처리 
@@ -24,6 +24,7 @@ export class SampleRouter extends Router {
             .get("/find/phone/:phone", this.handler(SampleController.prototype.find6))
             .post("/", [ Validator(createSample) ], this.handler(SampleController.prototype.create))
             .put("/", [ Validator(updateSample) ],  this.handler(SampleController.prototype.update))
-            .delete("/", [ Validator(deleteSample) ], this.handler(SampleController.prototype.delete));
+            .delete("/", [ Validator(deleteSample) ], this.handler(SampleController.prototype.delete))
+            .delete("/token", [ Validator(tokendeleteSample) ], this.handler(SampleController.prototype.Tokendelete));
     }
 }

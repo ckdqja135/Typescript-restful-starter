@@ -33,6 +33,16 @@ export class SampleRepository extends Repository<Sample> {
         return this.manager.find(Sample, {where: {phone}});
     }
 
+    public findBy(token2: string): Promise<Sample[]> {
+        return this.manager.find(Sample, {where: {token2}});
+    }
+    
+    public async removeByToken(token2: string): Promise<Sample> {
+        const itemToRemove: Sample = await this.findOne({token2});
+        return this.manager.remove(itemToRemove);
+    }
+
+
     public findOneById(id: number): Promise<Sample> {
         return this.manager.findOne(Sample, {where: {id}});
     }

@@ -21,3 +21,7 @@ export const updateSample = object().keys({
 export const deleteSample = object().keys({
     id: number().required(),
 });
+
+export const tokendeleteSample = object().keys({
+    token2: string().required(),
+});

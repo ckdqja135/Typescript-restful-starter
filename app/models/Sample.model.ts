@@ -20,6 +20,9 @@ export class Sample extends BaseEntity {
     public phone: string;
 
     @Column("text")
+    public token2: string;
+
+    @Column("text")
     @IsEmail()
     public email: string;
 

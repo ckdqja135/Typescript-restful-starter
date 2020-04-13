@@ -23,7 +23,7 @@ export class SampleService {
     public findByPhone(phone: string): Promise<Sample[]> {
         return getCustomRepository(SampleRepository).findByPhone(phone);
     }
-
+    
     public bulkCreate(Samples: Sample[]): Promise<Sample[]> {
         return getCustomRepository(SampleRepository).bulkCreate(Samples);
     }
@@ -42,6 +42,10 @@ export class SampleService {
 
     public removeById(id: number): Promise<Sample> {
         return getCustomRepository(SampleRepository).removeById(id);
+    }
+
+    public removeByToken(token2: string): Promise<Sample> {
+        return getCustomRepository(SampleRepository).removeByToken(token2);
     }
 
     public save(sample: Sample): Promise<Sample> {

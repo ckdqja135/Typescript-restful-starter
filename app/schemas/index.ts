@@ -1,3 +1,3 @@
-import { createSample, deleteSample, updateSample } from "./Sample.schemas";
+import { createSample, deleteSample, updateSample, tokendeleteSample } from "./Sample.schemas";
 
-export { createSample, deleteSample, updateSample };
+export { createSample, deleteSample, updateSample, tokendeleteSample };
