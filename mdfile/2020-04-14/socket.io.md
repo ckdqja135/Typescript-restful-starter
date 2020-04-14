@@ -183,4 +183,5 @@ socket.io 홈페이지의 예제는 express 를 사용해 html 파일을 serving
 # 실행화면
 <img src = "https://user-images.githubusercontent.com/33046341/79184497-426a4b80-7e4f-11ea-858f-c9c85b2705ac.png" width = 90%> </img>
 
-
+# reference
+* [참고 사이트](http://blog.haandol.com/2017/05/01/typescript2-experss-tutorial-part-four.html#fn:2)
