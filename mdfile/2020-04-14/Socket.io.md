@@ -1,5 +1,5 @@
 # TypeScript를 사용한 실시간 앱 : Web Sockets, Node & Angular 및 통합.
-  TypeScript를 사용하여 실시간 채팅 앱 작성.
+ ``` TypeScript를 사용하여 실시간 채팅 앱 작성.
   
 이 'Wikipedia 정의'에 따르면 실시간 응용 프로그램은 정보를 게시하는 즉시 정보를 수신할 수 있도록 하며, 
 소스가 정기적으로 업데이트되었는지 확인할 필요가 없습니다.
