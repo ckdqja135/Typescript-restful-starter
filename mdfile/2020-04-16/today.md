@@ -4,4 +4,4 @@
 
 * [ngrok](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-16/ngrok.md)
 
-*[외부접속 시도하기](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-16/%EC%99%B8%EB%B6%80%20%EC%A0%91%EC%86%8D.md)
+* [외부접속 시도하기](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-16/%EC%99%B8%EB%B6%80%20%EC%A0%91%EC%86%8D.md)
