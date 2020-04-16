@@ -438,6 +438,13 @@ TCP 패키지가 임의의 순서로 도착하는 경우에 대비하기 위해�
 
 <img src ="https://miro.medium.com/proxy/1*kEQmoMuNBDfZKNSBh0tvRA.png" width="90%">
 
+# 그렇다면 Socket.io는 무엇인가?
+WebSocket은 다가올 미래의 기술이지 아직 인터넷 기업에서 시범적으로라도 써 볼 수 있는 기술이 아니다. WebSocket이 미래의 기술이라면 Socket.io는 현재 바로 사용할 수 있는 기술이다. Socket.io는 JavaScript를 이용하여 브라우저 종류에 상관없이 실시간 웹을 구현할 수 있도록 한 기술이다.
+
+Guillermo Rauch가 만든 Socket.io는 WebSocket, FlashSocket, AJAX Long Polling, AJAX Multi part Streaming, IFrame, JSONP Polling을 하나의 API로 추상화한 것이다. 즉 브라우저와 웹 서버의 종류와 버전을 파악하여 가장 적합한 기술을 선택하여 사용하는 방식이다. 가령 브라우저에 Flash Plugin v10.0.0 이상(FlashSocket 지원 버전)이 설치되어 있으면 FlashSocket을 사용하고, Flash Plugin이 없으면 AJAX Long Polling 방식을 사용한다.
+
+개발자가 각 기술을 깊이 이해하지 못하거나 구현 방법을 잘 알지 못해도 사용할 수 있다. Web Socket과 달리 Socket.io는 표준 기술이 아니고 Node.js 모듈로서 Guillermo Rauch가 CTO로 있는 LearnBoost(https://www.learnboost.com) 라는 회사의 저작물이며 MIT 라이센스를 가진 오픈소스이다. 현재 Node.js가 아닌 다른 프레임워크에서 Socket.io를 사용할 수 있도록 하는 시도가 있다.
+
 ## reference 
 > * [참고자료](https://blog.sessionstack.com/how-javascript-works-deep-dive-into-websockets-and-http-2-with-sse-how-to-pick-the-right-path-584e6b8e3bf7)
 > * [참고자료](https://engineering.huiseoul.com/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%9E%91%EB%8F%99%ED%95%98%EB%8A%94%EA%B0%80-%EC%9B%B9%EC%86%8C%EC%BC%93-%EB%B0%8F-http-2-sse-1ccde9f9dc51)
