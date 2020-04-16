@@ -8,8 +8,6 @@
 
 <p  align="center"><img src= "https://miro.medium.com/max/1200/1*u-qal413IzAMkIZMhWqYHg.gif" width = 70% ></img></p>
 
-# reference
-* [github](https://github.com/bitlabstudio/blogpost-react-websocket-chat)
 두 개의 브라우저 창에서 실행 중인 React 앱이 백그라운드에서 노드 앱에 메시지를 게시하고, 모든 메시지를 연결된 모든 앱으로 다시 브로드캐스트합니다. <br />
 자, 어떻게 이것이 이루어졌는지 보겠습니다!
 
@@ -233,73 +231,15 @@ export default App
 
 ```
 
+# Step 3: 실행하기
+<code>frontend/</code> 디렉토리에서 <code>yarn start</code>를 실행하고 <code>backend/</code> 디렉토리에서 <code>node app.js</code>를 실행하여 서버를 시작하고 브라우저(또는 여러 브라우저 창)를 <code>localhost:3000</code>으로 지정합니다. <br />
 
+축하합니다. 첫 번째 대화방을 만들었습니다.  🎉
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Step 4: 실행화면
+<p align="center"> <img src = "https://user-images.githubusercontent.com/33046341/79416877-b3df0100-7feb-11ea-9efa-a1c64b0eec92.png" width = 80%></img></p>
 
 # reference
 > * [markdawn](https://devsoyoung.github.io/posts/markdown-image-tag/)
 > * [참고자료](https://blog.bitlabstudio.com/a-simple-chat-app-with-react-node-and-websocket-35d3c9835807)
 > * [github](https://github.com/bitlabstudio/blogpost-react-websocket-chat)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
