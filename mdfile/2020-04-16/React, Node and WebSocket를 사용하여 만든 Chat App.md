@@ -6,7 +6,7 @@
 
 당신은 다음과 같은 모양의 앱을 갖게 될 것입니다.
 
-<img src= "https://miro.medium.com/max/1200/1*u-qal413IzAMkIZMhWqYHg.gif" align="center" width = 70% ></img>
+<p  align="center"><img src= "https://miro.medium.com/max/1200/1*u-qal413IzAMkIZMhWqYHg.gif" width = 70% ></img></p>
 
 # reference
 * [github](https://github.com/bitlabstudio/blogpost-react-websocket-chat)
