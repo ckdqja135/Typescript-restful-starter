@@ -5,7 +5,7 @@ WebSocket은 컴퓨터 네트워크용 통신 규약의 하나이다. ( ws:// ) 
 인터넷의 표준화 단체인 **W3C(World Wide Web Consortium)** 와 **IETF(Internet Engineering Task Force)** 가 Web server 와 Web browser 간의 통신을 위한 규정을 정의한 **쌍방향통신(Duplex)용** 기술 규약이다. <br />
 
 API는 W3C가 책정을 맡고 있고, WebSocket 프로토콜은 IETF가 책정을 맡고 있다.
-<img src="https://4.bp.blogspot.com/-k1_SrNkxH5A/XDVxXr_KjEI/AAAAAAAAA18/jBi6bi0yr_A2e51lQyzUT0p1u54n1lhQgCLcBGAs/s320/Screen%2BShot%2B2019-01-09%2Bat%2B12.58.09%2BPM.png" width = 90%> </img>
+<img src="https://4.bp.blogspot.com/-k1_SrNkxH5A/XDVxXr_KjEI/AAAAAAAAA18/jBi6bi0yr_A2e51lQyzUT0p1u54n1lhQgCLcBGAs/s320/Screen%2BShot%2B2019-01-09%2Bat%2B12.58.09%2BPM.png" width = 75%> </img>
 
 ## WebSocket의 등장 배경
 초기 웹의 탄생 목적은 문서 전달과 하이퍼링크를 통한 문서 연결이었다. <br />
