@@ -103,4 +103,5 @@ COMMANDS:
 Inspect 화면에서 접속로그를 모두 볼 수 있다. <br />
 
 <p align = "center"><img src = "https://blog.outsider.ne.kr/attach/1/x3800650092.gif.pagespeed.ic.s9UkvRalSS.webp" width = 90%></img>
+
 Status 화면에서는 실행된 ngrok의 설정옵션과 접속 속도 등을 확인할 수 있다.
