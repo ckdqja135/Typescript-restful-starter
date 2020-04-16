@@ -239,7 +239,7 @@ export default App
 # Step 4: 실행화면
 <p align="center"> <img src = "https://user-images.githubusercontent.com/33046341/79416877-b3df0100-7feb-11ea-9efa-a1c64b0eec92.png" width = 80%></img></p>
 
-<p align="center"> <img src = "https://user-images.githubusercontent.com/33046341/79417035-fe607d80-7feb-11ea-8f4f-94fa5ec83e56.png" width = 80%></img></p>
+<p align="center"> <img src = "https://user-images.githubusercontent.com/33046341/79417035-fe607d80-7feb-11ea-8f4f-94fa5ec83e56.png" width = 90%></img></p>
 
 
 # reference
