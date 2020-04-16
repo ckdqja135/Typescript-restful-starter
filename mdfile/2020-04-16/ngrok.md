@@ -100,6 +100,7 @@ COMMANDS:
 실행하면 자동으로 웹에서 로그나 상태를 볼 수 있는 대시보드가 <code>http://127.0.0.1:4040</code>에 실행된다. 
 단순 개발할 때는 크게 필요하진 않아 보이지만 터미널 사용이 익숙지 않다면 웹으로 보는 것도 나쁘지 않다.
 <p align = "center"><img src = "https://blog.outsider.ne.kr/attach/1/x8685677165.gif.pagespeed.ic.j7A1-HYNcl.webp" width = 90%></img>
+
 Inspect 화면에서 접속로그를 모두 볼 수 있다. <br />
 
 <p align = "center"><img src = "https://blog.outsider.ne.kr/attach/1/x3800650092.gif.pagespeed.ic.s9UkvRalSS.webp" width = 90%></img>
