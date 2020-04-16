@@ -5,7 +5,7 @@
 거기서 여러분은 놀면서, 자신만의 아이디어와 기능을 탐구하고 추가할 수 있습니다. <br />
 
 당신은 다음과 같은 모양의 앱을 갖게 될 것입니다.
-<img src= "https://miro.medium.com/max/1200/1*u-qal413IzAMkIZMhWqYHg.gif" width = 70% text-align: center></img>
+<img src= "https://miro.medium.com/max/1200/1*u-qal413IzAMkIZMhWqYHg.gif" text-align = center width = 70% ></img>
 
 # reference
 * [github](https://github.com/bitlabstudio/blogpost-react-websocket-chat)
