@@ -80,8 +80,7 @@ COMMANDS:
 
 터미널 창 전체가 ngrok의 접속 상태를 알 수 있는 대시보드처럼 나온다. <br />
 앞에서 <code>3000</code>포트를 지정했으므로 <code>http://7eb69b3e.ngrok.io</code>나 <code>https://7eb69b3e.ngrok.io</code>로 접속하면 <br />
-로컬의 <code>http://127.0.0.1:3000</code>로 접속을 연결해 준다. 로컬에서 간단히 웹 어플리케이션을 띄어놓고 ngrok로 연결한 뒤 <br />
-바로 ngrok 주소를 공유하면 같은 네트워크가 아니더라도 어디서나 접근할 수 있다. <br />
+로컬의 <code>http://127.0.0.1:3000</code>로 접속을 연결해 준다. 로컬에서 간단히 웹 어플리케이션을 띄어놓고 ngrok로 연결한 뒤 바로 ngrok 주소를 공유하면 같은 네트워크가 아니더라도 어디서나 접근할 수 있다. <br />
 
 <p align = "center"><img src = "https://blog.outsider.ne.kr/attach/1/x5451170611.gif.pagespeed.ic.SXk5853Zyd.webp" width = 90%></img>
 
