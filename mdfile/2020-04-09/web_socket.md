@@ -60,6 +60,7 @@ Guillermo Rauch가 만든 Socket.io는 WebSocket, FlashSocket, AJAX Long Polling
 ## reference 
 > * [웹 소켓과 socket.io](https://d2.naver.com/helloworld/1336)
 > * [WebSocket기반 실시간 양방향 통신](https://jusungpark.tistory.com/40)
+> * [WebSocket Test](http://www.websocket.org/echo.html)
 
 # 자바스크립트는 어떻게 작동하는가: 웹소켓 및 HTTP/2 SSE
 
