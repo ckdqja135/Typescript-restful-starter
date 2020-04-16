@@ -85,6 +85,22 @@ COMMANDS:
 
 <p align = "center"><img src = "https://blog.outsider.ne.kr/attach/1/x5451170611.gif.pagespeed.ic.SXk5853Zyd.webp" width = 90%></img>
 
+접속할 때마다 하단에는 접속로그가 나타나고 개발 시에는 별로 중요하진 않지만, 평균 연결 시간도 알 수 있다. <br />
+간단한 명령어로 바로 로컬에서 개발 중이던 웹 애플리케이션을 공개로 열 수 있어서 최근에 애용해서 사용하고 있다. <br />
+앞에서 얘기한 **PageSpeed Insights** 나 [W3C Markup Validation](https://validator.w3.org/)같은 경우로 ngrok로 열어서 URL을 입력하면 <br />
+소스를 수정하면서 바로 결과를 확인할 수 있어서 최근에 애용하고 있다. <br />
 
+이 외에도 tcp 접속에 터널을 만들거나 다양한 옵션이 존재하지만, 너무 많아서 아직은 기본 설정만 사용하고 있다.  <br />
+그리고 ngrok은 유료 서비스라서 서브도메인이나 호스트 명을 지정하려면 유료 플랜을 사용해야 하지만 이런 요구사항 없이 간단하게 터널링을 사용하는 것은 무료플랜 뿐만 아니라 가입을 하지 않아도 사용할 수 있다.  <br />
+설정파일을 만들어 놓고 사용하는 방법은 문서만으로는 서브도메인 등을 사용하지 않으면 무료 플랜에서도 사용할 수 있어야 하는데 여러 가지로 설정해 봐도 계속 subdomain은 유료플랜에서만 가능하다고 오류가 나와서 아직 설정파일은 쓰지 못하고 있다.  <br />
+실행명령어가 간단해서 크게 상관은 없다. <br />
 
+# 대시보드
+앞에서 터미널에도 접속 로그 등을 볼 수 있었지만(<code>-inspect=false</code>옵션을 주면 로그가 남지 않는다.) 
+실행하면 자동으로 웹에서 로그나 상태를 볼 수 있는 대시보드가 <code>http://127.0.0.1:4040</code>에 실행된다. 
+단순 개발할 때는 크게 필요하진 않아 보이지만 터미널 사용이 익숙지 않다면 웹으로 보는 것도 나쁘지 않다.
+<p align = "center"><img src = "https://blog.outsider.ne.kr/attach/1/x8685677165.gif.pagespeed.ic.j7A1-HYNcl.webp" width = 90%></img>
+Inspect 화면에서 접속로그를 모두 볼 수 있다. <br />
 
+<p align = "center"><img src = "https://blog.outsider.ne.kr/attach/1/x3800650092.gif.pagespeed.ic.s9UkvRalSS.webp" width = 90%></img>
+Status 화면에서는 실행된 ngrok의 설정옵션과 접속 속도 등을 확인할 수 있다.
