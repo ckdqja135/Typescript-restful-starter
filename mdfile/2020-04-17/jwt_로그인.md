@@ -427,7 +427,7 @@ Typescript-Node와 각종 필요한 Library를 통해서 간단하게 JWT 기반
 <p align = "center"><img src = "https://github.com/HodongMan/typescript-jwt-auth/raw/master/images/create-user.PNG" width = 90%></img></p>
 
 # reference
-> * [jwt문서](https://jwt.io/)
+> * [jwt디코딩](https://jwt.io/)
 > * [jwt로그인](https://hodongman.github.io/2018/09/20/HTTP,JWT-JWT-Token-Login-by-Typescript-node.html)
 > * [github](https://github.com/HodongMan/typescript-jwt-auth/)
 
