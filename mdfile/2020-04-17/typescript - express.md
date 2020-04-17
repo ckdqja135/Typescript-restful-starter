@@ -648,3 +648,8 @@ async, await으로 리팩토링한 코드 정말 짧고 간결하죠? 동기적�
 ```
 
 이제 브라우저에서 <code>/crawl</code>로 접속하면 실시간 검색어가 보일 것 입니다. 
+
+# reference
+> * [참고자료](https://velog.io/@k7120792/ts-express-1)
+> * [참고자료](https://velog.io/@k7120792/Typescript%EC%99%80-Express%EB%A1%9C-%EC%9E%AC%EB%B0%8C%EB%8A%94-%EB%AC%B4%EC%96%B8%EA%B0%80%EB%A5%BC-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EC%9E%902)
+> * [참고자료](https://velog.io/@k7120792/Typescript%EC%99%80-Express%EB%A1%9C-%EC%9E%AC%EB%B0%8C%EB%8A%94-%EB%AC%B4%EC%96%B8%EA%B0%80%EB%A5%BC-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EC%9E%903)
