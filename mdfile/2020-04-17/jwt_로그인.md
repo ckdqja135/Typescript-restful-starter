@@ -405,6 +405,27 @@ HTTP Header는 특수문자를 사용할 수 없고 Querystring은 URL에 직접
 Typescript-Node와 각종 필요한 Library를 통해서 간단하게 JWT 기반의 인증 HTTP Application을 작성해 봤습니다. <br />
 이 과정을 통해 간단하게 인증 서버를 구현할 수 있습니다. 그리고 Session이나 Cookie없이 Login을 구현할 수 있어요. <br />
 
+# 설치
+```linux
+     
+     npm install
+     yarn install
+
+```
+
+# 서버 구동
+```linux
+
+     npm start
+     yarn start
+
+```
+
+# 실행화면
+<p align = "center"><img src = "https://github.com/HodongMan/typescript-jwt-auth/raw/master/images/create-user.PNG" width = 90%></img></p>
+
+<p align = "center"><img src = "https://github.com/HodongMan/typescript-jwt-auth/raw/master/images/create-user.PNG" width = 90%></img></p>
+
 # reference
 > * [jwt문서](https://jwt.io/)
 > * [jwt로그인](https://hodongman.github.io/2018/09/20/HTTP,JWT-JWT-Token-Login-by-Typescript-node.html)
