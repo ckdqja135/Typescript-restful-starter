@@ -768,6 +768,9 @@ IOTA 프로젝트의 백서에 처음 언급 및 설명이 되었습니다. <br 
 > * [블록체인-용어사전-2부-ㅈ-ㅎ-a-z](https://medium.com/ceta-network/%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8-%EC%9A%A9%EC%96%B4%EC%82%AC%EC%A0%84-2%EB%B6%80-%E3%85%88-%E3%85%8E-a-z-93cc4896ea98)
 >
 > * [에이콘아카데미 공식](http://blog.naver.com/acornedu/221485614772)
-> * **불새! - 블록체인 세상** https://www.youtube.com/channel/UC70aaNLIi5Er-ZmKBPL2-Xw <br/>
-> * Blockgeeks https://blockgeeks.com/guides/blockchain-glossary-from-a-z/ <br/>
-> * Blockchainhub -  https://blockchainhub.net/blockchain-glossary/ <br/>
+>
+> * [불새! - 블록체인 세상](https://www.youtube.com/channel/UC70aaNLIi5Er-ZmKBPL2-Xw)
+>
+> * [Blockgeeks](https://blockgeeks.com/guides/blockchain-glossary-from-a-z/)
+>
+> * [Blockchainhub](https://blockchainhub.net/blockchain-glossary/)
