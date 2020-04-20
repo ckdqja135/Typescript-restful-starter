@@ -764,6 +764,42 @@ IOTA 프로젝트의 백서에 처음 언급 및 설명이 되었습니다. <br 
 
 [개인키]: #개인키-private-key
 [가스]: #가스-gas
+[김프]: #김치프리미엄-김프
+[마이이더월렛]: #마이이더월렛-myetherwallet
+[메인넷]: #메인넷-main-net
+[암호화폐]: #암호화폐-cryptocurrency
+[이더리움]: #이더리움-ethereum
+[알트코인]: #알트코인
+[암호화폐 거래소]: #암호화폐-거래소-crypto-exchange
+[월렛]: #월렛-wallet
+[알고리즘]: #알고리즘
+[블록체인]: #블록체인-blockchain
+[비트코인]: #비트코인-bitcoin
+[백서]: #백서-whitepaper
+[블록]: #블록-block
+[비탈릭 부테린]: #비탈릭-부테린
+[사토시 나카모토]: #사토시-나카모토-satoshi-nakamoto
+[사토시]: #사토시
+[스마트 컨트랙트]: #스마트-컨트랙트-smart-contract
+[소프트캡]: #소프트캡
+[재정거래]: #재정거래
+[채굴]: #채굴-mining
+[콜드월렛]: #콜드월렛-coldwallet
+[테스트넷]: #테스트넷-test-net
+[토큰]: #토큰
+[합의 알고리즘]: #합의-알고리즘-consensus-algorithm
+[하드포크]: #하드포크
+[하드캡]: #하드캡
+[해쉬]: #해쉬-hash
+[흑우]: #흑우
+[흑두루미]: #흑두루미
+[SHA-256]: #sha-256
+[DAPP]: #dapp
+[P2P]: #p2p
+[ERC-20]: #erc-20
+[wei]: #wei
+[ICO]: #ico
+
 #reference
 > * [ㄱ-ㅇ 블록체인 용어사전](https://medium.com/ceta-network/%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8-%EC%9A%A9%EC%96%B4%EC%82%AC%EC%A0%84-1%EB%B6%80-%E3%84%B1-%E3%85%87-f69b3cda64f5)
 >
