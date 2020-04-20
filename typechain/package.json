@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Learning Typescript by making a Blockchain with it",
   "main": "index.js",
-  "repository": "https://github.com/nomadcoders/typechain",
+  "repository": "https://github.com/ckdqja135/Typescript-restful-starter/tree/master/typechain",
   "author": "cbsong <ckdqja13580@gmail.com>",
   "license": "MIT",
   "scripts": {
