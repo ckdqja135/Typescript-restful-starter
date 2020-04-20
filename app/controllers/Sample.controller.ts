@@ -100,7 +100,7 @@ export class SampleController extends Controller {
         this.sample.age = age;
         this.sample.phone = phone;
         this.sample.token2 = crypto.createHash('sha256').update(timestamp+cid+phone).digest('base64');
-        // this.sample.email = "someone@somewhere.com";
+        // 헤더(header) + 내용(payload) + 서명(signature) 부분을 timestamp + cid + phone 으로 함.
         try {
             const result = await this.sampleService.save(this.sample);
             return this.res.status(200).send(result);
