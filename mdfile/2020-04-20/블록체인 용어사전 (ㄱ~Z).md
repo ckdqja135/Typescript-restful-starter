@@ -366,6 +366,32 @@ IOTA 프로젝트의 백서에 처음 언급 및 설명이 되었습니다. <br 
 [ㅍ]: #ㅍ
 [ㅎ]: #ㅎ
 
+[A]: #A
+[B]: #B
+[C]: #C
+[D]: #D
+[E]: #E
+[F]: #F
+[G]: #G
+[H]: #H
+[I]: #I
+[J]: #J
+[K]: #K
+[L]: #L
+[M]: #M
+[O]: #O
+[P]: #P
+[Q]: #Q
+[R]: #R
+[S]: #S
+[T]: #T
+[U]: #U
+[V]: #V
+[W]: #W
+[X]: #X
+[Y]: #Y
+[Z]: #Z
+
 #reference
 > * [ㄱ-ㅇ 블록체인 용어사전](https://medium.com/ceta-network/%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8-%EC%9A%A9%EC%96%B4%EC%82%AC%EC%A0%84-1%EB%B6%80-%E3%84%B1-%E3%85%87-f69b3cda64f5)
 >
