@@ -814,6 +814,7 @@ wei가 1이더가 되기 위해선 엄청나게 많은 wei가 필요하다. 정�
 [ERC-20]: #ERC-20
 [wei]: #wei
 [ICO]: #ICO
+[공개키]: #공개키-Public-Key
 
 #reference
 > * [ㄱ-ㅇ 블록체인 용어사전](https://medium.com/ceta-network/%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8-%EC%9A%A9%EC%96%B4%EC%82%AC%EC%A0%84-1%EB%B6%80-%E3%84%B1-%E3%85%87-f69b3cda64f5)
