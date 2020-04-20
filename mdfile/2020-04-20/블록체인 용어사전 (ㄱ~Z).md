@@ -810,7 +810,7 @@ wei가 1이더가 되기 위해선 엄청나게 많은 wei가 필요하다. 정�
 [흑두루미]: #흑두루미
 [SHA-256]: #sha-256
 [DAPP]: #DAPP
-[P2P]: #P2{
+[P2P]: #P2P
 [ERC-20]: #ERC-20
 [wei]: #wei
 [ICO]: #ICO
