@@ -1,3 +1,67 @@
+# Websocket에 대해
+
+## WebSocket이란
+WebSocket은 컴퓨터 네트워크용 통신 규약의 하나이다. ( ws:// )  <br />
+인터넷의 표준화 단체인 **W3C(World Wide Web Consortium)** 와 **IETF(Internet Engineering Task Force)** 가 Web server 와 Web browser 간의 통신을 위한 규정을 정의한 **쌍방향통신(Duplex)용** 기술 규약이다. <br />
+
+API는 W3C가 책정을 맡고 있고, WebSocket 프로토콜은 IETF가 책정을 맡고 있다.
+<img src="https://4.bp.blogspot.com/-k1_SrNkxH5A/XDVxXr_KjEI/AAAAAAAAA18/jBi6bi0yr_A2e51lQyzUT0p1u54n1lhQgCLcBGAs/s320/Screen%2BShot%2B2019-01-09%2Bat%2B12.58.09%2BPM.png" width = 75%> </img>
+
+## WebSocket의 등장 배경
+초기 웹의 탄생 목적은 문서 전달과 하이퍼링크를 통한 문서 연결이었다. <br />
+웹을 위한 HTTP 프로토콜은 이러한 목적에 매우 부 합하는 모델이다. <br />
+그러나 시대가 변하고 환경이 발전할 수록 웹이 더 이상 문서공유에만 집중할 수 없었다. <br />
+갈수록 동적인 표 현과 뛰어난 상호작용이 요구되었고 이로 인해 여러 새로운 기술이 탄생되었다. <br />
+플래시(플렉스), 자바애플릿(자바FX), ActiveX , 실버라이트 등을 들 수 있다. <br />
+하지만 이들은 웹에서 화려한 동작과 뛰어난 상호작용을 보장하지만 순수 웹 환경이 아니라 별도의 런타임을 플러그 인 형태로 브라우저에 설치해야 사용 가능하다. <br />
+HTML5는 그 주요 목적 중 하나인, 플러그 인 없 는 일관되고 표준화된 웹 응용 환경이라는 기치하에 많은 참신한 스펙들이 개발되었다. <br />
+그 중 순수 웹 환경에서 실시간 양방향 통신을 위한 스펙이 바로 WebSocek 이다. <br />
+
+## 웹(Web)의 실시간(양방향) 통신을 위한 그동안의 노력.
+**DHTML, iframe, Ajax, Comet** 과 기술들이 등장했지만 이 모든 것은 **'폴링(polling)'** 방식이다. <br />
+즉 데이터 수신을 위해 서버가 클라이언트에게 전송해 주는 푸시(push)방식이 아니라 **클라이언트가 서버에에게 요청하는 폴링(polling) 방식**이였다. <br />
+비교적 최적의 대안이었던 Comet 역시 무의미한 반복 요청을 피하기 위한 연결유지 기법이 적용되었지만 <br />
+일정 시간 이후에는 연결을 종료하고 다시 연결해야 한다. 그래서 Comet을 Long-Polling 라 한다.<br />
+
+## 웹(Web)의 진정한 실시간(양방향) 통신, WebSocket의 등장.
+WebSocket은 웹 서버와 웹 브라우저가 지속적으로 연결된 TCP 라인을 통해 실시간으로 데이터를 주고 받을 수 있도록 하는 HTML5의 새로운 사양이다. <br />
+따라서 WebSocket을 이용하면 일반적인 TCP소켓과 같이 연결지향 양방향 전이중 통신이 가능하다. <br />
+이와 같은 특징으로 웹에서도 채팅이나 게임, 실시간 주식 차트와 같은 실시간이 요구되는 응용프로그램의 개발을 한층 효 과적으로 구현할 수 있게 되었다. <br />
+
+## 기존의 존재했던 통신방법과 WebSocket의 결정적 차이는?
+지금까지 존재했던 통신방법과 WebSocket의 결정적인 차이는 프로토콜에 있다. <br />
+WebSocket 프로토콜은 접속 확립에 HTTP를 사용하지만, 그 후의 통신은 WebSocket 독자의 프로토콜로 이루어진다. <br />
+또한, header가 상당히 작아 overhead가 적은 특징 이 있다. 장시간 접속을 전제로 하기 때문에, 접속한 상태라면 클라이언트나 서버로부터 데이터 송신이 가능하다. <br />
+더불어 데이터의 송신과 수신에 각각 커넥션을 맺을 필요가 없어, 하나의 커넥션으로 데이터를 송수신 할 수 있다. <br />
+통신시에 지정되는 URL은 http://www.sample.com/과 같은 형식이 아니라 ws://www.sample.com/과 같은 형식이 된다.<br />
+
+## WebSocket 소켓이 필요한 다섯가지 경우.
+1. **실시간 양방향** 데이터 통신이 필요한 경우.
+2. **많은 수의 동시 접속자를 수용**해야 하는 경우.
+3. **브라우저에서 TCP 기반의 통신으로 확장**해야 하는 경우.
+4. **개발자에게 사용하기 쉬운 API**가 필요할 경우.
+5. 클라우드 환경이나 웹을 넘어 **SOA(Service Oriented Architecture)** 로 확장해야 하는 경우
+
+## WebSocket 서버의 종류.
+
+1. pywebsocket(apache).
+2. phpwebsocket(php).
+3. jWebSocket(java,javascript).
+4. web-socket-ruby(ruby).
+5. Socket.IO(node.js).
+
+## 그렇다면 Socket.io는 무엇인가?
+WebSocket은 다가올 미래의 기술이지 아직 인터넷 기업에서 시범적으로라도 써 볼 수 있는 기술이 아니다. WebSocket이 미래의 기술이라면 Socket.io는 현재 바로 사용할 수 있는 기술이다. Socket.io는 JavaScript를 이용하여 브라우저 종류에 상관없이 실시간 웹을 구현할 수 있도록 한 기술이다.
+
+Guillermo Rauch가 만든 Socket.io는 WebSocket, FlashSocket, AJAX Long Polling, AJAX Multi part Streaming, IFrame, JSONP Polling을 하나의 API로 추상화한 것이다. 즉 브라우저와 웹 서버의 종류와 버전을 파악하여 가장 적합한 기술을 선택하여 사용하는 방식이다. 가령 브라우저에 Flash Plugin v10.0.0 이상(FlashSocket 지원 버전)이 설치되어 있으면 FlashSocket을 사용하고, Flash Plugin이 없으면 AJAX Long Polling 방식을 사용한다.
+
+개발자가 각 기술을 깊이 이해하지 못하거나 구현 방법을 잘 알지 못해도 사용할 수 있다. Web Socket과 달리 Socket.io는 표준 기술이 아니고 Node.js 모듈로서 Guillermo Rauch가 CTO로 있는 LearnBoost(https://www.learnboost.com) 라는 회사의 저작물이며 MIT 라이센스를 가진 오픈소스이다. 현재 Node.js가 아닌 다른 프레임워크에서 Socket.io를 사용할 수 있도록 하는 시도가 있다.
+
+## reference 
+> * [웹 소켓과 socket.io](https://d2.naver.com/helloworld/1336)
+> * [WebSocket기반 실시간 양방향 통신](https://jusungpark.tistory.com/40)
+> * [WebSocket Test](http://www.websocket.org/echo.html)
+
 # 자바스크립트는 어떻게 작동하는가: 웹소켓 및 HTTP/2 SSE
 
 ## 소개
@@ -445,3 +509,4 @@ TCP 패키지가 임의의 순서로 도착하는 경우에 대비하기 위해�
 > * [참고자료](http://blog.teamtreehouse.com/an-introduction-to-websockets)
 > * [참고자료](https://tools.ietf.org/html/rfc6455)
 > * [웹 소켓 기본 예제 및 설명](https://niceman.tistory.com/109)
+> * [웹 소켓과 socket.io](https://d2.naver.com/helloworld/1336)
