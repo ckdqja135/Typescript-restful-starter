@@ -1,8 +1,17 @@
-Markdown Extra
---------------------
+### Tables
 
-StackEdit supports **Markdown Extra**, which extends **Markdown** syntax with some nice features.
+**Markdown Extra** has a special syntax for tables:
 
-> **Tip:** You can disable any **Markdown Extra** feature in the **Extensions** tab of the <i class="icon-cog"></i> **Settings** dialog.
+Item     | Value
+-------- | ---
+Computer | $1600
+Phone    | $12
+Pipe     | $1
 
-> **Note:** You can find more information about **Markdown** syntax [here][2] and **Markdown Extra** extension [here][3].
+You can specify column alignment with one or two colons:
+
+| Item     | Value | Qty   |
+| :------- | ----: | :---: |
+| Computer | $1600 |  5    |
+| Phone    | $12   |  12   |
+| Pipe     | $1    |  234  |
