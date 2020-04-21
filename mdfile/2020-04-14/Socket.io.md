@@ -121,7 +121,7 @@ export class ChatMessage extends Message{
 ```
   
 # 채팅 서버 구현
-<code>server</code> 디렉토리의 주요 파일은 <code>index.ts<code>와 <code>chat-server.ts</code>이다. 첫 번째 앱은 <code>ChatServer app</code>을 만들고 내보낼 수 있고, 마지막 앱에는 <code>express</code>와 <code>socket.IO</code>이 들어 있다.
+<code>server</code> 디렉토리의 주요 파일은 <code>index.ts</code>와 <code>chat-server.ts</code>이다. 첫 번째 앱은 <code>ChatServer app</code>을 만들고 내보낼 수 있고, 마지막 앱에는 <code>express</code>와 <code>socket.IO</code>이 들어 있다.
 
 ### index.ts
 ```typescript
