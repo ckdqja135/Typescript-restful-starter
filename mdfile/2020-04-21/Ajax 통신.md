@@ -1,7 +1,7 @@
 # [목표]
 - 모던웹 구현에 필요한 Ajax 개념알기 <br />
 - Ajax 직접 구현해보는 것 마음먹기 <br />
-:+1:
+
 # [먼저 보면 좋은 게시글]
 1) [HTTP 프로토콜 자세히 알기](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-21/HTTP%20%EA%B7%B8%EB%A6%AC%EA%B3%A0%20REST%20API%20%EB%8B%A4%EA%B0%80%EA%B0%80%EA%B8%B0.md)
 2) [싱글쓰레드 자바스크립트 엔진은 비동기처리를 어떻게 하는가](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-21/js%EC%97%94%EC%A7%84%EC%9D%80%20%EC%96%B4%EB%96%BB%EA%B2%8C%20%EB%8F%99%EC%8B%9C%EC%B2%98%EB%A6%AC%EB%A5%BC%20%ED%95%98%EB%8A%94%EA%B0%80.md)
