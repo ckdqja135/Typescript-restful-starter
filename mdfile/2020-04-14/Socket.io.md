@@ -395,15 +395,96 @@ client App에 <code>express</code> 및 <code>socket.io</code> 모듈을 추가�
 
 ```
 
+이제 서버로부터 메시지를 들을 준비가 되셨습니다.
 
+### chat.component.ts
 
+```typescript
 
+  import { Component, OnInit } from '@angular/core';
 
+  import { Action } from './shared/model/action';
+  import { Event } from './shared/model/event';
+  import { Message } from './shared/model/message';
+  import { User } from './shared/model/user';
+  import { SocketService } from './shared/services/socket.service';
 
+  @Component({
+    selector: 'tcc-chat',
+    templateUrl: './chat.component.html',
+    styleUrls: ['./chat.component.css']
+  })
+  export class ChatComponent implements OnInit {
+    action = Action;
+    user: User;
+    messages: Message[] = [];
+    messageContent: string;
+    ioConnection: any;
 
+    constructor(private socketService: SocketService) { }
 
+    ngOnInit(): void {
+      this.initIoConnection();
+    }
 
+    private initIoConnection(): void {
+      this.socketService.initSocket();
 
+      this.ioConnection = this.socketService.onMessage()
+        .subscribe((message: Message) => {
+          this.messages.push(message);
+        });
+
+      this.socketService.onEvent(Event.CONNECT)
+        .subscribe(() => {
+          console.log('connected');
+        });
+
+      this.socketService.onEvent(Event.DISCONNECT)
+        .subscribe(() => {
+          console.log('disconnected');
+        });
+    }
+
+    public sendMessage(message: string): void {
+      if (!message) {
+        return;
+      }
+
+      this.socketService.send({
+        from: this.user,
+        content: message
+      });
+      this.messageContent = null;
+    }
+
+    public sendNotification(params: any, action: Action): void {
+      let message: Message;
+
+      if (action === Action.JOINED) {
+        message = {
+          from: this.user,
+          action: action
+        }
+      } else if (action === Action.RENAME) {
+        message = {
+          action: action,
+          content: {
+            username: this.user.name,
+            previousUsername: params.previousUsername
+          }
+        };
+      }
+
+      this.socketService.send(message);
+    }
+  }
+
+```
+
+<code>ChatComponent</code>가 초기화되면 이 구성 요소는 연결 이벤트 또는 수신 메시지를 받기 시작하기 위해 <code>SocketService</code> observables자료에 가입할 것이다. <br />
+
+<code>sendMessage</code>와 <code>sendNotification</code> 기능은 각각의 콘텐츠를 동일한 서비스를 통해 전송한다. 이때 전송되는 알림은 사용자 이름 변경 및 사용자 가입 알림입니다.
 
 # 실행화면
 * Server 실행
