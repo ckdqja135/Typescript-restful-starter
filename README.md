@@ -18,3 +18,4 @@
 ### [2020-04-14](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-14/2020-04-14.md)
 ### [2020-04-16](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-16/today.md)
 ### [2020-04-17](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-17/today.md)
+### [2020-04-20](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-20/today.md)
