@@ -545,6 +545,11 @@ Connected client on port 8080.
 * 터미널 창 <br />
 <img src = "https://user-images.githubusercontent.com/33046341/79189333-7009c180-7e5c-11ea-8e5d-0fe5722cb861.png" width = 90%></img>
 
+* 2인 이상 접속시 <br />
+<img src = "https://user-images.githubusercontent.com/33046341/79210645-1d420100-7e80-11ea-9eb6-44313585c872.png" width = 90%></img>
+
+<img src = "https://user-images.githubusercontent.com/33046341/79210732-3ea2ed00-7e80-11ea-8c86-6378ba2755d2.png" width = 90%></img>
+
 # reference
 > * [참고 사이트](https://medium.com/dailyjs/real-time-apps-with-typescript-integrating-web-sockets-node-angular-e2b57cbd1ec1)
 > * [참고 사이트](https://luixaviles.com/2017/09/releasing-socket-io-typescript-chat-project)
