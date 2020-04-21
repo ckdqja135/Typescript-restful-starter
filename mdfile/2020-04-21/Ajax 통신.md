@@ -25,6 +25,7 @@
 1) **서버로 정보 요청** : 이벤트 발생 -> 핸들러 함수 호출 -> 서버 요청 객체 생성 및 메서드 호출
 
 <p align = "center"><img src = "https://t1.daumcdn.net/cfile/tistory/226F8D3958FA3B230B" width = 90%></img></p>
+
 - XMLHttpRequest : 자바스크립트 객체 및 객체 메서드(open, 아래는 open의 파라미터) 사용
 - open 메서드 파라미터 : HTTP 메서드, 요청 URL, 비동기처리여부(boolean)
 - HTTP 응답 콜백함수 정의 : 조건문으로 응답 코드(XMLHttpRequest 객체 프로퍼티로 코드 알 수 있음)별 처리다르게
