@@ -31,7 +31,7 @@
 - HTTP Request 관련 정보 구성
 
 2) **서버 내부 처리 후 응답** : json 또는 xml 형태로 데이터 전달
-<p align = "center"><img src = "https://t1.daumcdn.net/cfile/tistory/2747723958FA3B2402" width = 90%></img></p>
+<p align = "center"><img src = "https://t1.daumcdn.net/cfile/tistory/2747723958FA3B2402" width = 70%></img></p>
 - HTTP Response 관련 정보 구성
 - HTTP Request, HTTP Response 구성 내용보기 : [먼저 보면 좋은 게시글 - 1]
 
