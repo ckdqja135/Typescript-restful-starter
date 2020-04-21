@@ -13,6 +13,398 @@
 이 GitHub 리포지토리에서 전체 프로젝트를 찾으십시오.
 [github](github.com/luixaviles/socket-io-typescript-chat)
 
+# 웹 소켓
+WebSockets는 양방향 통신 채널을 제공하는 프로토콜입니다. <br />
+즉, 브라우저와 웹 서버는 실시간 통신을 유지하면서 연결이 열려있는 동안 메시지를주고받을 수 있습니다. <br />
+
+<img src = "https://miro.medium.com/max/1400/1*9HDEuF54yWrJdnwvLaWIWg.png" width = 90%></img>
+
+# 응용 프로그램 구조
+서버 관련 코드와 클라이언트 코드를 분리합니다. <br />
+가장 중요한 파일을 설명 할 때 자세한 내용을 살펴 보겠습니다. 현재로서는 다음과 같이 응용 프로그램의 예상 구조입니다. <br />
+
+```text
+
+  server/
+  |- src/
+  |- package.json
+  |- tsconfig.json
+  |- gulpfile.js
+  client/
+  |- src/
+  |- package.json
+  |- tsconfig.json
+  |- .angular-cli.json
+
+```
+
+# 서버 코드
+WebSockets는 [규격](https://tools.ietf.org/html/rfc6455)이기 때문에, 우리는 그것에 대한 [몇 가지 구현](https://github.com/facundofarias/awesome-websockets)을 찾을 수 있다.  <br />
+우리는 TypeScript 또는 다른 프로그래밍 언어를 선택할 수 있다. <br />
+  
+이 경우 우리는 가장 빠르고 신뢰할 수 있는 실시간 엔진 중 하나인 Socket.io 을 사용할 것이다.
+
+# 서버측 코드에 TypeScript를 사용하는 이유
+TypeScript는 정말 멋진 기능들을 가지고 있으며 매우 자주 업데이트된다.  <br />
+그것은 약 15%의 버그를 예방할 수 있다.  <br />
+더 많은 이유가 필요한가? 😄 <br />
+
+# 서버 응용 프로그램 초기화
+[package.json](https://docs.npmjs.com/cli/init)을 만들어 종속성 설치를 진행합니다.
+
+```text
+  
+  npm install --save express socket.io @types/express @types/socket.io
+  
+```
+
+<code>devdependencies</code>를 몇 가지 설치하여 <code>gulp</code>와 <code>typescript</code>를 통합할 수 있도록 해야 나중에 이러한 툴로 작업을 쉽게 정의할 수 있을 것입니다. <br />
+
+```text
+
+  npm install --save-dev typescript gulp gulp-typescript
+  
+```
+
+# TypeScript 컴파일러 구성
+
+다음과 같이tsconfig.json 파일을 생성하십시오.
+### tsconfig.json 
+```json
+
+  {
+  "files": [
+    "src/*.ts",
+    "src/model/*.ts"
+  ],
+  "compilerOptions": {
+    "target": "es5"
+  }
+}
+
+```
+# 데이터 모델 정의
+다음과 같이 작은 데이터 모델을 정의해 보자.
+### chat-model.ts 
+```typescript
+
+export class User {
+    constructor(private name: string) {}
+}
+
+export class Message {
+    constructor(private from: User, private content: string) {}
+}
+
+export class ChatMessage extends Message{
+    constructor(from: User, content: string) {
+        super(from, content);
+    }
+}
+
+```
+
+..서버/src 디렉토리에 대한 자세한 내용을 확인하십시오.
+```text
+  
+  server/
+  |- src/
+     |- model/
+        |- message.model.ts
+        |- user.model.ts
+     |- index.ts
+     |- server.ts
+  |- package.json
+  |- tsconfig.json
+  |- gulpfile.js
+
+```
+  
+# 채팅 서버 구현
+<code>server</code> 디렉토리의 주요 파일은 <code>index.ts<code>와 <code>chat-server.ts</code>이다. 첫 번째 앱은 <code>ChatServer app</code>을 만들고 내보낼 수 있고, 마지막 앱에는 <code>express</code>와 <code>socket.IO</code>이 들어 있다.
+
+### index.ts
+```typescript
+  
+  import { ChatServer } from './chat-server';
+
+  let app = new ChatServer().getApp();
+  export { app };
+
+```
+
+### chat-server.ts 
+```typescript
+  
+  import { createServer, Server } from 'http';
+  import * as express from 'express';
+  import * as socketIo from 'socket.io';
+
+  import { Message } from './model';
+
+  export class ChatServer {
+      public static readonly PORT:number = 8080;
+      private app: express.Application;
+      private server: Server;
+      private io: SocketIO.Server;
+      private port: string | number;
+
+      constructor() {
+          this.createApp();
+          this.config();
+          this.createServer();
+          this.sockets();
+          this.listen();
+      }
+
+      private createApp(): void {
+          this.app = express();
+      }
+
+      private createServer(): void {
+          this.server = createServer(this.app);
+      }
+
+      private config(): void {
+          this.port = process.env.PORT || ChatServer.PORT;
+      }
+
+      private sockets(): void {
+          this.io = socketIo(this.server);
+      }
+
+      private listen(): void {
+          this.server.listen(this.port, () => {
+              console.log('Running server on port %s', this.port);
+          });
+
+          this.io.on('connect', (socket: any) => {
+              console.log('Connected client on port %s.', this.port);
+              socket.on('message', (m: Message) => {
+                  console.log('[server](message): %s', JSON.stringify(m));
+                  this.io.emit('message', m);
+              });
+
+              socket.on('disconnect', () => {
+                  console.log('Client disconnected');
+              });
+          });
+      }
+
+      public getApp(): express.Application {
+          return this.app;
+      }
+  }
+
+```
+
+# 서버 클래스들
+이전 코드는 다음과 같은 클래스 및 관계의 결과를 제공한다.
+
+<img src = "https://miro.medium.com/max/2000/1*-FNkJxTH5kDiBPdJx4tVIg.png" width = 90%></img>
+
+# 서버 빌드 및 실행
+Node.js의 V8 엔진에 필요한 JavaScript 파일을 갖기 위해, 우리는 <code>build</code> 작업을 <code>gulpfile.js</code> 파일에 추가할 수 있다.
+
+### gulpfile.js
+```typescript
+
+  var gulp = require("gulp");
+  var ts = require("gulp-typescript");
+  var tsProject = ts.createProject("tsconfig.json");
+
+  gulp.task("build", function () {
+      return tsProject.src()
+          .pipe(tsProject())
+          .js.pipe(gulp.dest("./dist"));
+  });
+
+```
+
+보다시피 빌드 프로세스(JavaScript 파일)의 출력은 <code>dist</code> 디렉토리에 위치한다. 이 작업을 수행하려면 다음을 실행하십시오.
+
+```typescript
+
+  gulp build
+  
+```
+
+이제 <code>node dist/index.js</code> 명령을 실행하여 서버를 실행할 수 있다.
+
+# 클라이언트 코드
+최신 [Angular  CLI](https://cli.angular.io/) 버전을 사용하여 <code>client</code> 디렉토리를 생성해 보십시오.
+
+```text
+
+  ng new typescript-chat-client --routing --prefix tcc --skip-install
+  
+```
+
+그런 다음 <code>npm install</code>을 실행하는 종속성을 설치하십시오(이 단계에서는 [Yarn](https://classic.yarnpkg.com/en/)을 사용함).
+
+```text
+
+  cd typescript-chat-client
+  yarn install
+
+```
+
+# Angular 추가
+최신 가이드를 참조하여 <code>Angular  CLI</code> 프로젝트 내에 [Angular](https://material.angular.io/guide/getting-started)를 설치하십시오.
+
+[프로젝트 구조](https://angular.io/guide/styleguide#application-structure-and-ngmodules)에서 best practices를 사용하는 과정에서 <code>공유</code> 및 <code>소재</code> 모듈을 만들 수 있다.
+
+```text
+
+  client/
+  |- src/
+     |- app/
+        |- chat/
+        |- shared/
+           |- material/
+              |- material.module.ts
+           |- shared.module.ts
+        |-app.module.ts
+      
+```
+
+command line 인터페이스에서 다음을 수행할 수 있다.
+
+```text
+
+  ng generate module shared --module app
+  ng generate module shared/material --module shared
+
+```
+
+<code>app.module.ts</code>와 <code>shared.module.ts</code> 내부의 변경 사항을 확인하여 이들 모듈 간에 생성된 관계를 확인하십시오.
+
+# express 와 socket.IO 추가하기
+
+client App에 <code>express</code> 및 <code>socket.io</code> 모듈을 추가하십시오.
+
+```text
+
+  npm install express socket.io --save
+  
+```
+
+# 채팅 모듈 및 구성 요소
+채팅 응용 프로그램의 구성 요소를 만들기 전에 새 모듈을 만들어 봅시다.
+```text
+  
+  ng generate module chat --module app
+  
+```
+
+이제 구성 요소를 최신 모듈에 추가하십시오.
+```text
+
+  ng generate component chat --module chat
+  
+```
+
+웹 소켓과 사용자 지정 모델을 사용하려면 다른 <code>shared</code> 폴더를 <code>chat</code> 디렉터리 내부에 생성하십시오. 
+```text
+  
+  ng generate service chat/shared/services/socket --module chat
+  ng generate class chat/shared/model/user
+  ng generate class chat/shared/model/message
+
+```
+
+우리는 다음과 유사한 구조로 마무리할 것입니다.
+
+```text
+  
+  client/
+  |- src/
+     |- app/
+        |- chat/
+           |- shared/
+             |- model/
+                |- user.ts
+                |- message.ts
+             |- services/
+                |- socket.service.ts
+        |- shared/
+        |-app.module.ts
+      
+```
+
+# Observables 과 Web Sockets
+우리의 Angular App은 <code>RxJS</code>와 함께 제공되기 때문에, 우리는 <code>Observables</code>를 사용하여 socket.io을 잡을 수 있다.
+
+### socket.service.ts 
+```typescript
+
+  import { Injectable } from '@angular/core';
+  import { Observable } from 'rxjs/Observable';
+  import { Observer } from 'rxjs/Observer';
+  import { Message } from '../model/message';
+  import { Event } from '../model/event';
+
+  import * as socketIo from 'socket.io-client';
+
+  const SERVER_URL = 'http://localhost:8080';
+
+  @Injectable()
+  export class SocketService {
+      private socket;
+
+      public initSocket(): void {
+          this.socket = socketIo(SERVER_URL);
+      }
+
+      public send(message: Message): void {
+          this.socket.emit('message', message);
+      }
+
+      public onMessage(): Observable<Message> {
+          return new Observable<Message>(observer => {
+              this.socket.on('message', (data: Message) => observer.next(data));
+          });
+      }
+
+      public onEvent(event: Event): Observable<any> {
+          return new Observable<Event>(observer => {
+              this.socket.on(event, () => observer.next());
+          });
+      }
+  }
+
+```
+
+앱에서 <code>Actions</code>과 <code>Events</code>를 관리하기 위해 몇 가지 열거형을 정의해야 할 것이다.
+
+### client-enums.ts 
+```typescript
+
+  // Actions you can take on the App
+  export enum Action {
+      JOINED,
+      LEFT,
+      RENAME
+  }
+
+  // Socket.io events
+  export enum Event {
+      CONNECT = 'connect',
+      DISCONNECT = 'disconnect'
+  }
+
+```
+
+
+
+
+
+
+
+
+
+
+
 # 실행화면
 * Server 실행
 ```linux
