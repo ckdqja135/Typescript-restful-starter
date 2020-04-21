@@ -546,5 +546,5 @@ Connected client on port 8080.
 <img src = "https://user-images.githubusercontent.com/33046341/79189333-7009c180-7e5c-11ea-8e5d-0fe5722cb861.png" width = 90%></img>
 
 # reference
-[참고 사이트](https://medium.com/dailyjs/real-time-apps-with-typescript-integrating-web-sockets-node-angular-e2b57cbd1ec1)
-[참고 사이트](https://luixaviles.com/2017/09/releasing-socket-io-typescript-chat-project)
+> * [참고 사이트](https://medium.com/dailyjs/real-time-apps-with-typescript-integrating-web-sockets-node-angular-e2b57cbd1ec1)
+> * [참고 사이트](https://luixaviles.com/2017/09/releasing-socket-io-typescript-chat-project)
