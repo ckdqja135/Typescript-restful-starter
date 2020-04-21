@@ -32,12 +32,14 @@
 - HTTP Request 관련 정보 구성
 
 2) **서버 내부 처리 후 응답** : json 또는 xml 형태로 데이터 전달
-<p align = "center"><img src = "https://t1.daumcdn.net/cfile/tistory/2747723958FA3B2402" width = 70%></img></p>
+<p align = "center"><img src = "https://t1.daumcdn.net/cfile/tistory/2747723958FA3B2402" width = 50%></img></p>
+
 - HTTP Response 관련 정보 구성
 - HTTP Request, HTTP Response 구성 내용보기 : [먼저 보면 좋은 게시글 - 1]
 
 3) **응답을 받으면 이벤트 발생**(onload), **이벤트의 콜백함수 호출**
 <p align = "center"><img src = "https://t1.daumcdn.net/cfile/tistory/255EF53958FA3B243D" width = 90%></img></p>
+
 - 응답 코드 체크하기 : 200(응답완료, 이상 무), 304(이전과 바뀐것 x), 404(요청 주소 찾을 수 없음), 500(서버 내부 오류)
 - 응답 데이터 파싱 후 DOM을 제어하여 랜더링 : 전체 페이지 로드 방식 X 
 
