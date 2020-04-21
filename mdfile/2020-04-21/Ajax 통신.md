@@ -1,6 +1,6 @@
 # [목표]
 - 모던웹 구현에 필요한 Ajax 개념알기 <br />
-- Ajax 직접 구현해보는 것 마음먹기 <br /> <i class="icon-cog"></i>
+- <i class="icon-cog"> Ajax 직접 구현해보는 것 마음먹기 <br /></i>
 
 # [먼저 보면 좋은 게시글]
 1) [HTTP 프로토콜 자세히 알기](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-04-21/HTTP%20%EA%B7%B8%EB%A6%AC%EA%B3%A0%20REST%20API%20%EB%8B%A4%EA%B0%80%EA%B0%80%EA%B8%B0.md)
