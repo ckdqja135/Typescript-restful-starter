@@ -44,10 +44,10 @@ DEMO를 보고 있는 사이트의 경로는 https:// ~~~~로 되어있는데 �
 <p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79948599-200baa00-84af-11ea-8058-12976d530618.png" width = 90%></img></p>
 
 ### 그리고 또 하나의 JS파일을 만들고
+<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79949207-22223880-84b0-11ea-80ec-208c6bdbf5b4.png" width = 90%></img></p>
+### 왼쪽 하단에 있는 function() 부분을 복사해서 넣습니다.
 <p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79948954-bb048400-84af-11ea-9994-85fabf577200.png" width = 90%></img></p>
 
-### 왼쪽 하단에 있는 function() 부분을 복사해서 넣습니다.
-<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79949207-22223880-84b0-11ea-80ec-208c6bdbf5b4.png" width = 90%></img></p>
 
 ### 다시 HTML로 돌아옵니다.
 아까 새로 function() 부분이 들어간 js파일(graph.js)과 다운 받았던 폴더에 있던
