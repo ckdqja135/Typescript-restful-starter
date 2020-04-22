@@ -1,5 +1,5 @@
 # JavaScript에 Highchart를 이용한 그래프 삽입
-이번에는 https://www.highcharts.com/에서 제공하는 데모버전을 적용하는 방법을 알아보겠습니다.
+이번에는 https://www.highcharts.com/ 에서 제공하는 데모버전을 적용하는 방법을 알아보겠습니다.
 
 먼저 [여기](https://www.highcharts.com/)로 들어갑니다.
 
