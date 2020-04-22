@@ -13,15 +13,7 @@
 >
 > *	http://chartplay.jui.io/ 
 >
-> *	http://html.nhncorp.com/nwagon  네이버차트
->
 > *	http://ui.toast.com/tui-chart/  nhnent 에서 만듬,차트를 포함한 다양한 콤포넌트가 있음
->
-> *	https://nhnent.github.io/tui.jsdoc-template/latest/#  
->
-> *	https://nhnent.github.io/tui.grid/api/tutorial-example01-basic.html  그리드
->
-> *	https://ecomfe.github.io/echarts-examples/public/index.html  중국 바이두에서 만듬
 >
 > *	http://www.jqplot.com/examples/  순수 jquery chart
 >
@@ -42,7 +34,7 @@
 >
 > *	https://bl.ocks.org/mbostock/3885304  d3 barchart
 >
-> *	http://jgraph.github.io/mxgraph/javascript/examples/schema.html  다이어그램그릴때유용
+> *	http://jgraph.github.io/mxgraph/javascript/examples/schema.html DB 다이어그램그릴 때 유용함.
 
 ### 상용차트
 > * http://demo.riamore.net/HTML5demo/chart/index.html  국산차트
@@ -58,5 +50,6 @@
 > *	http://www.fusioncharts.com/demos/business/#management-dashboard  부드러운화면전환
 >
 > *	http://www.zkoss.org/zkchartsdemo/line_basic  zkcharts차트 Commercial License 
->
+
+### 기사
 > * http://newsjel.ly/archives/530  데이터 시각화 해외 기사 – 최고의 14가지 시각화 도구
