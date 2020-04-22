@@ -45,19 +45,20 @@ DEMO를 보고 있는 사이트의 경로는 https:// ~~~~로 되어있는데 �
 
 ### 그리고 또 하나의 JS파일을 만들고
 <p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79949207-22223880-84b0-11ea-80ec-208c6bdbf5b4.png" width = 90%></img></p>
-### 왼쪽 하단에 있는 function() 부분을 복사해서 넣습니다.
-<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79948954-bb048400-84af-11ea-9994-85fabf577200.png" width = 90%></img></p>
+
+### 왼쪽 하단에 있는 function() 부분을 복사해서 넣습니다
+<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79949264-3a925300-84b0-11ea-9c3a-8e0d633ce504.png" width = 90%></img></p>
 
 
 ### 다시 HTML로 돌아옵니다.
 아까 새로 function() 부분이 들어간 js파일(graph.js)과 다운 받았던 폴더에 있던
-<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79949264-3a925300-84b0-11ea-9c3a-8e0d633ce504.png" width = 90%></img></p>
+<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79949333-5f86c600-84b0-11ea-95fb-a9695cc50334.png" width = 90%></img></p>
 jquery-1.11.3 버전이나 최신버전의 jquery를 다운받아서 <script>....</script>에 넣어 주시면 됩니다. <br />
 jquery-1.12.3min.js로 돌아가는거 확인했습니다. jquery가 맞지 않으면 돌아가지 않을 수 있습니다. <br />
 또한 jquery위치를 가장 위에 올려주시면 되겠습니다. 아래에 놓으면 동작안할 가능성이 있습니다. <br />
 
 ### 
-<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79949333-5f86c600-84b0-11ea-95fb-a9695cc50334.png" width = 90%></img></p>
+
 
 ### 
 <p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79947631-3d3f7900-84ad-11ea-9fdd-4bf835a4b7ff.png" width = 90%></img></p>
