@@ -40,7 +40,7 @@ DEMO를 보고 있는 사이트의 경로는 https:// ~~~~로 되어있는데 �
 <div id = "container" style = "min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 ```
-를 넣어줍니다.
+를 넣어줍니다. <br />
 <p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79948599-200baa00-84af-11ea-8058-12976d530618.png" width = 90%></img></p>
 
 ### 그리고 또 하나의 JS파일을 만들고
@@ -57,13 +57,13 @@ jquery-1.11.3 버전이나 최신버전의 jquery를 다운받아서 <script>...
 jquery-1.12.3min.js로 돌아가는거 확인했습니다. jquery가 맞지 않으면 돌아가지 않을 수 있습니다. <br />
 또한 jquery위치를 가장 위에 올려주시면 되겠습니다. 아래에 놓으면 동작안할 가능성이 있습니다. <br />
 
-### 
+### 최종적인 모습은 이렇게 될 것입니다
+<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79950243-c0fb6480-84b1-11ea-95f2-b1afeb31d586.png" width = 90%></img></p>
 
+### 그리고 실행 시키면
+<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79950310-d7a1bb80-84b1-11ea-9e38-b384a8541083.png" width = 90%></img></p>
 
-### 
-<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79947631-3d3f7900-84ad-11ea-9fdd-4bf835a4b7ff.png" width = 90%></img></p>
-
-### 
-<p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79947631-3d3f7900-84ad-11ea-9fdd-4bf835a4b7ff.png" width = 90%></img></p>
+DEMO버전과 똑같은 그래프가 그려집니다. <br />
+이제 여기서 원하는 데이터 값을 넣는 것을 추가하거나 여러가지 방법을 통해 각자의 입맛에 맞게 바꿀 수 있습니다. <br />
 
 
