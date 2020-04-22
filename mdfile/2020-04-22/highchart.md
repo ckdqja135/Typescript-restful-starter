@@ -33,7 +33,7 @@
 <p align = "center"><img src = "https://user-images.githubusercontent.com/33046341/79948189-55fc5e80-84ae-11ea-99cb-2b371acd99b0.png" width = 90%></img></p>
 
 ### 그리고 경로에 맞게 <code><script src ="highcharts.js"></script></code> 등등을 넣어줍니다.
-DEMO를 보고 있는 사이트의 경로는 https:// ~~~~로 되어있는데 꼭 자신에 맞게 경로를 다시 지정해주셔야 됩니다.
+DEMO를 보고 있는 사이트의 경로는 https:// ~~~~ 로 되어있는데 꼭 자신에 맞게 경로를 다시 지정해주셔야 됩니다. <br />
 그리고 <code><script src = ...></code> 아래에 있는 
 ```HTML
 
