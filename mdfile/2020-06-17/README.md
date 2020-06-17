@@ -1,1 +1,1 @@
-* [한 눈에 보는 타입스크립트]()
+* [한 눈에 보는 타입스크립트](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-06-17/%ED%95%9C%20%EB%88%88%EC%97%90%20%EB%B3%B4%EB%8A%94%20%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8.md)
