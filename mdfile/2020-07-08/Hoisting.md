@@ -82,3 +82,6 @@ let/const선언 변수는 호이스팅되지 않는 것이 아니다. 스코프�
 ```해당 문서에 문제가 있거나 설명이 부족한다면 
 rhcn258@gmail.com으로 메일이나 
 https://velog.io/@marcus/Javascript-Hoisting 에 댓글 주시면 감사하겠습니다:D```
+
+### 참조
+[참조](https://github.com/Jogeonsang/Hoisting/blob/master/README.md)
