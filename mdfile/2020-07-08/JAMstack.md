@@ -63,8 +63,11 @@ Next (react), Gatsby</code> **같은 정적 사이트 생성기**<code>(Static S
 이는 매우 큰 장점을 가져오게 되는데, **Static HTML** 을 <code>CDN</code> 을 통해 <code>Cache</code> 하고 배포하여, **빠른 속도**를 유지한다. <br />
 
 따로 동적으로 **HTML** 을 생성하지 않기 때문에, 따로 웹서버가 필요 없어 **서버 비용**이 높지 않다. <br />
+
 하지만 모든 **HTML** 이 **Static HTML** 만으로 이루어진 것을 뜻하지는 않는다. <br />
+
 모든 **Markup** 을 정적 으로 유지하게 되면, 최신 데이터를 유지하기 어렵기 때문이다. <br />
+
 중요한 것은 최대한 **HTML Build** 을 빌드하여, <code>Cache</code> 하고 사용자를 위한 <code>First meaningful paint</code> 의 속도를 높히자는 점이다. <br />
 
 ## 간단한 JAM Stack 과정
