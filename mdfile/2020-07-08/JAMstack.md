@@ -80,3 +80,26 @@ Next (react), Gatsby</code> **같은 정적 사이트 생성기**<code>(Static S
 > 3. Netlify 에 배포 환경을 구성한다.
 > 4. GitHub 에 코드가 변경되면, Netlify 에서 빌드를 시작한다.
 > 5. Netlify 로 Gatsbyjs 으로 빌드하고, 사이트을 배포한다.
+
+한번 배포된 **Package** 는 더 이상 빌드를 위한 웹서버의 자원은 필요하지 않게되고, 모든 처리는 **Javascript** 와 **API** 에서 이루어지게 된다. <br />
+
+**JAMStack** 은 하나의 개념이기 때문에, 특정 라이브러리나 플랫폼을 이용하지 않고, 본인이 직접 빌드툴 혹은 프레임워크을 만들거나, 호스팅 서버나 **CDN** 을 운영해도 전혀 문제가 없다. <br />
+
+## 마치며
+**JAM Stack** 은 새로운 개념이 아니다. <br >
+이전부터 많은 개발자들이 고민하면서 알게 모르게, 성능과 유저 그리고 동료들을 위해서 노력했던 과정들의 산물이다. <br />
+**JAM Stack** 은 이렇게 하면 편하고, 빠르고, 멋진 경험을 하면서, 개발할 수 있다는 하나의 지침이다. <br />
+**SSR** 을 위한 **Nextjs** 를 도입하려고 찾아보던 중 **JAM Stack** 이라는 방향성 을 만나게 되어 기쁘기 그지없다. <br />
+**Nextjs** 와 **S3** 그리고 **Cloud Front** 를 이용해 **JAM Stack** 을 적용해 볼 수 있기를 기대해 본다. <br />
+
+## 참고 URL
+### JAM Stack 을 위한 여러 도구를 설명한다.
+> https://www.thenewdynamic.org/
+> https://www.staticgen.com/
+> https://headlesscms.org/
+
+### JAM Stack 을 더 자세히 설명하는 글이다.
+> https://jamstack.org/
+> https://www.netlify.com/jamstack/
+> https://www.gatsbyjs.org/docs/glossary/jamstack/
+[자료](https://medium.com/@pks2974/jam-stack-%EA%B0%9C%EB%85%90-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-17dd5c34edf7)
