@@ -3,7 +3,7 @@
 체크 박스에 체크가 되거나, 체크가 해제될 때마다 이벤트가 발생하는 로직이 있었다. <br />
 보통 페이지를 최초로 로딩할 때 해당 체크박스를 다 부려주니 아래와 같이 구현하여 쓰고 있었다. <br />
 
-```jQuery
+```javascript
 
   $(document).ready(function () {
     $("input[name='optionCheck']").change(function() {
