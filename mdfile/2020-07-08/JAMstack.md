@@ -102,5 +102,6 @@ Next (react), Gatsby</code> **같은 정적 사이트 생성기**<code>(Static S
 > * https://jamstack.org/
 > * https://www.netlify.com/jamstack/
 > * https://www.gatsbyjs.org/docs/glossary/jamstack/
->
+
+### 원본
 > * [자료](https://medium.com/@pks2974/jam-stack-%EA%B0%9C%EB%85%90-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-17dd5c34edf7)
