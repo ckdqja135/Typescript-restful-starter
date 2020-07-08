@@ -5,9 +5,10 @@
 # 자바스크립트 설계 패턴 -  Namespace Pattern
 
 네임스페이스는 프로그램에서 필요로 하는 전역 변수의 개수를 줄이는 동시에 과도한 접두어를 사용하지 않고도 이름이 겹치지 않게 해줍니다. <br />
+
 자바스크립트의 언어 문법에 내장되어 있지는 않지만, 네임스페이스는 꽤 쉽게 구현할 수 있는 기능입니다. <br />
 
-<p align = "center"><img src = "https://t1.daumcdn.net/cfile/tistory/2401514C56A5587501" width = 90%></img></p>
+<p align = "center"><img src = "https://t1.daumcdn.net/cfile/tistory/2401514C56A5587501" width = 60%></img></p>
 
 
 ## 네임스페이스 패턴
