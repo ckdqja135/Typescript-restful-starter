@@ -100,12 +100,12 @@ Next (react), Gatsby</code> **같은 정적 사이트 생성기**<code>(Static S
 **Nextjs** 와 **S3** 그리고 **Cloud Front** 를 이용해 **JAM Stack** 을 적용해 볼 수 있기를 기대해 본다. <br />
 
 ## 참고 URL
-### JAM Stack 을 위한 여러 도구를 설명한다.
+**JAM Stack** 을 위한 여러 도구를 설명한다.
 > * https://www.thenewdynamic.org/
 > * https://www.staticgen.com/
 > * https://headlesscms.org/
 
-### JAM Stack 을 더 자세히 설명하는 글이다.
+**JAM Stack** 을 더 자세히 설명하는 글이다.
 > * https://jamstack.org/
 > * https://www.netlify.com/jamstack/
 > * https://www.gatsbyjs.org/docs/glossary/jamstack/
