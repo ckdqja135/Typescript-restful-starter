@@ -21,7 +21,7 @@ document.ready는 화면이 최초에 로드되었을 때에 화면 안에 있�
 
 ```javascript
   
-  $(document).on("change","input[name='[optionCheck']", function() {
+  $(document).on("change","input[name='optionCheck']", function() {
     // 이벤트 바인딩
   });
   
