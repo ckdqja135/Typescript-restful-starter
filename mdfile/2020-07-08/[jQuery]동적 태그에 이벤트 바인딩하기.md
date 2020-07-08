@@ -19,7 +19,7 @@ document.ready는 화면이 최초에 로드되었을 때에 화면 안에 있�
 
 이런 때엔 어떻게 이벤트를 거는 지 찾아보았더니 아래와 같은 방법이 있었다.
 
-```jquery
+```javascript
   
   $(document).on("change","input[name='optionCheck']", function() {
     // 이벤트 바인딩
@@ -28,7 +28,7 @@ document.ready는 화면이 최초에 로드되었을 때에 화면 안에 있�
 ```  
 그리고 더 찾아보았더니, on에는 생각보다 많은 장점들이 존재한다. 하나의 element에 여러 개의 이벤트가 바인딩 될 때에도 아래와 같이 깔끔하게 jQuery를 구현 할 수 있다.
 
-```jquery
+```javascript
   
   $("input[name='optionCheck]").on({
     "change" : function() { // 이벤트 바인딩 },
