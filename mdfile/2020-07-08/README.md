@@ -1,6 +1,5 @@
 ### 1. [javascript NameSpace](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-07-08/javascript%20NameSpace.md)
 ### 2. [Jquery .onchange와 .on("chnage")차이](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-07-08/%5BjQuery%5D%EB%8F%99%EC%A0%81%20%ED%83%9C%EA%B7%B8%EC%97%90%20%EC%9D%B4%EB%B2%A4%ED%8A%B8%20%EB%B0%94%EC%9D%B8%EB%94%A9%ED%95%98%EA%B8%B0.md)
 ### 3. [JAMstack](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-07-08/JAMstack.md)
-### 4. [추상화에 대해]()
-### 5. [Hoisting](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-07-08/Hoisting.md)
-### 6. [Scope](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-07-08/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%8A%A4%EC%BD%94%ED%94%84.md)
+### 4. [Hoisting](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-07-08/Hoisting.md)
+### 5. [Scope](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-07-08/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%8A%A4%EC%BD%94%ED%94%84.md)
