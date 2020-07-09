@@ -114,6 +114,9 @@ var를 사용하면 변수 선언의 경우 할당되는 값이 유동적으로 
 
 ```
 
+## 호이스팅
+호이스팅은 [Hoisting에 대한 정리](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-07-08/Hoisting.md)에서 참고 바람
+
 ## 참조
 [참조](https://velog.io/@marcus/2019-02-10-1702-%EC%9E%91%EC%84%B1%EB%90%A8)
 
