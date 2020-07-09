@@ -1,7 +1,7 @@
 <p align = "center"><img src = "https://media.vlpt.us/post-images/marcus/020c1130-2d11-11e9-8401-8b896dd4fb48/10hfm3TfurQboq6KlJrG56g.jpeg" width = 60%></img></p>
 
 ## var-let-const
-##### javascript var - let - const 의 차이 
+#### javascript var - let - const 의 차이 
 Javascript에 변수 선언 방식인 var let const에 각각 차이점을 알아보자 <br />
 먼저 이들의 차이점을 이해하기 위해서는 Hoisting과 Scope의 개념이 필요하다. <br />
 (해당 링크에 각각의 개념을 정리했으니 참고 부탁드립니다.) <br />
@@ -15,7 +15,7 @@ var let const를 비교할 때 몇가지 키워드로 정리해서 알아보자 
 2. 변수의 유효범위
 3. 호이스팅
 
-##### 먼저 변수 값의 변환을 알아보자
+#### 먼저 변수 값의 변환을 알아보자
 기존의 Javascript를 사용하면서 가장 문제가 있다고 느낀점은 변수 선언의 방식이였다. <br />
 
 var를 사용하면 변수 선언의 경우 할당되는 값이 유동적으로 변경될 수 있는 단점을 가지고있다. <br />
@@ -58,7 +58,7 @@ var를 사용하면 변수 선언의 경우 할당되는 값이 유동적으로 
 <code>let</code>은 변수에 재할당이 가능하지만, <code>const</code>는 변수 재선언, 재할당 모두 불가능하다. <br />
 
 아래 코드를 보자. <br />
-##### <code>let</code>
+#### <code>let</code>
 
 ```javascript
   
@@ -69,7 +69,7 @@ var를 사용하면 변수 선언의 경우 할당되는 값이 유동적으로 
 
 ```
 
-##### <code>const</code>
+#### <code>const</code>
 
 ```javascript
   
@@ -84,7 +84,7 @@ var를 사용하면 변수 선언의 경우 할당되는 값이 유동적으로 
 ##### 변수의 유효범위
 먼저 var는 기본적으로 function scope를 가지게되고 let, const는 block scope를 가지게된다. <br />
 
-##### <code>var</code>
+#### <code>var</code>
 
 ```javscript
   
@@ -99,7 +99,7 @@ var를 사용하면 변수 선언의 경우 할당되는 값이 유동적으로 
 
 ```
 
-##### <code>let과 const</code>
+#### <code>let과 const</code>
 
 ```javascript
 
