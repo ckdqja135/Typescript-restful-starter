@@ -1,4 +1,5 @@
 # Hoisting
+<p align = "center"><img src = "https://media.vlpt.us/post-images/marcus/96e03630-2d0a-11e9-8401-8b896dd4fb48/webkul.com.png" width = 60%></img></p>
 Javascript에 Hoisting을 알아보자
 
 Hoisting은 어쩌면 우리가 무의식적으로 사용하고있을 수 있다.
