@@ -80,9 +80,5 @@ console.log(TDZ);
 ##### 결론 
 let/const선언 변수는 호이스팅되지 않는 것이 아니다. 스코프에 진입할 때 변수가 만들어지고 TDZ(Temporal Dead Zone)가 생성되지만, 코드 실행이 변수가 실제 있는 위치에 도달할 때까지 액세스할 수 없는 것이다. let/const변수가 선언된 시점에서 제어흐름은 TDZ를 떠난 상태가 되며, 변수를 사용할 수 있게 된다.
 
-```해당 문서에 문제가 있거나 설명이 부족한다면 
-rhcn258@gmail.com으로 메일이나 
-https://velog.io/@marcus/Javascript-Hoisting 에 댓글 주시면 감사하겠습니다:D```
-
 ### 참조
 [참조](https://github.com/Jogeonsang/Hoisting/blob/master/README.md)
