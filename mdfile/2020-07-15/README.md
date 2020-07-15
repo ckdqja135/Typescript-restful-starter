@@ -1,1 +1,1 @@
-* 1.[long, short포지션]()
+* 1. [long, short포지션]()
