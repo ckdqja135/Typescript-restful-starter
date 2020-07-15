@@ -6,7 +6,7 @@ https://kr.tradingview.com/symbols/ETHUSD/ <br />
 
 #### BitMEX
 BitMEX 는 cryptocurrency 교환 및 파생 거래 플랫폼입니다. 세이셸에 등록되어 있으며 전 세계에 지사가있는 HDR Global Trading Limited가 소유하고 운영 합니다. <br />
-https://en.wikipedia.org/wiki/BitMEX
+https://en.wikipedia.org/wiki/BitMEX <br />
 https://www.bitmex.com/app/tradingOverview
 
 
