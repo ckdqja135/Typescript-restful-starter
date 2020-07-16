@@ -9,5 +9,13 @@ BitMEX 는 cryptocurrency 교환 및 파생 거래 플랫폼입니다. 세이셸
 https://en.wikipedia.org/wiki/BitMEX <br />
 https://www.bitmex.com/app/tradingOverview
 
+#### binance
+영어에서 번역됨-바이 낸스는 다양한 암호 화폐 거래를위한 플랫폼을 제공하는 암호 화폐 거래소입니다. 2018 년 1 월 기준, 바이 낸스는 거래량면에서 세계에서 가장 큰 암호 화폐 거래소였습니다. <br />
+https://www.binance.com/en <br />
+https://en.wikipedia.org/wiki/Binance <br />
+
+
+
+
 
 * [long, short포지션](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-07-15/%ED%8F%AC%EC%A7%80%EC%85%98.md)
