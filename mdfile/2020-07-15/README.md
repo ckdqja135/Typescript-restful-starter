@@ -14,7 +14,11 @@ https://www.bitmex.com/app/tradingOverview
 https://www.binance.com/en <br />
 https://en.wikipedia.org/wiki/Binance <br />
 
+#### 주문 수량
+내가 얼마 얼마에 사겠다고 걸어놓은 수량
 
+#### 체결 수량
+내가 얼마 얼마에 사겠다고 걸어놓은 것이 팔렸거나, 매도가 된 상태.
 
 
 
