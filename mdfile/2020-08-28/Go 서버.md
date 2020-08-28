@@ -10,7 +10,7 @@ Golang - net/http 패키지의 ListenAndServe메소드를 통해서 서버를 �
 
 아래 예제를 통해서 요청과 응답의 기본 흐름을 익히실 수 있습니다.
 
-''' text
+``` text
   go_http.go
 ```
 
