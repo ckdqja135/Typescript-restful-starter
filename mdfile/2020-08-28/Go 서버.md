@@ -64,3 +64,17 @@ Golang - net/http 패키지의 ListenAndServe메소드를 통해서 서버를 �
 - 18 ~ 21번 라인 : Get방식의 Request의 Parameter에 대한 모든 Key, Value 값 출력
 - 30번 라인 : 서버 시작 -8080 포트
 - 32 ~ 36번 라인 : 서버 시작 실패 시 예외 처리
+
+
+## 실행 시
+* 먼저 [여기](https://golang.org/dl/)에서 Go를 설치 후에 진행 해야 함.
+
+``` text
+  go build go_http.go
+```
+#### 이 때 해당 폴더에 go_http.exe파일이 생성 되는데
+
+``` text
+  go run go_http.go 
+```
+#### 으로 실행시켜준다.
