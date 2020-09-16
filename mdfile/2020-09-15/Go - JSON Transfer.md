@@ -139,7 +139,7 @@ EndOfFile이라는 것이 뜬다. Body에 data를 넣어야 하기 때문에 URL
 이럴 때 필요한 것이 클라이언트 앱이다. <br />
 
 크롬 앱 중에 Advanced REST client 라는 앱을 설치한다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293018-ece10300-f821-11ea-8042-7b35608eb89c.png" width = 40%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293188-59f49880-f822-11ea-93db-0f3c717aa3d7.png" width = 40%> </img></p>
 
 ### 풀 소스
 
