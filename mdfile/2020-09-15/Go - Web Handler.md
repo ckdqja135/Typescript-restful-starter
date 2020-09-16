@@ -34,6 +34,76 @@ Fprint(w, "Hello World")는 request 보낸 쪽에 Hello World라는 Response를 
   })
     
 ```
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93289063-64119980-f818-11ea-88f1-6591ac27b988.png" width = 50%> </img></p>
+
+'/bar' 라는 경로에 진입 했을 때의 Handler를 추가했다.
+
+추가로 
+
+``` Go
+
+type fooHandler struct{}
+
+``` 
+으로 비어있는 struct를 만들고, <br />
+
+fooHandler의 인스턴스의 메소드를 만들어준다. <br />
+``` Go
+
+  func (f *fooHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprint(w, "Hello Foo!")
+  }
+
+```
+
+다시 main함수에 돌아와서 맨 아래줄에
+
+``` Go
+
+   http.Handle("/foo", &fooHandler{})
+      
+```
+를 추가해 준다.
+
+이 상태에서 실행을 하면
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93289391-3bd66a80-f819-11ea-90a3-1aaec2dbaf78.png" width = 50%> </img></p>
+
+Foo Handler도 추가 됐음을 알 수 있다. <br />
+
+지금까지 3가지의 Handler를 추가했는데 "/", "/bar"의 Handler와 "/foo"의 Handler가 다르다. <br />
+"/", "/bar"의 Handler는 func형태로 직접등록하여 사용한 상태이고, "/foo"의 Handler는 인스턴스 형태로 등록할 때 많이 쓰이는 형태인데 <br />
+인스턴스로 등록 할 때는 <br />
+
+위와 같이 어떤 인스턴스를 만들고, <br />
+``` Go
+
+type fooHandler struct{}
+
+``` 
+
+``` Go
+
+  func (f *fooHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprint(w, "Hello Foo!")
+  }
+
+```
+
+거기에 해당하는 ServeHTTP라는 인터페이스를 구현해서 그 인터페이스를 구현한 것을 <code>&fooHandler{}</code>로 등록하는 형태로 만들면 된다. <br />
+
+실제로 Handler는 ServeHTTP라는 함수 하나를 가지고 있는 인터페이스로
+
+``` Go
+
+  type Handler interface {
+    ServeHTTP(ResponseWriter, * Request)
+  }
+  
+```
+형태로 이루어져 있다.
+
+
 
 ### 풀 소스
 
