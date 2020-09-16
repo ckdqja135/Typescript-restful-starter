@@ -133,7 +133,14 @@ http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
 6 : 잘 되었다고 알려주기 위해 사용한다. string(data)으로 사용한 이유는 data가 byte[]형식이기 때문에 string으로 형변환 시켜준 것이다. <br />
 
 이 상태에서 실행을 하게 되면 <br />
-https://user-images.githubusercontent.com/33046341/93293018-ece10300-f821-11ea-8042-7b35608eb89c.png)
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293018-ece10300-f821-11ea-8042-7b35608eb89c.png" width = 40%> </img></p>
+
+EndOfFile이라는 것이 뜬다. Body에 data를 넣어야 하기 때문에 URL에 데이터를 넣어도 결과는 똑같다. <br />
+이럴 때 필요한 것이 클라이언트 앱이다. <br />
+
+크롬 앱 중에 Advanced REST client 라는 앱을 설치한다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293018-ece10300-f821-11ea-8042-7b35608eb89c.png" width = 40%> </img></p>
+
 ### 풀 소스
 
 ``` Go
