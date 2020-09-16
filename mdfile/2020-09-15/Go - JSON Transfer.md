@@ -184,8 +184,12 @@ Email과 시간을 제외한 모든 값들이 제대로 들어가지 않았다. 
 제대로 들어간 것을 확인할 수 있다. <br />
 하지만 우리가 입력했던 형식이랑은 다르게 출력이 되었는데 그 이유는 JSON이 아닌 TEXT로 인식하고 있기 때문이다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294565-db015f00-f825-11ea-9991-344c396d7fb1.png" width = 50%> </img></p>
-그래서 ```  func (f *fooHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)  ``` 부분에
-``` Go w.Header().Add("content-type", "application/json")```을 추가해준다.
+그래서 <code>func (f *fooHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)</code> 부분에 <br />
+<code>w.Header().Add("content-type", "application/json")</code>을 추가해준 뒤 다시 실행시키면 <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294897-ca9db400-f826-11ea-9ea5-5054ed88f4c9.png" width = 50%> </img></p>
+정상적으로 동작하는 것을 확인 할 수 있다. 
+
 ### 풀 소스
 
 ``` Go
@@ -219,6 +223,7 @@ Email과 시간을 제외한 모든 값들이 제대로 들어가지 않았다. 
     
     user.CreatedAt = time.Now()
     data, _ := json.Marshal(user)
+    w.Header().Add("content-type", "application/json")
     	w.WriteHeader(http.StatusOK)
     fmt.Fprint(w, string(data))
   }
