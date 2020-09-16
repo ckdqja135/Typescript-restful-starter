@@ -107,7 +107,7 @@ http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
     user.CreatedAt = time.Now() // 4
     
     data, _ := json.Marshal(user) // 5
-    w.WriteHander(http.StatusOK) // 6
+    w.WriteHeader(http.StatusOK) // 6
     fmt.Fprint(w, string(data))
   }
   
@@ -133,14 +133,59 @@ http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
 6 : 잘 되었다고 알려주기 위해 사용한다. string(data)으로 사용한 이유는 data가 byte[]형식이기 때문에 string으로 형변환 시켜준 것이다. <br />
 
 이 상태에서 실행을 하게 되면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293018-ece10300-f821-11ea-8042-7b35608eb89c.png" width = 40%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293018-ece10300-f821-11ea-8042-7b35608eb89c.png" width = 50%> </img></p>
 
 EndOfFile이라는 것이 뜬다. Body에 data를 넣어야 하기 때문에 URL에 데이터를 넣어도 결과는 똑같다. <br />
 이럴 때 필요한 것이 클라이언트 앱이다. <br />
 
 크롬 앱 중에 Advanced REST client 라는 앱을 설치한다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293188-59f49880-f822-11ea-93db-0f3c717aa3d7.png" width = 40%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293188-59f49880-f822-11ea-93db-0f3c717aa3d7.png" width = 50%> </img></p>
 
+앱을 키고 실행한다. <br />
+POST로 바꾸어주고, 주소는 <code>http://localhost:3000/foo</code>로 지정해준 뒤, Body 부분에 user struct부분에 맞추어 JSON형태의 값을 넣어준 뒤 데이터를 날려준다.
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293713-9379d380-f823-11ea-80df-511d5d8b48a5.png" width = 50%> </img></p>
+
+결과를 보면
+``` JSON
+
+{"FirstName":"","LastName":"","Email":"changbeom@naver.com","CreatedAt":"2020-09-16T13:49:06.990073+09:00"}
+
+```
+Email과 시간을 제외한 모든 값들이 제대로 들어가지 않았다. 그 이유는 JSON에 입력했던 형식과 User struct에서 쓰는 형식이 다르기 때문에 서로 다르게 인식하는 것인데, <br />
+그것을 맞춰주어야 한다. <br />
+
+```Go 
+
+   type User struct {
+    FirstName string 
+    LastName  string
+    Email     string
+    CreatedAt time.Time
+  }
+  
+```
+여기에서 FirstName을 first_name으로 바꾸어 주어도 되지만 Go에서는 밑줄을 싫어한다. 그렇기 때문에
+
+```Go 
+
+   type User struct {
+    FirstName string `json:"first_name"`
+    LastName  string `json:"last_name"`
+    Email     string `json:"email"`
+    CreatedAt time.Time `json:"created_at"`
+  }
+  
+```
+이런식으로 옆에 Annotation(설명)을 붙여준다. <br />
+이렇게 하면 Decode하고 Marshal할 때 해당 컬럼 이름에 맞추어서 해준다. <br />
+다시 실행해보자! <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294450-7d6d1280-f825-11ea-8d9e-9682f97f7f7d.png" width = 50%> </img></p>
+제대로 들어간 것을 확인할 수 있다. <br />
+하지만 우리가 입력했던 형식이랑은 다르게 출력이 되었는데 그 이유는 JSON이 아닌 TEXT로 인식하고 있기 때문이다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294565-db015f00-f825-11ea-9991-344c396d7fb1.png" width = 50%> </img></p>
+그래서 ```  func (f *fooHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)  ``` 부분에
+``` Go w.Header().Add("content-type", "application/json")```을 추가해준다.
 ### 풀 소스
 
 ``` Go
@@ -154,11 +199,11 @@ EndOfFile이라는 것이 뜬다. Body에 data를 넣어야 하기 때문에 URL
     "time"
   )
 
-  type User struct {
-    FirstName string
-    LastName  string
-    Email     string
-    CreatedAt time.Time
+   type User struct {
+    FirstName string `json:"first_name"`
+    LastName  string `json:"last_name"`
+    Email     string `json:"email"`
+    CreatedAt time.Time `json:"created_at"`
   }
 
   type fooHandler struct{}
@@ -174,7 +219,7 @@ EndOfFile이라는 것이 뜬다. Body에 data를 넣어야 하기 때문에 URL
     
     user.CreatedAt = time.Now()
     data, _ := json.Marshal(user)
-    w.WriteHander(http.StatusOK)
+    	w.WriteHeader(http.StatusOK)
     fmt.Fprint(w, string(data))
   }
 
