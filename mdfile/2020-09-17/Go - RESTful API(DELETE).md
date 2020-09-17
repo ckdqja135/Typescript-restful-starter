@@ -322,7 +322,7 @@ func TestDeleteUsers(t *testing.T) {
 
 <code>myapp/app_test.go</code>
 package myapp
-
+``` Go
 import (
 	"encoding/json"
 	"fmt"
@@ -431,15 +431,17 @@ func NewHandler() http.Handler {
 ```
 
 <code>main.go</code>
-package main
+``` GO
+	package main
 
-import (
-	"net/http"
+	import (
+		"net/http"
 
-	"./myapp"
-)
+		"./myapp"
+	)
 
-func main() {
-	http.ListenAndServe(":3000", myapp.NewHandler())
-}
+	func main() {
+		http.ListenAndServe(":3000", myapp.NewHandler())
+	}
 
+```
