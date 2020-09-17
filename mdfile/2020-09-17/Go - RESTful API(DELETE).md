@@ -4,50 +4,50 @@
 
 <code>myapp/app_test.go</code>
 ``` Go
-  
-  package myapp
 
-  import (
-    "encoding/json"
-    "io/ioutil"
-    "net/http"
-    "net/http/httptest"
-    "strconv"
-    "strings"
-    "testing"
+package myapp
 
-    "github.com/stretchr/testify/assert"
-  )
+import (
+"encoding/json"
+"io/ioutil"
+"net/http"
+"net/http/httptest"
+"strconv"
+"strings"
+"testing"
 
-  func TestIndex(t *testing.T) {
-    assert := assert.New(t)
+"github.com/stretchr/testify/assert"
+)
 
-    ts := httptest.NewServer(NewHandler())
-    defer ts.Close()
+func TestIndex(t *testing.T) {
+assert := assert.New(t)
 
-    resp, err := http.Get(ts.URL)
-    assert.NoError(err)
-    assert.Equal(http.StatusOK, resp.StatusCode)
-    data, _ := ioutil.ReadAll(resp.Body)
-    assert.Equal("Hello World", string(data))
-  }
+ts := httptest.NewServer(NewHandler())
+defer ts.Close()
 
-  func TestUsers(t *testing.T) {
-    assert := assert.New(t)
+resp, err := http.Get(ts.URL)
+assert.NoError(err)
+assert.Equal(http.StatusOK, resp.StatusCode)
+data, _ := ioutil.ReadAll(resp.Body)
+assert.Equal("Hello World", string(data))
+}
 
-    ts := httptest.NewServer(NewHandler())
-    defer ts.Close()
+func TestUsers(t *testing.T) {
+assert := assert.New(t)
 
-    resp, err := http.Get(ts.URL + "/users")
-    assert.NoError(err)
-    assert.Equal(http.StatusOK, resp.StatusCode)
-    data, _ := ioutil.ReadAll(resp.Body)
-    assert.Contains(string(data), "Get UserInfo")
-  }
+ts := httptest.NewServer(NewHandler())
+defer ts.Close()
+
+resp, err := http.Get(ts.URL + "/users")
+assert.NoError(err)
+assert.Equal(http.StatusOK, resp.StatusCode)
+data, _ := ioutil.ReadAll(resp.Body)
+assert.Contains(string(data), "Get UserInfo")
+}
   
   ...
   
-    func TestDeleteUsers(t *testing.T) {
+func TestDeleteUsers(t *testing.T) {
     assert := assert.New(t)
 
     ts := httptest.NewServer(NewHandler())
@@ -57,7 +57,7 @@
     resp, err := http.DefaultClient.Do(req) // 1
     assert.NoError(err)
     assert.Equal(http.StatusOK, resp.StatusCode)
-    
+}
 ```
 
 1 : http 자체에서 GET, POST는 지원하지만 DELETE는 지원하지 않아서 저렇게 사용해야 한다. <br />
