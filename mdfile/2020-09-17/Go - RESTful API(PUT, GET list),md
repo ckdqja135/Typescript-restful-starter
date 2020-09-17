@@ -426,12 +426,12 @@ func TestUsers_WithUsersData(t *testing.T) {
     defer ts.Close()
 
     resp, err := http.Post(ts.URL+"/users", "application/json",
-    strings.NewReader(`{"first_name":"tucker", "last_name":"kim", "email":"tucker@naver.com"}`))
+    strings.NewReader(`{"first_name":"changbeom", "last_name":"song", "email":"changbeom@naver.com"}`))
     assert.NoError(err)
     assert.Equal(http.StatusCreated, resp.StatusCode)
     
       resp, err := http.Post(ts.URL+"/users", "application/json",
-    strings.NewReader(`{"first_name":"jason", "last_name":"park", "email":"jason@naver.com"}`))
+    strings.NewReader(`{"first_name":"changbeom", "last_name":"song", "email":"changbeom@naver.com"}`))
     assert.NoError(err)
     assert.Equal(http.StatusCreated, resp.StatusCode)
     
@@ -491,6 +491,417 @@ func TestUsers_WithUsersData(t *testing.T) {
 
 이 상태에서 테스트를 하면 PASS OK가 뜨게 된다. <br />
 
+이제 <code>myapp/app_test.go</code>로 돌아와서 data를 받았을 때 잘 받아지는지 확인해야 한다.
+
+``` Go
+
+func TestUsers_WithUsersData(t *testing.T) {
+    assert := assert.New(t)
+
+    ts := httptest.NewServer(NewHandler())
+    defer ts.Close()
+
+    resp, err := http.Post(ts.URL+"/users", "application/json",
+    strings.NewReader(`{"first_name":"changbeom", "last_name":"song", "email":"changbeom@naver.com"}`))
+    assert.NoError(err)
+    assert.Equal(http.StatusCreated, resp.StatusCode)
+    
+      resp, err := http.Post(ts.URL+"/users", "application/json",
+    strings.NewReader(`{"first_name":"changbeom", "last_name":"song", "email":"changbeom@naver.com"}`))
+    assert.NoError(err)
+    assert.Equal(http.StatusCreated, resp.StatusCode)
+    
+    resp, err := http.Get(ts.URL+"/users")
+    assert.NoError(err)
+    assert.Equal(http.StatusOK, resp.StatusCode)
+    data, err := ioutil.ReadAll(resp.Body)
+    
+    // 수정된 부분
+    users := []*User{}
+    json.newDecoder(resp.Body).Decode(&users) // 1
+    assert.NoError(err)
+    assert.Equal(2, len(users))
+    // assert.NoError(err)
+    // assert.NoZero(len(data))
+}
+
+``` 
+
+기존 두 줄 코드는 지우고 새로운 코드를 넣었다. <br />
+1 : marshal할 때 포인터 타입을 넣어주어야 하는데 <code>[]*User{}</code>가 포인터 타입이 아니여서 users앞에 &를 넣어주었다.
+
+이제 정상적으로 List를 뽑아내는지 확인해보자! <br />
+
+먼저 POST메소드로 id가 1,2만 바꾸어서 등록해보자! <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93455773-bc7b9080-f917-11ea-9d79-de14bb904c92.png" width = 70%> </img></p>
+
+그 후 GET메소드를 호출 했을 때 전체 List가 나오는지 확인해보자! <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93455898-eaf96b80-f917-11ea-96fa-40d126701ca0.png" width = 70%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93456116-3744ab80-f918-11ea-8046-2549d049767c.png" width = 70%> </img></p>
+
+### 풀 소스
+
+<code>myapp/test_app.go</code>
+``` Go
+
+package myapp
+
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
+	"strconv"
+	"strings"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
+
+func TestIndex(t *testing.T) {
+	assert := assert.New(t)
+
+	ts := httptest.NewServer(NewHandler())
+	defer ts.Close()
+
+	resp, err := http.Get(ts.URL)
+	assert.NoError(err)
+	assert.Equal(http.StatusOK, resp.StatusCode)
+	data, _ := ioutil.ReadAll(resp.Body)
+	assert.Equal("Hello World", string(data))
+}
+
+func TestUsers(t *testing.T) {
+	assert := assert.New(t)
+
+	ts := httptest.NewServer(NewHandler())
+	defer ts.Close()
+
+	resp, err := http.Get(ts.URL + "/users")
+	assert.NoError(err)
+	assert.Equal(http.StatusOK, resp.StatusCode)
+	data, _ := ioutil.ReadAll(resp.Body)
+	assert.Equal(string(data), "No Users")
+}
+
+func TestGetUserInfo(t *testing.T) {
+	assert := assert.New(t)
+
+	ts := httptest.NewServer(NewHandler())
+	defer ts.Close()
+
+	resp, err := http.Get(ts.URL + "/users/89")
+	assert.NoError(err)
+	assert.Equal(http.StatusOK, resp.StatusCode)
+	data, _ := ioutil.ReadAll(resp.Body)
+	assert.Contains(string(data), "No User Id:89")
+
+	resp, err = http.Get(ts.URL + "/users/56")
+	assert.NoError(err)
+	assert.Equal(http.StatusOK, resp.StatusCode)
+	data, _ = ioutil.ReadAll(resp.Body)
+	assert.Contains(string(data), "No User Id:56")
+}
+
+func TestCreateUser(t *testing.T) {
+	assert := assert.New(t)
+
+	ts := httptest.NewServer(NewHandler())
+	defer ts.Close()
+
+	resp, err := http.Post(ts.URL+"/users", "application/json",
+		strings.NewReader(`{"first_name":"tucker", "last_name":"kim", "email":"tucker@naver.com"}`))
+	assert.NoError(err)
+	assert.Equal(http.StatusCreated, resp.StatusCode)
+
+	user := new(User)
+	err = json.NewDecoder(resp.Body).Decode(user)
+	assert.NoError(err)
+	assert.NotEqual(0, user.ID)
+
+	id := user.ID
+	resp, err = http.Get(ts.URL + "/users/" + strconv.Itoa(id))
+	assert.NoError(err)
+	assert.Equal(http.StatusOK, resp.StatusCode)
+
+	user2 := new(User)
+	err = json.NewDecoder(resp.Body).Decode(user2)
+	assert.NoError(err)
+	assert.Equal(user.ID, user2.ID)
+	assert.Equal(user.FirstName, user2.FirstName)
+}
+
+func TestDeleteUser(t *testing.T) {
+	assert := assert.New(t)
+
+	ts := httptest.NewServer(NewHandler())
+	defer ts.Close()
+
+	req, _ := http.NewRequest("DELETE", ts.URL+"/users/1", nil)
+	resp, err := http.DefaultClient.Do(req)
+	assert.NoError(err)
+	assert.Equal(http.StatusOK, resp.StatusCode)
+	data, _ := ioutil.ReadAll(resp.Body)
+	assert.Contains(string(data), "No User ID:1")
+
+	resp, err = http.Post(ts.URL+"/users", "application/json",
+		strings.NewReader(`{"first_name":"tucker", "last_name":"kim", "email":"tucker@naver.com"}`))
+	assert.NoError(err)
+	assert.Equal(http.StatusCreated, resp.StatusCode)
+
+	user := new(User)
+	err = json.NewDecoder(resp.Body).Decode(user)
+	assert.NoError(err)
+	assert.NotEqual(0, user.ID)
+
+	req, _ = http.NewRequest("DELETE", ts.URL+"/users/1", nil)
+	resp, err = http.DefaultClient.Do(req)
+	assert.NoError(err)
+	assert.Equal(http.StatusOK, resp.StatusCode)
+	data, _ = ioutil.ReadAll(resp.Body)
+	assert.Contains(string(data), "Deleted User ID:1")
+}
+
+func TestUpdateUser(t *testing.T) {
+	assert := assert.New(t)
+
+	ts := httptest.NewServer(NewHandler())
+	defer ts.Close()
+
+	req, _ := http.NewRequest("PUT", ts.URL+"/users",
+		strings.NewReader(`{"id":1, "first_name":"updated", "last_name":"updated", "email":"updated@naver.com"}`))
+	resp, err := http.DefaultClient.Do(req)
+	assert.NoError(err)
+	assert.Equal(http.StatusOK, resp.StatusCode)
+	data, _ := ioutil.ReadAll(resp.Body)
+	assert.Contains(string(data), "No User ID:1")
+
+	resp, err = http.Post(ts.URL+"/users", "application/json",
+		strings.NewReader(`{"first_name":"tucker", "last_name":"kim", "email":"tucker@naver.com"}`))
+	assert.NoError(err)
+	assert.Equal(http.StatusCreated, resp.StatusCode)
+
+	user := new(User)
+	err = json.NewDecoder(resp.Body).Decode(user)
+	assert.NoError(err)
+	assert.NotEqual(0, user.ID)
+
+	updateStr := fmt.Sprintf(`{"id":%d, "first_name":"jason"}`, user.ID)
+
+	req, _ = http.NewRequest("PUT", ts.URL+"/users",
+		strings.NewReader(updateStr))
+	resp, err = http.DefaultClient.Do(req)
+	assert.NoError(err)
+	assert.Equal(http.StatusOK, resp.StatusCode)
+
+	updateUser := new(User)
+	err = json.NewDecoder(resp.Body).Decode(updateUser)
+	assert.NoError(err)
+	assert.Equal(updateUser.ID, user.ID)
+	assert.Equal("jason", updateUser.FirstName)
+	assert.Equal(user.LastName, updateUser.LastName)
+	assert.Equal(user.Email, updateUser.Email)
+}
+
+func TestUsers_WithUsersData(t *testing.T) {
+	assert := assert.New(t)
+
+	ts := httptest.NewServer(NewHandler())
+	defer ts.Close()
+
+	resp, err := http.Post(ts.URL+"/users", "application/json",
+		strings.NewReader(`{"first_name":"tucker", "last_name":"kim", "email":"tucker@naver.com"}`))
+	assert.NoError(err)
+	assert.Equal(http.StatusCreated, resp.StatusCode)
+
+	resp, err = http.Post(ts.URL+"/users", "application/json",
+		strings.NewReader(`{"first_name":"jason", "last_name":"park", "email":"jason@naver.com"}`))
+	assert.NoError(err)
+	assert.Equal(http.StatusCreated, resp.StatusCode)
+
+	resp, err = http.Get(ts.URL + "/users")
+	assert.NoError(err)
+	assert.Equal(http.StatusOK, resp.StatusCode)
+
+	users := []*User{}
+	err = json.NewDecoder(resp.Body).Decode(&users)
+	assert.NoError(err)
+	assert.Equal(2, len(users))
+}
 
 
+```
+<code>myapp/app.go</code>
+``` Go
 
+package myapp
+
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"strconv"
+	"time"
+
+	"github.com/gorilla/mux"
+)
+
+// User struct
+type User struct {
+	ID        int       `json:"id"`
+	FirstName string    `json:"first_name"`
+	LastName  string    `json:"last_name"`
+	Email     string    `json:"email"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
+var userMap map[int]*User
+var lastID int
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "Hello World")
+}
+
+func usersHandler(w http.ResponseWriter, r *http.Request) {
+	if len(userMap) == 0 {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "No Users")
+		return
+	}
+	users := []*User{}
+	for _, u := range userMap {
+		users = append(users, u)
+	}
+	data, _ := json.Marshal(users)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprint(w, string(data))
+}
+
+func getUserInfoHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprint(w, err)
+		return
+	}
+	user, ok := userMap[id]
+	if !ok {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "No User Id:", id)
+		return
+	}
+
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	data, _ := json.Marshal(user)
+	fmt.Fprint(w, string(data))
+}
+
+func createUserHandler(w http.ResponseWriter, r *http.Request) {
+	user := new(User)
+	err := json.NewDecoder(r.Body).Decode(user)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprint(w, err)
+		return
+	}
+
+	// Created User
+	lastID++
+	user.ID = lastID
+	user.CreatedAt = time.Now()
+	userMap[user.ID] = user
+
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	data, _ := json.Marshal(user)
+	fmt.Fprint(w, string(data))
+}
+
+func deleteUserHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprint(w, err)
+		return
+	}
+	_, ok := userMap[id]
+	if !ok {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "No User ID:", id)
+		return
+	}
+	delete(userMap, id)
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprint(w, "Deleted User ID:", id)
+}
+
+func updateUserHandler(w http.ResponseWriter, r *http.Request) {
+	updateUser := new(User)
+	err := json.NewDecoder(r.Body).Decode(updateUser)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprint(w, err)
+		return
+	}
+	user, ok := userMap[updateUser.ID]
+	if !ok {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "No User ID:", updateUser.ID)
+		return
+	}
+	if updateUser.FirstName != "" {
+		user.FirstName = updateUser.FirstName
+	}
+	if updateUser.LastName != "" {
+		user.LastName = updateUser.LastName
+	}
+	if updateUser.Email != "" {
+		user.Email = updateUser.Email
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	data, _ := json.Marshal(user)
+	fmt.Fprint(w, string(data))
+}
+
+// NewHandler make a new myapp handler
+func NewHandler() http.Handler {
+	userMap = make(map[int]*User)
+	lastID = 0
+	mux := mux.NewRouter()
+
+	mux.HandleFunc("/", indexHandler)
+	mux.HandleFunc("/users", usersHandler).Methods("GET")
+	mux.HandleFunc("/users", createUserHandler).Methods("POST")
+	mux.HandleFunc("/users", updateUserHandler).Methods("PUT")
+	mux.HandleFunc("/users/{id:[0-9]+}", getUserInfoHandler).Methods("GET")
+	mux.HandleFunc("/users/{id:[0-9]+}", deleteUserHandler).Methods("DELETE")
+	return mux
+}
+
+
+```
+<code>main.go</code>
+``` Go
+
+package main
+
+import (
+	"net/http"
+
+	"./myapp"
+)
+
+func main() {
+	http.ListenAndServe(":3000", myapp.NewHandler())
+}
+
+
+```
