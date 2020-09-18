@@ -17,23 +17,33 @@
 
 맨 위 Componenet(컴포넌트)라는 것은 interface이고, operation()이라는 function을 가지고 있다. <br />
 그리고 이 것을 구현한 게 두 개가 있는데 첫번째가 ConcreteComponent인데 실제로 Componenet interface를 구현했고, operation()을 가지고 있다. <br />
+
 ConcreteComponent는 기본 기능을 만들었다고 생각하면 된다. 볼펜으로 따지면 글쓰는 기능이 된다. <br />
+
 Decorator는 component interface를 맴버 변수로 가지고 있다. Componenet를 구현하고 동시에 맴버 변수로 다른 Componenet interface를 들고 있는 것이다. <br />
+
 그래서 이것이 operation()하면 Decorator가 가지고 있는 component안에도 operation()를 호출하고 호출이 끝나면 자기 것을 하는데 <br />
 이 Decorator가 상속해서 있는 것이 ConcreteDecorator가 있는데 '부가기능'을 의미한다. 예를들어 '압축'을 한다거나, '암호화'를 한다거나 등의 기능을 담당한다. <br />
+
 ConcreteDecorator의 operation()이 호출이 되면 자기가 가지고 있는 맴버 변수의 컴포넌트(Decorator 의 컴포넌트)를 먼저 호출하고, 그 다음에 자기 것을 호출하는 형태이다. <br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93547333-cba62100-f99f-11ea-97bd-e0e4ebe0f52a.png" width = 70%> </img></p>
 이거는 또 다른 예제인데, UI에서 윈도우를 그린것이라고 생각하면 된다. <br />
+
 Window라는 interface가 있는데 darw(), getDescription()이 있다고 치면 얘네를 구현한 SimpleWindow라는 것이 있는데 <br />
 SimpleWindow에게 종, 횡 스크롤바를 부가기능을 넣는다 할 때 draw, getDescription이 있기 때문에 이 Window 자체 기능이 아니다. <br />
+
 그래서 SimpleWindow는 Window 자체 기능을 담당 하는 것이고, Window를 상속 받아서 WindowDecorator라는 것이 있는데 이것은 Window를 맴버 변수로 가지고 있다.
+
 이것을 구현한 맴버 구조체가 두가지가 있는데 HorizontalScrollBarDecorator(횡스크롤 바)와 VerticalScrollBarDecorator(종 스크롤바) 가 있다.
+
 기본 기능은 SimpleWindow가 있는데 여기에 저 둘을 붙이는 것이다. <br />
 그래서 VerticalScrollBarDecorator가 있고, VerticalScrollBarDecorator이 다시 HorizontalScrollBarDecorator를 맴버 변수로 가지고 있고, <br />
 HorizontalScrollBarDecorator이 SimpleWinodw를 맴버 변수로 가지고 있는 상태이다. <br />
+
 그래서 맨 앞에 있는 VerticalScrollBarDecorator을 호출하게 되면 HorizontalScrollBarDecorator의 draw()을 호출하게 되고, HorizontalScrollBarDecorator의 draw()을 호출하게 되면, <br />
-SimpleWindow의 draw()가 호출하게 된다. 그 다음 SimpleWindow의 draw()가 호출이 끝나면 return되서 횡 스크롤 바가 본인의 스크롤을 그리게 되고, 또 return되서 종 스크롤바가 본인의 스크롤을 그리게 된다. <br /> 
+SimpleWindow의 draw()가 호출하게 된다. 
+그 다음 SimpleWindow의 draw()가 호출이 끝나면 return되서 횡 스크롤 바가 본인의 스크롤을 그리게 되고, 또 return되서 종 스크롤바가 본인의 스크롤을 그리게 된다. <br /> 
 그래서 SimpleWindow가 먼저 그려지게 되고, 횡 스크롤 붙이고, 종 스크롤 붙여서 하나의 과정이 되는 것을 그린 것이다. <br />
 
 
@@ -100,14 +110,20 @@ Data를 받을 때 -> unzip -> Decrypt -> Data <br />
 ```
 
  1 : 컴포넌트 인터페이스 정의 <br />
+ 
  2 : SendComponent의 Operator 함수 호출 <br />
      -> 실질적으로 data가 전송되는 기본 기능(실적으로 네트워크를 통해서든 보내야 하는데 테스트기 때문에 저렇게 작성함) <br />
+     
  3 : 압축하는 컴포넌트 <br />
+ 
  4 : ZipComponent의 Operator 함수 호출<Br />
      byteAarry와 error가 배출 되는데 각각 zipData, err변수에 담는다.<br />
      ZipComponent데코레어터가 데코레이트 하고 있는 실제 컴포넌트의 self.com.Operator를 압축한 data를 호출<br />
+     
  5 : Encrypt데코레이터 생성. 데코레이터기 때문에 다른 컴포넌트를 가지고 있다. <br />
+ 
  6 : Encrypt라는 func이 있는데 byte[]와 key를 받으면 결과로 byte[]가 나오고 error가 나오기 때문에 key값과 data를 넣어준다. <br />
+ 
  7 : 암호화하고, 압축하고 전송하는 것을 테스트 하기위해 main함수 선언. <br />
      그래서 Encrypt를 먼저 만들고 이 안에 컴포넌트를 압축하는 컴포넌트로 만들고 또 그 안에 컴포넌트를 전송하는 컴포넌트로 만들어준다. <br />
      이렇게되면 암호화하는 컴포넌트가 ZipComponent를 가지고 있고 ZipComponent가 SendComponent하는 컴포넌트를 가지게 된다. <br />
@@ -185,17 +201,21 @@ main 함수 바로 위에 암호화를 해제하는 컴포넌트와 압축을 �
 
  1 : Decrypt 컴포넌트 <br />
      -> 데코레이터이기 때문에 컴포넌트를 가지고 있고, 암호를 풀어야 하기 때문에 key를 가지고 있다. <br />
+     
  2 : 컴포넌트 인터페이스를 implements하기 때문에 Operator func을 구현하고 있어야 한다. 
      -> 데이터와 키를 넘기면 압축이 풀리는 데이터를 전해주는 역할을 한다. <br />
 
  3 : Unzip 컴포넌트 생성 <br />
+ 
  4 : 마찬가지로 컴포넌트 인터페이스를 implements하기 때문에 Operator func을 구현하고 있어야 한다.  <br />
      -> Read()함수가 하는 일은 데이터를 넘기면 압축을 풀어준다. <br />
      
  5 : 데이터를 넘겨주면 압축을 풀고, 암호를 풀고 데이터를 나타내주는 변수. <br />
  
  6 : 데이터를 나타내는 컴포넌트 <br />
+ 
  7 : sentData를 세팅한 것 처럼 recvData데이터 셋팅 <br /> 
+ 
  8 : receiver를 실행해야 하는데 실행하는 데이터의 인자는 sentData로, 실행이 된 다음에는 recvData로 호출하게 한다. <br />
  
 이제 실행을 해보자!
