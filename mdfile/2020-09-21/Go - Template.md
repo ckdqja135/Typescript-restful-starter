@@ -300,3 +300,78 @@ body내용이 include한 tmpl1내용이 오는것을 확인할 수 있다. <Br /
 이것을 실행하면 다음과 같다. <br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93732491-905c5a00-fc0c-11ea-8aec-253fca1cc331.png" width = 70%> </img></p>
+
+
+### 풀 소스
+
+<code>main.go</code>
+``` Go
+  
+  package main
+
+  import (
+    "html/template"
+    "os"
+  )
+
+  type User struct {
+    Name  string
+    Email string
+    Age   int
+  }
+
+  func (u User) IsOld() bool {
+    return u.Age > 30
+  }
+
+  func main() {
+    user := User{Name: "changbeom", Email: "changbeom@naver.com", Age: 23}
+    user2 := User{Name: "aaa", Email: "aaa@gmail.com", Age: 40}
+    users := []User{user, user2}
+    tmpl, err := template.New("Tmpl1").ParseFiles("templates/tmpl1.tmpl", "templates/tmpl2.tmpl")
+    if err != nil {
+      panic(err)
+    }
+    tmpl.ExecuteTemplate(os.Stdout, "tmpl2.tmpl", users)
+  }
+
+```
+
+<code>templates/tmpl1.tmpl</code>
+  
+``` HTML
+  
+    Name: {{.Name}}
+    Email: {{.Email}}
+    {{if .IsOld}}
+    oldAge: {{.Age}}
+    {{else}}
+    Age: {{.Age}}
+    {{end}}
+
+    <a href="/user?email={{.Email}}">user</a>
+
+    <script>
+     var email={{.Email}}
+     var name={{.Name}}
+     var age={{.Age}}
+    </script>
+
+```
+
+<code>templates/tmpl2.tmpl</code>
+
+``` Go
+    
+  <html>
+  <head>
+  <title>Template</title>
+  </head>
+  <body>
+  {{range .}}
+  {{template "tmpl1.tmpl" .}}
+  {{end}}
+  </body>
+  </html>
+
+```
