@@ -36,8 +36,7 @@ func main() {
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93297308-fd967680-f82b-11ea-82fa-82e13eae6f29.png" width = 70%> </img></p>
 
 이 상태에서 myapp폴더 안에 테스트코드를 만들어보자! <br />
-코드를 작성하기 전에 터미널 하나를 더 추가하여 goconvey를 실행시켜 놓자!
-[goconvey](https://github.com/smartystreets/goconvey)여기서 자세한 것을 확인 할 수 있다.
+코드를 작성하기 전에 터미널 하나를 더 추가하여 goconvey를 실행시켜 놓자!<br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93297761-e73cea80-f82c-11ea-93ca-fc0b95c2b428.png" width = 70%> </img></p>
 
