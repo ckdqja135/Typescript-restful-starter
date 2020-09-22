@@ -490,3 +490,125 @@ PASS가 뜨고 다시 생성 되었음을 확인할 수 있다. <br />
 저장 후 기다리면 PASS 된 것을 확인 할 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93859272-62544400-fcf8-11ea-8705-2692c96d50ad.png" width = 50%> </img></p>
 
+<code>main.go</code>
+
+``` Go
+
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"os"
+	"io"
+)
+
+func uploadsHandler(w http.ResponseWriter, r *http.Request) {
+	uploadFile, header, err := r.FormFile("upload_file")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprint(w, err)
+		return
+	}
+	defer uploadFile.Close()
+
+	dirname := "./uploads"
+	os.MkdirAll(dirname, 0777)
+	filepath := fmt.Sprintf("%s/%s", dirname, header.Filename)
+	file, err := os.Create(filepath)
+	defer file.Close()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, err)
+		return
+	}
+	io.Copy(file, uploadFile)
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprint(w, filepath)
+}
+
+func main() {
+	http.HandleFunc("/uploads", uploadsHandler)
+	http.Handle("/", http.FileServer(http.Dir("public")))
+
+	http.ListenAndServe(":3000", nil)
+}
+
+```
+
+<code>main_test.go</code>
+``` Go
+package main
+
+import (
+	"bytes"
+	"io"
+	"mime/multipart"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"path/filepath"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
+
+func TestUploadTest(t *testing.T) {
+	assert := assert.New(t)
+	path := "C:/Users/ckdqj/Downloads/ex_image.png"
+	file, _ := os.Open(path)
+	defer file.Close()
+
+	os.RemoveAll("./uploads")
+
+	buf := &bytes.Buffer{}
+	writer := multipart.NewWriter(buf)
+	multi, err := writer.CreateFormFile("upload_file", filepath.Base(path))
+	assert.NoError(err)
+	io.Copy(multi, file)
+	writer.Close()
+
+	res := httptest.NewRecorder()
+	req := httptest.NewRequest("POST", "/uploads", buf)
+	req.Header.Set("Content-type", writer.FormDataContentType())
+
+	uploadsHandler(res, req)
+	assert.Equal(http.StatusOK, res.Code)
+
+	uploadFilePath := "./uploads/" + filepath.Base(path)
+	_, err = os.Stat(uploadFilePath)
+	assert.NoError(err)
+
+	uploadFile, _ := os.Open(uploadFilePath)
+	originFile, _ := os.Open(path)
+	defer uploadFile.Close()
+	defer originFile.Close()
+
+	uploadData := []byte{}
+	originData := []byte{}
+	uploadFile.Read(uploadData)
+	originFile.Read(originData)
+
+	assert.Equal(originData, uploadData)
+
+}
+
+```
+
+<code>public/index.html</code>
+``` HTML
+	
+<html>
+<head>
+<title>Go 로 만드는 웹 4</title>
+</head>
+<body>
+<p><h1>파일을 전송해보자.</h1></p>
+<form action="/uploads" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+    <p><input type="file" id="upload_file" name="upload_file"/></p>
+    <p><input type="submit" name="upload"/></p>
+</form>
+</body>
+</html>
+
+```
