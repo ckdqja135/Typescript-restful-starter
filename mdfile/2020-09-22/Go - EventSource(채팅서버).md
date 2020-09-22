@@ -168,5 +168,5 @@ chat.js가 우리가 만들 파일인데, public 폴더에 생성해준다.
 이렇게 다시 새로고침 된 상태로 돌아오는데, <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93838876-230cff80-fcc6-11ea-8c8f-c007078d5cd3.png" width = 70%> </img></p>
 
-터미널 log를 보면 정상적으로 POST되었음을 확인할 수 있다.
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93839338-9f541280-fcc7-11ea-8ff0-88a399abd4c1.png" width = 70%> </img></p>
+터미널 log를 보면 POST evnet는 떴지만 POST핸들러를 만들지 않아서 404가 떴음을 확인할 수 있다.
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93839479-01ad1300-fcc8-11ea-8e6c-8545f8ed1d94.png" width = 70%> </img></p>
