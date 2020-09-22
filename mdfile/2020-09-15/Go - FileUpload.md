@@ -457,6 +457,22 @@ PASS가 뜨고 다시 생성 되었음을 확인할 수 있다. <br />
       
       uploadsHandler(res, req)
       assert.Equal(http.StatusOK, res.Code)
+      
+      _, err = os.Stat(uploadFilePath)
+      assert.NoError(err)
+
+      uploadFile, _ := os.Open(uploadFilePath)
+      originFile, _ := os.Open(path)
+      defer uploadFile.Close()
+      defer originFile.Close()
+      
+      uploadData := []byte{}
+      originData := []byte{}
+      uploadFile.Read(uploadData)
+      originFile.Read(originData)
+      
+      assert.Equal(originData, uploadData)
+
   }
 
 ```
