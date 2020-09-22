@@ -442,7 +442,7 @@ PASS가 뜨고 다시 생성 되었음을 확인할 수 있다. <br />
       
       defer file.Close()
 
-      os.RemoveAll("./uploads") // 추가
+      os.RemoveAll("./uploads")
 
       buf := &bytes.Buffer{} 
       writer := multipart.NewWriter(buf) 
@@ -458,21 +458,35 @@ PASS가 뜨고 다시 생성 되었음을 확인할 수 있다. <br />
       uploadsHandler(res, req)
       assert.Equal(http.StatusOK, res.Code)
       
-      _, err = os.Stat(uploadFilePath)
-      assert.NoError(err)
+      uploadFilePath := "./uploads/" + filepath.Base(path) // 1
+      _, err = os.Stat(uploadFilePath) // 2
+      assert.NoError(err) // 3
 
-      uploadFile, _ := os.Open(uploadFilePath)
-      originFile, _ := os.Open(path)
-      defer uploadFile.Close()
-      defer originFile.Close()
+      uploadFile, _ := os.Open(uploadFilePath) // 4
+      originFile, _ := os.Open(path) // 5
+      defer uploadFile.Close() // 6
+      defer originFile.Close() // 7
       
-      uploadData := []byte{}
-      originData := []byte{}
-      uploadFile.Read(uploadData)
-      originFile.Read(originData)
+      uploadData := []byte{} // 8
+      originData := []byte{} // 9
+      uploadFile.Read(uploadData) // 10 
+      originFile.Read(originData) // 11 
       
-      assert.Equal(originData, uploadData)
+      assert.Equal(originData, uploadData) // 12
 
   }
 
 ```
+1 : 업로드 되는 경로를 넣어준다. <br />
+2 : 그 안에 파일이 잘 들어있는지 확인해준다. <br />
+    os.Stat를 사용하면 그 file의 info를 가져다 준다. <br />
+3 : 마찬가지로 에러가 없어야 하고, <br />
+4, 5 : 통과했으면 파일이 있다는 의미이므로, 업로드된 파일과 기존 파일과 확인해보아야 한다. <br />
+6, 7 : 두 파일을 닫아준다. <br />
+8, 9 : Read함수에 사용 될 byte array <Br />
+10, 11 : 위의 byte array를 사용하여 두 데이터를 읽어온다. <br />
+12 : 그 후 이 두개의 데이터가 같은지 확인한다. <br />
+
+저장 후 기다리면 PASS 된 것을 확인 할 수 있다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93859272-62544400-fcf8-11ea-8705-2692c96d50ad.png" width = 50%> </img></p>
+
