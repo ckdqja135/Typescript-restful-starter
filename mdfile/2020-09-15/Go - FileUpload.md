@@ -456,7 +456,7 @@ PASS가 뜨고 다시 생성 되었음을 확인할 수 있다. <br />
       req.Header.Set("Content-type", writer.FormDataContentType())
       
       uploadsHandler(res, req)
-	    assert.Equal(http.StatusOK, res.Code)
+      assert.Equal(http.StatusOK, res.Code)
   }
 
 ```
