@@ -216,5 +216,143 @@
 22 : (20번 이어서) 19번과 마찬가지로 처리 해주고,
 23 : error가 없다면 resp의 데이터를 읽어오면 되는데, resp.Body를 모두 읽어서 data를 반환 해준다.
 
+
 이제 저장 후 실행을 시켜보자! <br />
 
+혹시나 실행 시 아래와 같은 창이 뜬다면
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93979391-3d270a80-fdb8-11ea-8b31-2b91e653616b.png" width = 70%> </img></p> 
+
+``` Go 
+  
+  var googleOauthConfig = oauth2.Config{
+    RedirectURL:  "http://localhost:3000/auth/google/callback",
+    ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+    ClientSecret: os.Getenv("GOOGLE_SECRET_KEY"),
+    Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
+    Endpoint:     google.Endpoint,
+  }
+
+```
+이 부분에서 ClientID와 ClientSecret값을 직접 넣어주면 해결된다. <br />
+
+구글 로그인 링크로 접속 후 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93979149-ee797080-fdb7-11ea-8b8d-b1d442b82104.png" width = 70%> </img></p> 
+
+로그인을 하게 되면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93979094-e15c8180-fdb7-11ea-9be8-c8e058f9699a.png" width = 70%> </img></p> 
+
+아래와 같이 그 유저의 정보가 뜨게 된다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93979220-03ee9a80-fdb8-11ea-819f-8e18a095a3cf.png" width = 70%> </img></p> 
+
+
+### 풀소스
+
+<code>main.go</code>
+
+``` Go
+  
+  package main
+
+  import (
+    "context"
+    "crypto/rand"
+    "encoding/base64"
+    "fmt"
+    "io/ioutil"
+    "log"
+    "net/http"
+    "os"
+    "time"
+
+    "github.com/gorilla/pat"
+    "github.com/urfave/negroni"
+    "golang.org/x/oauth2"
+    "golang.org/x/oauth2/google"
+  )
+
+  var googleOauthConfig = oauth2.Config{
+    RedirectURL:  "http://localhost:3000/auth/google/callback",
+    ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+    ClientSecret: os.Getenv("GOOGLE_SECRET_KEY"),
+    Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
+    Endpoint:     google.Endpoint,
+  }
+
+  func googleLoginHandler(w http.ResponseWriter, r *http.Request) {
+    state := generateStateOauthCookie(w)
+    url := googleOauthConfig.AuthCodeURL(state)
+    http.Redirect(w, r, url, http.StatusTemporaryRedirect)
+  }
+
+  func generateStateOauthCookie(w http.ResponseWriter) string {
+    expiration := time.Now().Add(1 * 24 * time.Hour)
+
+    b := make([]byte, 16)
+    rand.Read(b)
+    state := base64.URLEncoding.EncodeToString(b)
+    cookie := &http.Cookie{Name: "oauthstate", Value: state, Expires: expiration}
+    http.SetCookie(w, cookie)
+    return state
+  }
+
+  func googleAuthCallback(w http.ResponseWriter, r *http.Request) {
+    oauthstate, _ := r.Cookie("oauthstate")
+
+    if r.FormValue("state") != oauthstate.Value {
+      log.Printf("invalid google oauth state cookie:%s state:%s\n", oauthstate.Value, r.FormValue("state"))
+      http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+      return
+    }
+
+    data, err := getGoogleUserInfo(r.FormValue("code"))
+    if err != nil {
+      log.Println(err.Error())
+      http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+      return
+    }
+
+    fmt.Fprint(w, string(data))
+  }
+
+  const oauthGoogleUrlAPI = "https://www.googleapis.com/oauth2/v2/userinfo?access_token="
+
+  func getGoogleUserInfo(code string) ([]byte, error) {
+    token, err := googleOauthConfig.Exchange(context.Background(), code)
+    if err != nil {
+      return nil, fmt.Errorf("Failed to Exchange %s\n", err.Error())
+    }
+
+    resp, err := http.Get(oauthGoogleUrlAPI + token.AccessToken)
+    if err != nil {
+      return nil, fmt.Errorf("Failed to Get UserInfo %s\n", err.Error())
+    }
+
+    return ioutil.ReadAll(resp.Body)
+  }
+
+  func main() {
+    mux := pat.New()
+    mux.HandleFunc("/auth/google/login", googleLoginHandler)
+    mux.HandleFunc("/auth/google/callback", googleAuthCallback)
+
+    n := negroni.Classic()
+    n.UseHandler(mux)
+    http.ListenAndServe(":3000", n)
+  }
+
+```
+
+<code>public/index.html</code>
+  
+``` HTML
+
+  <html>
+  <head>
+  <title>Go Oauth2.0 Test</title> 
+  </head>
+  <body>
+  <p><a href='./auth/google/login'>Google Login</a></p>
+  </body>
+  </html>
+
+```
