@@ -1,7 +1,7 @@
 ### 시작
 부트스트랩과 지금까지 배운것을 토대로 TodoList를 만들어 보려고 한다. <br />
 
-먼저 알아볼 것은 부트스트랩인데, original폴더에 있는 파일들을 다운 받으면 된다. <br />
+먼저 알아볼 것은 부트스트랩인데, public폴더에 있는 파일들을 다운 받으면 된다. <br />
 [출처](https://bbbootstrap.com/snippets/awesome-todo-list-template-25095891) <Br />
 
 그 후 app이라는 폴더를 만든 뒤 app.go파일을 만든 뒤 여기에 핸들러를 만들어 보자! <br />
