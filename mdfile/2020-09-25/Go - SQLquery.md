@@ -153,7 +153,7 @@ func (m *memoryHandler) CompleteTodo(id int, complete bool) bool {
 }
 
 func(m *memoryHandler) close() { // 1
-
+  
 }
 
 func newMemoryHandler() DBHandler {
@@ -179,6 +179,11 @@ import (
 )
 
 var rd *render.Render
+
+type AppHandler struct { // 1
+	http.Handler // 1
+	db model.DBHandler
+}
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/todo.html", http.StatusTemporaryRedirect)
@@ -239,7 +244,20 @@ func MakeHandler() http.Handler {
 
 ```
 
-이 쪽도 마찬가지로 main.go에서 사용하기 때문에 이것도 하나의 패키지인데, 이제는 Model.go의 DBHandler를 만들어서 사용할 것인데, 이 것의 대한 close책임을 이 패키지를 사용한 쪽에 넘겨야 한다. <br />
-그런데 app.go또한 하나의 패키지이고, 이것을 main.go에 사용하기 때문에
+1 : 이 쪽도 마찬가지로 main.go에서 사용하기 때문에 이것도 하나의 패키지인데, 이제는 Model.go의 DBHandler를 만들어서 사용할 것인데, 이 것의 대한 close책임을 이 패키지를 사용한 쪽에 넘겨야 한다. <br />
+그런데 app.go도 하나의 패키지이고, 이것을 main.go에서 사용하기 때문에 app.go에는 close책임이 없기 때문에 수정해주어야 한다. <br />
+
+1-1 : http.Handler를 포함 타입 이라고 하는데 <br />
+``` Go
+	
+  handler http.Handler
+  
+```
+맴버 변수를 암시적으로 생략해서 이 인터페이스를 포함하고 있다. 라는 의미이다. 상속하고 비슷한 개념으로 볼 수 있지만 상속관계가 아니다.
+has-a관계이지 is-a관계가 아니다. <br />
+[is-a관계 has-a관계에 대해](https://m.blog.naver.com/PostView.nhn?blogId=lunatic918&logNo=156290730&proxyReferer=https:%2F%2Fwww.google.com%2F)
+
+4:50
+
 
 
