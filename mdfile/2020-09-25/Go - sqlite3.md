@@ -1,5 +1,8 @@
-### 시작
-Go에서 SQLlite를 사용하기 위해서 [mattn/go-sqlite3](https://github.com/mattn/go-sqlite3)를 사용할 것인데 <br />
+
+
+### SQLite 설치
+
+Go에서 SQLite를 사용하기 위해서 [mattn/go-sqlite3](https://github.com/mattn/go-sqlite3)를 사용할 것인데 <br />
 이 패키지가 사용하는 것이 CGO라는 것을 사용한다. <br />
 CGO는 C언어 라이브러리를 사용 할 수 있게 해주는 것인데, 문제는 이 C언어를 컴파일 할 수 있어야 한다.  <br />
 이 C언어가 표준 C언어인데, 표준 C언어를 컴파일 하기 위해서는 표준 컴파일러가 필요하다. <br />
@@ -23,7 +26,8 @@ MS-Window에서 사용하기에는 기본적으로 안되고, 무언가를 깔�
   go get github.com/mattn/go-sqlite3
   
 ```
- 
+
+### 시작
 메모리 map을 사용하는 부분을 인터페이스로 빼서 다시 한번 리팩토링을 하겠다. <br />
 
 <code>model/model.go</code>
