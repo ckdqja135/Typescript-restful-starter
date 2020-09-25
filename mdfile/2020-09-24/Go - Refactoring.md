@@ -93,7 +93,7 @@ PASS 되는 것을 확인 할 수 있다. <br />
     resp, err := http.PostForm(ts.URL+"/todos", url.Values{"name": {"Test todo"}})
     assert.NoError(err)
 	  assert.Equal(http.StatusCreated, resp.StatusCode) 
-    var todo model.Todo // 1
+    var todo Todo // 1
     err = json.NewDecoder(resp.Body).Decode(&todo) // 2
     assert.NoError(err)
     assert.Equal(todo.Name, "Test todo") // 3
@@ -130,7 +130,7 @@ PASS 되는 것을 확인 할 수 있다. <br />
     resp, err := http.PostForm(ts.URL+"/todos", url.Values{"name": {"Test todo"}})
     assert.NoError(err)
 	  assert.Equal(http.StatusCreated, resp.StatusCode) 
-    var todo model.Todo 
+    var todo Todo 
     err = json.NewDecoder(resp.Body).Decode(&todo)
     assert.NoError(err)
     assert.Equal(todo.Name, "Test todo") 
