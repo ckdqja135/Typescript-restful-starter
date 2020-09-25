@@ -140,3 +140,219 @@ MS-Window에서 사용하기에는 기본적으로 안되고, 무언가를 깔�
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/94105182-b46da480-fe73-11ea-9ea0-fae23211d042.png" width = 70%> </img></p> 
 PASS가 되는 것을 확인할 수 있다. <br />
 
+그리고 memoryHandler를 별도의 파일에 옮겨 관리하도록 변경해준다. <br />
+<code>model/memoryHandler.go</code>
+``` Go
+
+  package model
+
+  import "time"
+
+  type memoryHandler struct {
+    todoMap map[int]*Todo
+  }
+
+  func (m *memoryHandler) getTodos() []*Todo {
+    list := []*Todo{}
+    for _, v := range m.todoMap {
+      list = append(list, v)
+    }
+    return list
+  }
+
+  func (m *memoryHandler) addTodo(name string) *Todo {
+    id := len(m.todoMap) + 1
+    todo := &Todo{id, name, false, time.Now()}
+    m.todoMap[id] = todo
+    return todo
+  }
+
+  func (m *memoryHandler) removeTodo(id int) bool {
+    if _, ok := m.todoMap[id]; ok {
+      delete(m.todoMap, id)
+      return true
+    }
+    return false
+  }
+
+  func (m *memoryHandler) completeTodo(id int, complete bool) bool {
+    if todo, ok := m.todoMap[id]; ok {
+      todo.Completed = complete
+      return true
+    }
+    return false
+  }
+
+  func newMemoryHandler() dbHandler {
+    m := &memoryHandler{}
+    m.todoMap = make(map[int]*Todo)
+    return m
+  }
+
+```
+
+이 부분을 옮겨준다. <br />
+
+그래서 <code>model/model.go</code>를 보면
+``` Go
+
+  package model
+
+  import "time"
+
+  type Todo struct {
+    ID        int       `json:"id"`
+    Name      string    `json:"name"`
+    Completed bool      `json:"completed"`
+    CreatedAt time.Time `json:"created_at"`
+  }
+
+  type dbHandler interface {
+    getTodos() []*Todo
+    addTodo(name string) *Todo
+    removeTodo(id int) bool
+    completeTodo(id int, complete bool) bool
+  }
+
+  var handler dbHandler
+
+  func init() {
+    handler = newMemoryHandler() 
+    // handler = newSqliteHandler() // 1
+  }
+
+  func GetTodos() []*Todo {
+    return handler.getTodos()
+  }
+
+  func AddTodo(name string) *Todo {
+    return handler.addTodo(name)
+  }
+
+  func RemoveTodo(id int) bool {
+    return handler.removeTodo(id)
+  }
+
+  func CompleteTodo(id int, complete bool) bool {
+    return handler.completeTodo(id, complete)
+  }
+
+```
+
+인터페이스만 있으면 되기 때문에 실제로 어떤 핸들러로 돌아가는지 알 수 없다. <br />
+1 : 나중에 newSqliteHandler()를 만들어서 바꿔주면 동작은 기존 것과 같은데 새로운 핸들러로 바꾸어 줄 수 있게 된다. <br />
+    계속 리팩토링 했기 때문에 쉽게 될 수 있고, 동작은 테스트코드를 만들어 놓았기 때문에 테스트를 금방 할 수 있게 된다. <br />
+    그래서 리팩토링 하기전에 미리 구조를 바꾸어 주었다. <br />
+    
+그 다음 <code>model/sqliteHandler.go</code>를 생성해준다. <br />
+``` Go
+
+  package model
+
+  type sqliteHandler struct { // 1
+
+  }
+
+  func (s *sqliteHandler) getTodos() []*Todo { // 2
+    return nil
+  }
+
+  func (s *sqliteHandler) addTodo(name string) *Todo { // 2
+    return nil
+  }
+
+  func (s *sqliteHandler) removeTodo(id int) bool { // 2
+    return false
+  }
+
+  func (s *sqliteHandler) completeTodo(id int, complete bool) bool { // 2
+    return false
+  }
+
+  func newSqliteHandler() dbHandler { // 3
+    return &sqliteHander{}
+  }
+  
+```
+
+1 : sqliteHandler라는 struct를 추가. <br />
+    sqliteHandler가 implements 할 때 인터페이스가 dbHandler 인터페이스의 4개 함수이다. <br />
+
+2 : 그래서 4개의 메소드를 만들어 주면 된다. <br />
+    처음에는 아무것도 동작하지 않는 함수로 만들었다. <br />
+    
+3 : 지금은 맴버 변수를 initialize할게 없어서 인스턴스를 하나 만들어서 반환하도록 작성한다. <br />
+
+이제 기본틀은 다 만들어졌기 때문에 build가 되는지 확인해보아야 하는데, <code>model/model.go</code>에 아까 미리 만들어 두었던 핸들러의 주석을 풀어준다. <br />
+
+그 후 테스트를 진행해보자! 현재 sqllite에 구현된게 아무것도 없기 때문에 테스터가 동작하지 않을 것이다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/94232227-86a26180-ff40-11ea-9890-ec6882381047.png" width = 70%> </img></p> 
+테스트가 전부 fail 난 것을 확인 할 수 있다. <br />
+
+이제부터 sqlite를 채워보자! <br />
+
+``` Go
+
+  package model
+  
+  import (
+    "database/sql"
+
+    _ "github.com/mattn/go-sqlite3"
+  )
+  
+  type sqliteHandler struct { 
+    db *sql.DB // 2
+  }
+  
+  func (s *sqliteHandler) close() { // 4
+    s.db.Close()
+  }
+  
+  func (s *sqliteHandler) getTodos() []*Todo {
+    return nil
+  }
+
+  func (s *sqliteHandler) addTodo(name string) *Todo {
+    return nil
+  }
+
+  func (s *sqliteHandler) removeTodo(id int) bool {
+    return false
+  }
+
+  func (s *sqliteHandler) completeTodo(id int, complete bool) bool {
+    return false
+  }
+
+  func newSqliteHandler() dbHandler {
+    	database, err := sql.Open("sqlite3", "./test.db") // 1
+      
+      if err != nil { // 3
+        panic(err)
+      }
+      
+      statement, _ := database.Prepare( // 5
+        `CREATE TABLE IF NOT EXISTS todos (
+          id        INTEGER  PRIMARY KEY AUTOINCREMENT,
+          name      TEXT,
+          completed BOOLEAN,
+          createdAt DATETIME
+        )`)
+      statement.Exec() // 6
+    return &sqliteHander{db: database} // 7
+  }
+  
+```
+
+1 : sqlite를 사용하기 위해서 sql.Open을 사용해야하는데 어떤 타입의 db를 열 것인지, 파일DB이기 때문에 file명을 인자로 넣어준다. <br />
+    이 때 import에 "database/sql"이 추가 되는데, 이것만 추가하면 안되고, "github.com/mattn/go-sqlite3"를 추가시켜준다. <br />
+    앞에 밑줄은 실제로 이 패키지를 명시적으로 사용하진 않겠지만 "database/sql"을 사용할 때 "github.com/mattn/go-sqlite3"을 가지고 사용하겠다는 의미이다. <br />
+    첫번째 인자가 sql.DB의 인스턴스가 나오고 두번째 인자가 error가 나온다. <br />
+    
+2 : 그래서 sql.DB를 기억하고 있다가 사용할 것이기 때문에 맴버 번수로 db변수를 가지고 있는다. <br />
+3 : error 생길 시 에러를 반환하기 어려워서 panic으로 처리한다. <br />
+4 : DB를 열면 프로그램이 종료되기 전에 닫아주어야 하는데 sqliteHandler 인스턴스가 사라지기 전에 닫아주어야 하기 때문에 close 함수를 추가한다. <br />
+5 : todos data를 저장할 테이블을 생성 해준다. <br />
+6 : query 실행. <br />
+7 : 그리고 이 database를 계속 사용하기 때문에 &sqliteHander에 값으로 넣어준다. <br />
