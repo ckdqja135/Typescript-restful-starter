@@ -133,3 +133,10 @@ MS-Window에서 사용하기에는 기본적으로 안되고, 무언가를 깔�
       그 이유는 memoryHandler{}가 dbHandler의 인터페이스를 implements하고 있기 때문이다. <br />
   
 7 : 그 후 잘라내고 비어 있는 곳에 핸들러 메소드를 호출해준다. <br />
+
+지금까지 한 작업은 인터페이스를 추가했고, 메모리 map을 가지고 있던 것을 별도 struct를 만들어서 별도의 맴버 변수로 옮겼고, 그 struct의 메소드로 인터페이스를 전부 implements해주었다. <br />
+
+여기서 잘 되는지 테스트를 해보자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/94105182-b46da480-fe73-11ea-9ea0-fae23211d042.png" width = 70%> </img></p> 
+PASS가 되는 것을 확인할 수 있다. <br />
+
