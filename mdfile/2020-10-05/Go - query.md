@@ -182,7 +182,7 @@ var rd *render.Render
 
 type AppHandler struct { // 1
 	http.Handler // 1
-	db model.DBHandler
+	db model.DBHandler // 2
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -257,7 +257,128 @@ func MakeHandler() http.Handler {
 has-a관계이지 is-a관계가 아니다. <br />
 [is-a관계 has-a관계에 대해](https://m.blog.naver.com/PostView.nhn?blogId=lunatic918&logNo=156290730&proxyReferer=https:%2F%2Fwww.google.com%2F)
 
-4:50
+1-2 : model의 DB핸들러를 추가해준다.
 
+그 후 아래의 함수들을 AppHandler의 메소드로 바꾸어 준다. <br />
 
+``` Go 
 
+func (a *AppHandler) indexHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/todo.html", http.StatusTemporaryRedirect)
+}
+
+func (a *AppHandler) getTodoListHandler(w http.ResponseWriter, r *http.Request) {
+	list := a.db.GetTodos() // 1
+	rd.JSON(w, http.StatusOK, list)
+}
+
+func (a *AppHandler) addTodoHandler(w http.ResponseWriter, r *http.Request) {
+	name := r.FormValue("name")
+	todo := a.db.AddTodo(name)
+	rd.JSON(w, http.StatusCreated, todo)
+}
+
+type Success struct {
+	Success bool `json:"success"`
+}
+
+func (a *AppHandler) removeTodoHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := strconv.Atoi(vars["id"])
+	ok := a.db.RemoveTodo(id)
+	if ok {
+		rd.JSON(w, http.StatusOK, Success{true})
+	} else {
+		rd.JSON(w, http.StatusOK, Success{false})
+	}
+}
+
+func (a *AppHandler) completeTodoHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := strconv.Atoi(vars["id"])
+	complete := r.FormValue("complete") == "true"
+	ok := a.db.CompleteTodo(id, complete)
+	if ok {
+		rd.JSON(w, http.StatusOK, Success{true})
+	} else {
+		rd.JSON(w, http.StatusOK, Success{false})
+	}
+}
+
+```
+
+1 : AppHandler의 db 변수를 사용 할 수 있도록 바꾸어준다. <br />
+
+그 후 AppHandler를 initialize해주어야 하는데, MakeHandler()할 때 반환값을 AppHandler의 포인터가 반환되도록 바꾸어 준다. <br />
+``` Go
+
+var rd *render.Render = render.New() // 1
+
+func MakeHandler(filepath string) *AppHandler {
+	r := mux.NewRouter()
+	a := &AppHandler{
+		Handler: r, // 1
+		db:      model.NewDBHandler(filepath),
+	}
+
+	r.HandleFunc("/todos", a.getTodoListHandler).Methods("GET")
+	r.HandleFunc("/todos", a.addTodoHandler).Methods("POST")
+	r.HandleFunc("/todos/{id:[0-9]+}", a.removeTodoHandler).Methods("DELETE")
+	r.HandleFunc("/complete-todo/{id:[0-9]+}", a.completeTodoHandler).Methods("GET")
+	r.HandleFunc("/", a.indexHandler)
+
+	return a
+}
+```
+
+그 후 muxRouter를 지워주고, AppHandler를 만들어준다. <br />
+
+1 : render.New() 부분은 전역이기 때문에 저 위치에 initialize시켜준다. <br />
+2 : http 핸들러 부분은 muxRouter가 되고, dbHandler는 model의 NewDBHandler를 호출해서 그 결과를 db변수에 집어 넣는다. <br />
+
+이렇게 하면 AppHandler라는 인스턴스가 만들어지게 된다. <br />
+
+그 후 muxRouter에 등록을 할 때 일반 함수가 아닌 메소드로 변경되었기 때문에 메소드 형태로 바꾸어 준다. <br />
+그리고 반환을 AppHandler를 반환하기 때문에 a값을 넣어준다. <br />
+
+이렇게 한 이유는 DB핸들러가 프로그램이 종료되기 전에 Close()를 불러주어야 하는데 이걸 model패키지 입장에서는 자기가 만든 인스턴스에 대해서 얼만큼 사용될 지를 알 수 없다. <br />
+그러니까 자기 패키지안에선 Close()를 불러줄 수 가 없다. 결국에는 이 패키지를 사용한 쪽에서 불러주어야 하는데 그 패키지를 <code>app/app.go</code>에서 사용하는데 이 app 또한 <br />
+전적으로 DBHandler를 사용권한을 가지고 있지 않다. 이것 또한 바깥에서 사용되는 패키지이기 때문이다. <br />
+
+그래서 새로운 인스턴스를 만들어서 바깥에서 AppHandler의 function을 호출할 수 있게 코드를 추가해준다. <br />
+
+ <code>app/app.go</code>
+``` Go
+....
+
+ func (a *AppHandler) Close() { // 1
+	a.db.Close()
+}
+
+...
+
+```
+
+1 : 이렇게해서 app패키지를 사용하는 쪽에서 Close()를 호출 할 수 있도록 해준다. <br />
+
+그리고 <code>main.go</code>에서 appHandler를 만들었기 때문에 프로그램이 종료되기 전에 defer로 m의 Close를 호출 할 수 있게 된다. <br />
+<code>main.go</code>
+```
+
+func main() {
+   m := app.MakeHandler("./test.db")
+   defer m.Close()
+   n := negroni.Classic()
+   n.UseHandler(m)
+
+   log.Println("Started App")
+   err := http.ListenAndServe(":3000", n)
+   if err != nil {
+      panic(err)
+   }
+}
+
+```
+
+그 후 app에서 build가 잘 되는지 test를 해보면 만들어 놓은것이 없으므로 Fail이 났음을 확인할 수 있다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95039228-27e0a300-070b-11eb-8b60-590a15544684.png" width = 70%> </img></p> 
