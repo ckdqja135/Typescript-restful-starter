@@ -3,7 +3,7 @@
 ``` Go 
 
   package model
-
+ 
   import "time"
 
   type Todo struct {
