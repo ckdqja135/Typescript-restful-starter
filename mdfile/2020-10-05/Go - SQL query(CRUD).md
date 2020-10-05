@@ -515,3 +515,174 @@ ah 또한 function이 끝나기 전에 DB를 닫아주어야 하기 때문에 Cl
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95043475-c96df180-0717-11eb-827f-6cd78412128b.png" width = 70%> </img></p> 
 Get, Add를 제외한 부분만 에러가 나는 것을 확인할 수 있다. <br />
 
+이제 CompleteTodo를 수정해보자! <br />
+CompleteTodo는 완료상태를 변경하는 것인데, 기존 레코드는 그대로 두고, 기존 레코드의 complete값만 변경해주는 부분이다. <br />
+
+``` Go
+
+func (s *sqliteHandler) CompleteTodo(id int, complete bool) bool {
+   stmt, err := s.db.Prepare("UPDATE todos SET completed=? WHERE id=?") // 1
+   
+   if err != nil { // 2
+     panic(err)
+   }
+   
+   rst, err := stmt.Exec(complete, id) // 3
+   
+   if err != nil { // 4
+     panic(err)
+   }
+
+  cnt, _ := rst.RowsAffected() // 5
+  return cnt > 0 // 6
+}
+
+```
+
+1 : Prepare()로 UPDATE문을 넣어준다. 마찬가지로 statement가 나오고, error가 나온다.<br />
+2 : 에러 처리. <br />
+3 : 첫번째 전달인자(argument)값이 Compelte, 두 번째 전달인자(argument)값이 id값으로 넣어준다. <br />
+4 : 에러 처리. <br />
+5 : 위의 쿼리문을 영향받은 레코드 갯수가 몇개인지 알려준다. <br />
+    UPDATE 시 1이 될 것이고, UPDATE가 되지 않으면 0이 될 것이다. <br />
+6 : 그래서 UPDATE된 항목이 있을 시 True가 될 것이고, 그렇지 않으면 False값이 될 것이다.
+
+그 다음 RemoveTodo()를 수정하자! <br />
+``` Go
+
+func (s *sqliteHandler) RemoveTodo(id int) bool {
+  stmt, err := s.db.Prepare("DELETE FROM todos WHERE id=?") // 1
+  
+  if err != nil { // 2
+    panic(err)
+  }
+  
+  rst, err := stmt.Exec(id) // 3
+  
+  if err != nil { // 4
+    panic(err)
+  }
+  
+  cnt, _ := rst.RowsAffected() // 5
+  return cnt > 0 // 6
+}
+
+``` 
+1 : remove도 마찬가지로 Statement를 만들어준다. <br />
+2 : 에러 처리. <br />
+3 : 첫번째 전달인자(argument)값을 id값으로 넣어준다. <br />
+4 : 에러 처리. <br />
+5 : 위의 쿼리문을 영향받은 레코드 갯수가 몇개인지 알려준다. <br />
+6 : 그래서 DELETE된 항목이 있을 시 True가 될 것이고, 그렇지 않으면 False값이 될 것이다.
+
+그 후 테스트를 진행해보자! <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95046106-69c71480-071e-11eb-98ba-6b755fde899b.png" width = 70%> </img></p> 
+
+4개 모두 통과가 되었다! <br />
+코딩이 완료 되었고, 서버로 실행하여 동작을 하는지 확인해보자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95047497-24581680-0721-11eb-8f04-f884a7a05f9e.png" width = 70%> </img></p> 
+
+memoryDB가 아닌 FileDB로 변경해주었기 때문에 위와 같이 임의적으로 data를 추가 시킨 뒤 서버를 재시작 해주면 마지막 상태가 저장 되어 있음을 확인 할 수 있다.<br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95047497-24581680-0721-11eb-8f04-f884a7a05f9e.png" width = 70%> </img></p> 
+
+프로그램이 종료되어도, test.db에 저장되어 있다. <br />
+
+그 후에 한가지 수정할 사항이 있는데, <code>model/sqliteHandler.go</code>에서 
+
+``` Go
+
+func newSqliteHandler() dbHandler {
+  database, err := sql.Open("sqlite3", "./test.db")
+    ...
+  }
+
+```
+이렇게 configuration에 관련된 항목들을 코드안에 있는 박아 놓는 형태가 좋지 않아 최대한 바깥 쪽으로 빼주는게 좋다. <br />
+``` Go
+
+func newSqliteHandler(filepath string) DBHandler {
+   database, err := sql.Open("sqlite3", filepath)
+     if err != nil {
+        panic(err)
+     }
+     
+   statement, _ := database.Prepare(
+	`CREATE TABLE IF NOT EXISTS todos (
+	   id        INTEGER  PRIMARY KEY AUTOINCREMENT,
+	   name      TEXT,
+	   completed BOOLEAN,
+	   createdAt DATETIME
+	)`)
+	
+   statement.Exec()
+   return &sqliteHandler{db: database}
+}
+
+```
+이런식으로 filepath를 인자로 받아서 sql.Open()에 넣어준다. <br />
+그래서 기존에 있던 "./test.db"는 <code>model/model.go</code>의 NewDBHandler()안에 넣어준다. <br />
+``` Go
+
+func NewDBHandler() DBHandler {
+  //handler = newMemoryHandler()
+  return newSqliteHandler("./test.db")
+}
+
+```
+그래서 이렇게 바뀌어야 하는데 여기에 넣어놓으나, sqliteHandler.go에 넣어 놓으나 사실상 똑같기 때문에 filepath의 인자를 받아서 여기에도 filepath를 넘겨준다. <br />
+
+``` Go
+
+func NewDBHandler(filepath string) DBHandler {
+  //handler = newMemoryHandler()
+  return newSqliteHandler(filepath)
+}
+
+```
+또 filepath부분이 불리는 부분인 <code>app/app.go</code>의 MakeHandler()부분도 마찬가지로 수정해준다.
+``` Go
+func MakeHandler(filepath string) *AppHandler {
+  r := mux.NewRouter()
+  a := &AppHandler{
+        Handler: r,
+	db:      mo
+	del.NewDBHandler(filepath),
+  }
+
+  r.HandleFunc("/todos", a.getTodoListHandler).Methods("GET")
+  r.HandleFunc("/todos", a.addTodoHandler).Methods("POST")
+  r.HandleFunc("/todos/{id:[0-9]+}", a.removeTodoHandler).Methods("DELETE")
+  r.HandleFunc("/complete-todo/{id:[0-9]+}", a.completeTodoHandler).Methods("GET")
+  r.HandleFunc("/", a.indexHandler)
+
+  return a
+}
+
+```
+
+그렇게 사용하는 부분들을 거슬러 올라가다보면 main.go까지 사용하는데 main에서 "./test.db"를 추가시켜준다. <br />
+``` Go
+
+func main() {
+  m := app.MakeHandler("./test.db")
+  defer m.Close()
+  n := negroni.Classic()
+  n.UseHandler(m)
+
+  log.Println("Started App")
+  err := http.ListenAndServe(":3000", n)
+  
+  if err != nil {
+    panic(err)
+  }
+}
+
+```
+
+여기서 파일을 바꾸어 줄 수 있다. <br />
+그렇다면 여기에서도 마찬가지로 코드에 박힌 것이 아니냐고 생각할 수 있다.<br />
+그래서 여기서는 flag같은 실행인자를 가져오는 패키지가 있어서 사용할 수 있는데 지금은 그것을 사용하지 않고 그냥 넣어준다. <br />
+main에 넣는 것은 금방 바꿀 수 있어서 좋고, 패키지 안쪽에 있는 것 보다 최대한 바깥쪽에 넣어주는 것이 좋다. <br />
+
+이렇게 해서 기존 todos를 바꾸어 주는 부분들이 끝이 났다. <br />
