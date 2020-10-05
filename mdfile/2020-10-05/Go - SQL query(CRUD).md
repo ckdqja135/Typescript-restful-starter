@@ -382,3 +382,134 @@ func main() {
 
 그 후 app에서 build가 잘 되는지 test를 해보면 만들어 놓은것이 없으므로 Fail이 났음을 확인할 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95039228-27e0a300-070b-11eb-8b60-590a15544684.png" width = 70%> </img></p> 
+
+그리고 test.db가 생성 된 것을 확인 할 수 있다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95039437-afc6ad00-070b-11eb-9eb4-11af446ffcfd.png" width = 70%> </img></p> 
+저 test.db가 생성된 이유는 <code>model/sqliteHandler.go</code>에서 
+``` Go
+
+func newSqliteHandler() dbHandler {
+  database, err := sql.Open("sqlite3", "./test.db")
+    ...
+  }
+
+```
+"./test.db"를 여는데 저 파일이 없기 때문에 생성된 것이다. <br />
+
+이제 본격적으로 기능들을 추가해보자! 먼저 getTodos()와 addTodo()를 수정해준다. <br /><br />
+<code>model/sqliteHandler.go</code>
+
+``` Go
+
+package model
+
+type sqliteHandler struct { // 1
+  todos := []*Todo{} // 1
+  rows, err := s.db.Query("SELECT id, name, completed, createdAt FROM todos") // 2
+  if err != nil { // 3
+    panic(err)
+  }
+  defer rows.Close() // 5
+  for rows.Next() { // 4
+     var todo Todo
+     rows.Scan(&todo.ID, &todo.Name, &todo.Completed, &todo.CreatedAt)
+     todos = append(todos, &todo)
+  }
+  return todos
+}
+
+func (s *sqliteHandler) getTodos() []*Todo { // 2
+  stmt, err := s.db.Prepare("INSERT INTO todos (name, completed, createdAt) VALUES (?, ?, datetime('now'))") // 1
+  
+  if err != nil { // 2
+      panic(err)
+  }
+  
+  rst, err := stmt.Exec(name, false) // 3
+   
+  if err != nil { // 4
+    panic(err)
+  }
+  
+  id, _ := rst.LastInsertId() // 5
+  var todo Todo // 6
+  todo.ID = int(id) // 7
+  todo.Name = name // 8
+  todo.Completed = false // 9
+  todo.CreatedAt = time.Now() // 10
+  
+  return &todo // 1
+}
+
+func (s *sqliteHandler) addTodo(name string) *Todo { // 2
+return nil
+}
+
+```
+1-1 : data를 저장할 쿼리문을 만들어야 하는데, data를 읽어서 그 data를 반환시켜주어야 하기 때문에 data를 반환시켜주는 list를 만들어준다. <br />
+1-2 : 쿼리문 작성. <br />
+      Query()를 보면 query문을 먼저 작성하고, 전달인자(argument)를 넣으면 성공시에 sql.Rows, 실패시에 error가 나오게 된다. <br />
+1-3 : 에러가 있을 시 에러 처리. <br />
+1-4 : 데이터가 잘 뽑아져 나왔을 시 각 행(row)을 돌면서 데이터를 가져와야 하기 때문에 for문으로 반복문을 돌려주는데, for.Next()는 다음행으로 가겠다는 의미이며, <br />
+      다음 행이 없을 때 return false가 되어 return true가 될 때 까지 돌면서 레코드들을 읽어준다. <br />
+      rows.Scan()을 쓰게 되면 쿼리안에 있던 값들이 각각에 맞춰서 가져오게 되는데, 이 data를 담을 todo객체를 만들어서 Scan()안에 받아올 각 항목들을 넣어주면 된다. <br />
+      그 후 todo에 들어간 값들을 todos에 저장해준 뒤, todos를 return 해준다.<br />
+1-5 : 그 다음 row를 close시켜준다. <br />
+
+2-1 : 여기서도 쿼리문을 작성해주어야 하는데 s.db.Prepare()로 Statement를 만들어준다. <br />
+      Prepare의 반환값으로 Statement값과 error값이 나온다. <br />
+2-2 : error 처리 <br />
+2-3 : Statement값이 나왔기 때문에 execute해주어야 하는데 Exec()의 대응되는 전달인자(argument)는 아까 Insert 쿼리에 '?'로 썼던 부분이다. <br />
+      그래서 name에 name값, complete값에 false값을 넣어준다. <br />
+      Exec()가 반환되는 값은 result와 error가 나온다. <br />
+2-4 : 이 과정에서 error가 있을 수 있기 때문에 에러 처리를 해준다. <br />
+2-5 : 그 후 result값이 나왔고, AddTodo를 한 다음에 추가한 Todo의 정보를 알려주어야 한다. <br />
+      name, completed, createdAt값은 알 수 있는데 insert 시 id값을 넣지 않았으므로 id값은 알 수가 없다.(table을 만들었을 때 AUTO로 설정했기 때문)<br />
+      그래서 자동으로 발급된 그 id값을 알아야하기 때문에 result의 메소드로 LastInsertId()가 있는데 마지막으로 추가된 레코드의 id값을 알려준다. <br />
+      이 것을 id변수에 넣어준다. <br />
+2-6 : 그리고 return값이 todo이기 때문에 todo를 만들어 준다. <br />
+2-7 : 그래서 todo의 id는 새로만든 id가 될 것이고, 이 타입이 int64여서 int로 바꾸어준다. <br />
+2-8 : name값은 요청한 name값이 되고, <br />
+2-9 : completed값은 false로 넣어주고, <br />
+2-10 : CreateAt은 현재시간으로 넣어준다. <br />
+2-11 : 그 후 포인터 값을 반환시켜준다. <br />
+
+이렇게 하면 add와 get이 끝이 난다. <br />
+
+그 후 저장후에 테스트를 진행해보자! <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95042521-27e5a080-0715-11eb-9329-32d1f4bf475b.png" width = 70%> </img></p> 
+에러 문을 보면 65번째 줄과 79번째 줄이 통과가 안되었는데, 이 부분은 Completetodo와 delete한 부분이다.
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95042590-5fece380-0715-11eb-945d-1249ca91a69a.png" width = 70%> </img></p> 
+
+그러므로 방금 수정했던 Add와 Get은 통과가 되었다는 의미인데, 여기서 한 번 더 테스트를 해보면
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95042716-b9eda900-0715-11eb-98d7-bfed289d03f3.png" width = 70%> </img></p> 
+
+아까는 통과되었던 부분도 통과가 되지 않은 것을 확인 할 수 있다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95042793-ebff0b00-0715-11eb-802f-a85a4b2cb897.png" width = 70%> </img></p> 
+그 이유는 레코드가 2개가 와야하는데 4개가 왔기 때문이다. 아까 생성된 test.db파일이 한번 만들어지면 지워지지 않는데 <br />
+첫 번 째 테스트 시 이미 테이블이 만들어진 상태에서 테스트 코드에서 add를 2번하여 레코드 2개가 추가되었고, GetTodos를 진행하여 2개의 레코드를 조회했고, <br />
+두 번 째 테스트 시 추가했었던 레코드 2개가 이미 추가 된 상태에서 2개를 또 추가하는 것이기 때문에 4개가 된 것이다. <br />
+그래서 이것을 테스트를 돌리기 전에 db파일을 삭제하도록 수정해야 한다.<br />
+
+<code>app/app_test.go</code>
+``` Go
+
+ func TestTodos(t *testing.T) {
+   os.Remove("./test.db")
+   
+   ah := MakeHandler()
+   defer ah.Close()
+   ts := httptest.NewServer(ah)
+	...
+ }
+ 
+```
+os.Remove()를 추가 해주고, ts부분에서 AppHandler가 나와서 Close()를 시켜주어야 하기 때문에 다음과 같이 수정해준다. <br />
+AppHandler는 http.Handler를 임베디드하고 있기 때문에 NewServer()의 인자로 바로 써 줄 수 있다. <br />
+ah 또한 function이 끝나기 전에 DB를 닫아주어야 하기 때문에 Close()시켜준다. <br />
+
+이제 테스팅을 해보면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95043475-c96df180-0717-11eb-827f-6cd78412128b.png" width = 70%> </img></p> 
+Get, Add를 제외한 부분만 에러가 나는 것을 확인할 수 있다. <br />
+
