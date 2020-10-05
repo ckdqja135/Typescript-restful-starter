@@ -166,6 +166,7 @@ func newMemoryHandler() DBHandler {
 1 : 인터페이스에 맞춰주기 위해 close()함수를 새로 만들어 준다. <br />
 
 그리고 <code>app/app.go</code>도 수정을 해준다. <br />
+
 ``` Go
 package app
 
@@ -310,6 +311,7 @@ func (a *AppHandler) completeTodoHandler(w http.ResponseWriter, r *http.Request)
 1 : AppHandler의 db 변수를 사용 할 수 있도록 바꾸어준다. <br />
 
 그 후 AppHandler를 initialize해주어야 하는데, MakeHandler()할 때 반환값을 AppHandler의 포인터가 반환되도록 바꾸어 준다. <br />
+
 ``` Go
 
 var rd *render.Render = render.New() // 1
@@ -329,6 +331,7 @@ func MakeHandler(filepath string) *AppHandler {
 
 	return a
 }
+
 ```
 
 그 후 muxRouter를 지워주고, AppHandler를 만들어준다. <br />
