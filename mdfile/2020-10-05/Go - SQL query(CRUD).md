@@ -389,6 +389,7 @@ func main() {
 그리고 test.db가 생성 된 것을 확인 할 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95039437-afc6ad00-070b-11eb-9eb4-11af446ffcfd.png" width = 70%> </img></p> 
 저 test.db가 생성된 이유는 <code>model/sqliteHandler.go</code>에서 
+
 ``` Go
 
 func newSqliteHandler() dbHandler {
@@ -397,6 +398,7 @@ func newSqliteHandler() dbHandler {
   }
 
 ```
+
 "./test.db"를 여는데 저 파일이 없기 때문에 생성된 것이다. <br />
 
 이제 본격적으로 기능들을 추가해보자! 먼저 getTodos()와 addTodo()를 수정해준다. <br /><br />
@@ -406,7 +408,7 @@ func newSqliteHandler() dbHandler {
 
 package model
 
-type sqliteHandler struct { // 1
+func (s *sqliteHandler) getTodos() []*Todo { // 2
   todos := []*Todo{} // 1
   rows, err := s.db.Query("SELECT id, name, completed, createdAt FROM todos") // 2
   if err != nil { // 3
@@ -421,8 +423,9 @@ type sqliteHandler struct { // 1
   return todos
 }
 
-func (s *sqliteHandler) getTodos() []*Todo { // 2
-  stmt, err := s.db.Prepare("INSERT INTO todos (name, completed, createdAt) VALUES (?, ?, datetime('now'))") // 1
+
+func (s *sqliteHandler) addTodo(name string) *Todo { // 2
+   stmt, err := s.db.Prepare("INSERT INTO todos (name, completed, createdAt) VALUES (?, ?, datetime('now'))") // 1
   
   if err != nil { // 2
       panic(err)
@@ -442,10 +445,6 @@ func (s *sqliteHandler) getTodos() []*Todo { // 2
   todo.CreatedAt = time.Now() // 10
   
   return &todo // 1
-}
-
-func (s *sqliteHandler) addTodo(name string) *Todo { // 2
-return nil
 }
 
 ```
