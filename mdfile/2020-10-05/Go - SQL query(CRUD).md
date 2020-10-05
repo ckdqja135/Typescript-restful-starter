@@ -363,7 +363,7 @@ func MakeHandler(filepath string) *AppHandler {
 
 그리고 <code>main.go</code>에서 appHandler를 만들었기 때문에 프로그램이 종료되기 전에 defer로 m의 Close를 호출 할 수 있게 된다. <br />
 <code>main.go</code>
-```
+``` Go
 
 func main() {
    m := app.MakeHandler("./test.db")
