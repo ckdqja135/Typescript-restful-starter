@@ -280,3 +280,133 @@ Google에서 signin이 된 다음에 다시 콜백 주소로 알려주게 되는
     <code>session.Values["id"] = userInfo.ID</code>에 아무거나 저장해도 되는데, Email이나 Picture를 추가로 저장해도 무방하다. <br />
     그후 Save()를 통해 저장하고, 에러가 있을 시 에러를 반환해준다. <br />
 6 : 로그인이 끝났으므로 메인페이지로 redirect시켜준다. 
+
+그 다음 <code>app/app.go</code>에 넘어와서 코드를 수정할 것인데 <br />
+로그인 하면 세션 쿠키에 저장이 되었을 것이고, 그것을 indexHandler가 호출 될 때 그 세션 아이디를 읽어와야 한다. <br />
+그래서 쿠키에서 세션 아이디를 읽어오는 함수를 추가해준다. <br />
+
+``` Go
+
+  func getSesssionID(r *http.Request) string { // 1
+    session, err := store.Get(r, "session") // 2
+    if err != nil { // 3
+      return ""
+    }
+
+    // Set some session values.
+    val := session.Values["id"] // 4
+    if val == nil { // 5
+      return ""
+    }
+    return val.(string) // 6
+  }
+
+```
+
+1 : 쿠키는 Request안에 들어있기 때문에 Request가 필요하고, id의 return값이 string으로 나오게 된다. <br />
+2 : 그 후 세션에 저장했고, 아이디를 넣었기 때문에 저장할 때 사용 했던 코드들을 그대로 가져온다. <br />
+    가져오는 방법도 똑같다. store에서 세션을 Get한 다음, id를 가져오면 된다. <br />
+3 : 에러가 났을 때 빈 문자열을 반환 시켜준다. <br />
+4 : 이것이 map으로 되어 있는데 <code>map[interface{}]interface{}</code> 이런식으로 interface의 interface로 되어 있어 어떤 타입도 다 된다. <br />
+    그래서 nil도 가능하다. 그래서 이 부분이 비어있는 경우에 var는 nil이 된다. <br />
+5 : 그래서 비어있는지 여부를 체크한다. (비어있을 시 로그인이 안된 상태) <br />
+6 : val에 구글id를 string으로 넣기 때문에 string으로 바꾸어서 return 해준다. <br />
+
+여기까지 하면 session id가 나오는데, indexHandler도 그렇고, getTodoListHandler, addTodoHandler, removeTodoHandler들의 모든 요청에 대해서 <br />
+로그인이 되지 않은 상태면 로그인 화면으로 보내주어야 한다. 그렇게 하면 모든 Handler에 세션 id검사하는 부분을 만들기가 번거롭기 때문에 <br />
+지난 번에 Decorator Handler를 만들었었는데 Decorator Handler가 먼저 로그인 여부를 체크해서 로그인이 안되었을 경우에는 로그인 화면으로 보내버리고, <br /> 
+아닐 경우엔 나머지를 처리하도록 할 것인데 Decorator Handler를 새로 만든다기 보다는 negroni가 커스텀 미들웨어를 지원하기 때문에 negroni를 그대로 사용해보자! <br />
+
+<code>main.go</code>에 있는 negroni를 지워버리고 <code>app.go</code>에서 negroni를 가져온다. <br />
+
+``` Go
+
+  func CheckSignin(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) { // 2
+    // 이미 signin URL을 요청하거나 auth URL을  경우에 next()로 가야한다. (무한루프 방지)
+    if strings.Contains(r.URL.Path, "/signin.html") || 
+      strings.Contains(r.URL.Path, "/auth") {
+      next(w, r)
+      return
+    }
+    // 로그인 여부 체크 
+    // 유저가 signin되어 있으면 next로 가서 Write하고, 다음 next의 핸들러를 호출해준다.
+    sessionID := getSesssionID(r)
+    if sessionID != "" {
+      next(w, r)
+      return
+    }
+
+    //  유저가 signin이 안되어 있으면 signin화면으로 redirect시켜준다.
+    http.Redirect(w, r, "/signin.html", http.StatusTemporaryRedirect)
+  }
+
+  func MakeHandler(filepath string) *AppHandler {
+    r := mux.NewRouter()
+    n := negroni.New( // 1
+      negroni.NewRecovery(),
+      negroni.NewLogger(),
+      negroni.HandlerFunc(CheckSignin),
+      negroni.NewStatic(http.Dir("public")))
+    n.UseHandler(r)
+
+    a := &AppHandler{
+      Handler: n,
+      db:      model.NewDBHandler(filepath),
+    }
+
+    r.HandleFunc("/todos", a.getTodoListHandler).Methods("GET")
+    r.HandleFunc("/todos", a.addTodoHandler).Methods("POST")
+    r.HandleFunc("/todos/{id:[0-9]+}", a.removeTodoHandler).Methods("DELETE")
+    r.HandleFunc("/complete-todo/{id:[0-9]+}", a.completeTodoHandler).Methods("GET")
+    r.HandleFunc("/auth/google/login", googleLoginHandler)
+    r.HandleFunc("/auth/google/callback", googleAuthCallback)
+    r.HandleFunc("/", a.indexHandler)
+
+    return a
+  }
+
+```
+
+이 때 핸들러는 mux핸들러를 사용한다. <br />
+즉, AppHandler가 negroni Handler를 사용하고, negroni Handler가 mux Handler를 사용하는 물고 물리는 관계가 된다. <br />
+그래서 serverhttp(a) 함수가 호출되면 negronihttp 함수가 호출이 되고, negronihttp 함수가 호출이 되면, 데코레이터 모듈들이 호출이 된 다음에 <br />
+muxRouter가 호출이 되는 구조가 된다. <br />
+
+1 : negroni.Classic()의 구조를 보면
+``` Go
+
+  func Classic() *Negroni {
+    return New(NewRecovery(), NewLogger(), NewStatic(http.Dir("public")))
+  }
+
+```
+
+3가지 데코레이터를 가지고 있다는 것을 알 수 있다. <br />
+* NewRecovery() - 핸들러를 처리하다가 Panic()이 일어 났을 때 웹서버가 죽지 않도록 Recovery해주는 것.
+* NewLogger() - Log를 찍는 부분.
+* NewStatic(http.Dir("public")) - File Static을 해주는 부분.
+
+NewRecovery와 NewLogger는 그냥 사용할 수 있는데, NewStatic같은 경우엔 파일 요청을 들어오기전에 로그인 여부를 판단해야 하기 때문에 이 것을 바로 쓸 수 없고, <br />
+이 둘을 먼저 한 다음 CheckSignin이라는 데코레이터를 먼저 처리한 다음에 로그인이 안됐을 경우에 여기에서 끊어 버려준다. <br />
+앞쪽부터 체인으로 물려있다 생각하면 된다. <br />
+그래서 HandlerFunc안에 데코레이터 함수를 넣으면 데코레이터 핸들러로 바꾸어주는데 <br />
+HandlerFunc은 function type인데 저 3가지의 인자로 구성되어 있다. <br />
+
+``` Go
+
+  type HandlerFunc func(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc)
+  
+```
+
+2 : 그래서 거기에 해당하는 함수를 만들어준다. <br />
+
+이렇게 저장후에 실행을 시켜보자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95153707-0d6dfe80-07cb-11eb-850d-c70114398bf6.png" width = 70%> </img></p> 
+화면 진입 후 Google 로그인 버튼을 클릭하면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95166513-fe964480-07e8-11eb-82d3-fe343e4bfb7d.png" width = 70%> </img></p> 
+아래와 같이 Google로그인 창이 뜨게 되고 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95166549-0d7cf700-07e9-11eb-8673-e7cef4a548d3.png" width = 70%> </img></p> 
+로그인을 하게 되면 todos 앱 화면으로 넘어가는 것을 확인할 수 있다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95166616-2c7b8900-07e9-11eb-9499-6a49b208570d.png" width = 70%> </img></p> 
+
+지금은 data를 세션 id별로 따로 따로 보관하는 것이 아니라 어떤 계정으로 들어와도 같은 todos가 나오게 된다. <br />
