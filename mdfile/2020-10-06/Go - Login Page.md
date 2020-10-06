@@ -214,4 +214,69 @@ uuid이기 때문에 위와 같은 id가 없다는 것이 보장이 된다. <br 
 이제 이것을 환경변수에 추가해주자! <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95156217-f92d0000-07d0-11eb-8f57-8746c95334eb.png" width = 70%> </img></p> 
 
+uuid가 노출이 되면 암호화를 복호화 할 수 있기 때문에 노출에 주의해야 하고, 외부에 웹 사이트가 배포되었을 시 이 키를 주기적으로 바꾸어 주어야 한다. <br />
 
+이제 store변수를 가지고 <code>app/signin.go</code>에 가서 코드를 수정 해줄 것인데 <br />
+<code>app/signin.go</code>
+```Go
+
+  type GoogleUserId struct { // 1
+    ID            string `json:"id"`
+    Email         string `json:"email"`
+    VerifiedEmail bool   `json:"verified_email"`
+    Picture       string `json:"picture"`
+  }
+
+  func googleAuthCallback(w http.ResponseWriter, r *http.Request) {
+    oauthstate, _ := r.Cookie("oauthstate")
+
+    if r.FormValue("state") != oauthstate.Value {
+      log.Printf("invalid google oauth state cookie:%s state:%s\n", oauthstate.Value, r.FormValue("state"))
+      http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+      return
+    }
+
+    data, err := getGoogleUserInfo(r.FormValue("code"))
+    if err != nil {
+      log.Println(err.Error())
+      http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+      return
+    }
+    // 여기가 데이터를 받은 상태임.
+    // Store Id info into Session cookie
+    var userInfo GoogleUserId
+    err = json.Unmarshal(data, &userInfo) // 2
+    if err != nil { // 3
+      log.Println(err.Error())
+      http.Error(w, err.Error(), http.StatusInternalServerError) // 4
+      return
+    }
+    session, err := store.Get(r, "session") // 5
+    if err != nil {
+      http.Error(w, err.Error(), http.StatusInternalServerError) // 4
+      return
+    }
+    // Set some session values.
+    session.Values["id"] = userInfo.ID // 5
+    // Save it before we write to the response/return from the handler. 
+    err = session.Save(r, w) // 5
+    if err != nil { // 5
+      http.Error(w, err.Error(), http.StatusInternalServerError)
+      return
+    }
+    http.Redirect(w, r, "/", http.StatusTemporaryRedirect) // 6
+  }
+
+```
+Google에서 signin이 된 다음에 다시 콜백 주소로 알려주게 되는데 그 주소를 통해 유저의 정보를 받아올 수 있게 되었고, <br />
+그 다음에 데이터를 웹 화면상에 result로 뿌려줬는데 그 id 정보를 세션에 저장할 것이다. <br />
+
+1 : 먼저 구글에서 보내준 데이터를 파싱해야 하기 위해 보내준 형태 그대로 struct를 만들어 준다. <br />
+2 : 구글에서 보내준 데이터가 data변수 포맷에 맞는 데이터 이기 때문에 json패키지를 이용해서 Unmarshal해준다. <br />
+    첫번째로 데이터를 집어넣고, 두번째에 userInfo라는 객체를 만든 뒤 userInfo의 주소를 넘겨서 GoogleUserId 데이터가 Unmarshal되서 값이 들어가게 해준다. <br />
+3 : 에러가 있으면 에러 처리를 해준다. <br />
+4 : 기존에는 에러가 생겼을 때 Redirect()했었는데 에러를 반환하는 것으로 수정해준다. <br />
+5 : 2번이 정상적으로 처리 되었으면 유저의 ID값이 들어왔을텐데, 이것을 세션 쿠키에 저장해주는데, 해당 소스는 gorilla sessions에 예제 코드에 나와있다. <br />
+    <code>session.Values["id"] = userInfo.ID</code>에 아무거나 저장해도 되는데, Email이나 Picture를 추가로 저장해도 무방하다. <br />
+    그후 Save()를 통해 저장하고, 에러가 있을 시 에러를 반환해준다. <br />
+6 : 로그인이 끝났으므로 메인페이지로 redirect시켜준다. 
