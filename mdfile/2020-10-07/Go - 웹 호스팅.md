@@ -81,3 +81,41 @@ main파일을 열어준다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95302255-a892d100-08bc-11eb-8273-06879c97a58f.png" width = 70%> </img></p> 
 
 그러면 heroku가 git이랑 연동을 해서 내 계정에 app을 하나 만들어준다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95302407-ded05080-08bc-11eb-9559-b3715cf8fe5e.png" width = 70%> </img></p> 
+여기에서 https://infinite-beyond-51893.herokuapp.com/ 은 heroku가 랜덤하게 뽑아주는 것이다. 그래서 정해진 도메인이 아니다. <br />
+
+app을 만들었으므로 git app을 배포해주기 위해 git push heroku main를 입력해준다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95302748-530af400-08bd-11eb-909c-56a411351e59.png" width = 70%> </img></p> 
+그러면 heroku server에 방금 받은 app을 업로드 하게 되고, 빌드, 실행을 알아서 해준다. <br />
+
+depoly가 완료 된 것을 확인할 수 있다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95302890-7df54800-08bd-11eb-8c33-fc773f73652d.png" width = 70%> </img></p> 
+
+그 후 heroku open을 입력한다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95303028-a9783280-08bd-11eb-9c4c-e1760b564300.png" width = 70%> </img></p> 
+
+그러면 아래와 같이 새 창이 열리게 된다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95303044-af6e1380-08bd-11eb-8fa8-eb053a104582.png" width = 70%> </img></p> 
+
+이 페이지가 아까 올린 페이지이다. <br />
+
+그 다음 이 웹서버가 잘 돌아가는지 확인하고 싶다면 <br />
+
+``` linux
+  
+  heroku logs --tail
+  
+```
+를 입력해준다. <br />
+--tail를 입력해주었기 때문에 뒷부분 부터 나온다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95303599-5b176380-08be-11eb-8dd6-a5accce5b70b.png" width = 70%> </img></p> 
+이런식으로 log가 나오며, 이 log는 main함수에 넣어주었던 gin이라는 웹 플랫폼에서 자동으로 log기능을 가지고 있는데 그것이 뽑아주는 log이다. <br />
+Go에서 많이 사용되는 웹 플랫폼이기도 하지만 무겁기 때문에 다루지 않았다. <br />
+
+이렇게 하면 heroku배포가 끝이났다. <br />
+
+그리고 heroku ps를 입력해주면 현재 돌아가는 서버들을 확인할 수 있다.<br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95304015-f01a5c80-08be-11eb-9081-03107f914fd5.png" width = 70%> </img></p> 
+
+bin/go-getting-started가 웹서비스이고, 프리버전이고, 1개가 돌고있다는 것을 의미한다. <br />
+
