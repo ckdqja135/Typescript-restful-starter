@@ -246,7 +246,7 @@ log창을 보면 panic: runtime error: invalid memory address or nil pointer der
 
 ```
 
-<code>id        INTEGER  PRIMARY KEY AUTOINCREMENT,</code> 이 부분에서 에러가 난 것이다. <br />
+<code>id INTEGER  PRIMARY KEY AUTOINCREMENT,</code> 이 부분에서 에러가 난 것이다. <br />
 각 DB마다 문법이 다른데, 이 부분을 
 
 ``` Go
@@ -299,3 +299,6 @@ log창을 보면 panic: runtime error: invalid memory address or nil pointer der
 STRING을 사용할 수 없기 때문에 VARCHAR(256)으로 수정해주고, DATETIME을 사용할 수 없어 같은 기능을 하는 TIMESTAMP로 변경해준다. <br />
 
 이후 저장 후 다시 add, commit, push를 진행한다. <br />
+
+에러 잡는 중..
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95412966-30341a80-0965-11eb-9579-dfa05d49ceb1.png" width = 70%> </img></p> 
