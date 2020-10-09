@@ -10,7 +10,12 @@
 ```
 이런식으로 해결했다. <br />
 
-그 후 add와 select 부분을 수정해야 하는데 postgre에서는 '?'를 지원하지 않아 $와 숫자를 사용해야한다. <br />
+
+그 후 git add, commit, push 후 heroku -logs --tail을 사용하여 정상적으로 작동하는지 로그를 확인해준다. <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95541170-984e3380-0a2d-11eb-9696-9a3b30cff6a7.png" width = 70%> </img></p> 
+
+postgre에서는 '?'를 지원하지 않는다는 의미인데, postgre ?가 아닌 $와 숫자를 사용해야 한다. <br />
 ``` Go
 
   func (s *pqHandler) GetTodos(sessionId string) []*Todo {
@@ -37,6 +42,7 @@ func (s *pqHandler) CompleteTodo(id int, complete bool) bool {
 ```
 
 이렇게 바꾸어준다. <br />
+
 그 후 git add, commit, push 후 서버를 실행해주면 정상적으로 add와 update가 되는 것을 확인할 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95535005-46ec7700-0a22-11eb-8d76-67f355e2e03b.png" width = 70%> </img></p> 
 
