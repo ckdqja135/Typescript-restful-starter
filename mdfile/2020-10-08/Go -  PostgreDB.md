@@ -258,7 +258,7 @@ log창을 보면 panic: runtime error: invalid memory address or nil pointer der
     }
     statement, err := database.Prepare(
       `CREATE TABLE IF NOT EXISTS todos (
-        id        INTEGER  PRIMARY KEY AUTOINCREMENT,
+        id        SERIAL PRIMARY KEY,
         sessionId VARCHAR(256),
         name      TEXT,
         completed BOOLEAN,
