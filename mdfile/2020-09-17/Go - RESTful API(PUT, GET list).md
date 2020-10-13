@@ -613,7 +613,7 @@ func TestCreateUser(t *testing.T) {
 	defer ts.Close()
 
 	resp, err := http.Post(ts.URL+"/users", "application/json",
-		strings.NewReader(`{"first_name":"tucker", "last_name":"kim", "email":"tucker@naver.com"}`))
+		strings.NewReader(`{"first_name":"changbeom", "last_name":"song", "email":"changbeom@naver.com"}`))
 	assert.NoError(err)
 	assert.Equal(http.StatusCreated, resp.StatusCode)
 
@@ -648,7 +648,7 @@ func TestDeleteUser(t *testing.T) {
 	assert.Contains(string(data), "No User ID:1")
 
 	resp, err = http.Post(ts.URL+"/users", "application/json",
-		strings.NewReader(`{"first_name":"tucker", "last_name":"kim", "email":"tucker@naver.com"}`))
+		strings.NewReader(`{"first_name":"changbeom", "last_name":"song", "email":"changbeom@naver.com"}`))
 	assert.NoError(err)
 	assert.Equal(http.StatusCreated, resp.StatusCode)
 
@@ -680,7 +680,7 @@ func TestUpdateUser(t *testing.T) {
 	assert.Contains(string(data), "No User ID:1")
 
 	resp, err = http.Post(ts.URL+"/users", "application/json",
-		strings.NewReader(`{"first_name":"tucker", "last_name":"kim", "email":"tucker@naver.com"}`))
+		strings.NewReader(`{"first_name":"changbeom", "last_name":"song", "email":"changbeom@naver.com"}`))
 	assert.NoError(err)
 	assert.Equal(http.StatusCreated, resp.StatusCode)
 
@@ -713,7 +713,7 @@ func TestUsers_WithUsersData(t *testing.T) {
 	defer ts.Close()
 
 	resp, err := http.Post(ts.URL+"/users", "application/json",
-		strings.NewReader(`{"first_name":"tucker", "last_name":"kim", "email":"tucker@naver.com"}`))
+		strings.NewReader(`{"first_name":"changbeom", "last_name":"song", "email":"changbeom@naver.com"}`))
 	assert.NoError(err)
 	assert.Equal(http.StatusCreated, resp.StatusCode)
 
