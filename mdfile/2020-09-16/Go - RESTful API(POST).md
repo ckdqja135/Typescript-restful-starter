@@ -291,7 +291,7 @@ func TestGetUserInfo(t *testing.T) {
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93417867-ed41d280-f8e3-11ea-942f-0403f050b362.png" width = 70%> </img></p>
 
-지금까지 우리가 한 것을 되새김 해보면 특정 id에 해당하는 유저의 정보를 가져오는 것, 그게 없다면 No User id가 출력 되도록 하는 것, <br />
+지금까지 한 것을 되새김 해보면 특정 id에 해당하는 유저의 정보를 가져오는 것, 그게 없다면 No User id가 출력 되도록 하는 것, <br />
 POST로 정보를 JSON 형태로 보냈을 때 이 정보를 서버가 받아서 새로운 등록을 해서 그 유저의 정보를 return하게 했고, 해당 유저의 정보의 기록을 map에 기록을 했고, <br />
 그 뒤 유저가 등록되어 있어 GET으로 /users/에 똑같이 id를 붙여 보낼 시 해당하는 유저의 정보를 JSON으로 보내준 것이기 때문에 user2로 파싱을 해서 테스팅 할 수 있게 했다. <br />
 
