@@ -1,4 +1,3 @@
-[Go - mysql](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-09-15/Go%20-%20mysql(simple).md)
 1. [Go 언어 특징](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-09-15/Go%20%EC%96%B8%EC%96%B4%20%ED%8A%B9%EC%A7%95.md)
 2. [Go - WebHandle](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-09-15/Go%20-%20Web%20Handler.md)
 3. [Go - JSONTransfer](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-09-15/Go%20-%20JSON%20Transfer.md) 
