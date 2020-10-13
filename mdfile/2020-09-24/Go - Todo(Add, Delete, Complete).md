@@ -1,6 +1,6 @@
 ### 시작
 <code>public/todo.js</code>
-``` javascrpit
+``` Javascrpit
  ....
  
 $(function() {
@@ -23,7 +23,7 @@ $(function() {
   
 저번에 이어서 여기에서 '.todo-list-add-btn'을 클릭했을 때 서버에 add를 요청할 수 있게 만들어보자! <br />
 이 코드를 보면은
-``` javascrpit
+``` Javascrpit
  ....
  
 $(function() {
@@ -116,7 +116,7 @@ $(function() {
 기존에 있던 item변수에서 가져오는데 이렇게 하면 서버에서 보내준 id값을 읽어 올 수 없기 때문에 서버의 data를 그대로 사용 할 수 있도록 수정 하는데 <br />
 서버가 JSON object로 반환해주기 때문에 그 값을 그대로 사용 할 수 있다.  <br />
 
-``` javascrpit
+``` Javascrpit
  ....
     
     var item = $(this).prevAll('.todo-list-input').val();
@@ -151,7 +151,7 @@ $(function() {
 
 이제 Delete할 수 있게 만들어 보자! 서버로 요청을 날린다음에 요청이 처리된 다음에 지울 수 있게 만들어본다.<br />
 <code>public/todo.js</code>
-``` javascript
+``` Javascript
 
   todoListItem.on('click', '.remove', function() { // 1
           // url: todos/id method: DELETE
@@ -239,7 +239,7 @@ $(function() {
 
 이제 DELETE했을 때 성공여부에 따라서 data가 success일 때만 지워 줄 수 있도록 코드를 수정해주자. <br />
 <code>public/todo.js</code>
-``` javascript
+``` Javascript
 
   todoListItem.on('click', '.remove', function() {
           // url: todos/id method: DELETE
@@ -277,7 +277,7 @@ $(function() {
 ```
 
 <code>public/todo.js</code>
-``` javascript
+`` Javascript
    
   todoListItem.on('change', '.checkbox', function() {
     var id = $(this).closest("li").attr('id'); // 2
@@ -353,7 +353,7 @@ $(function() {
       
 다시 <code>public/todo.js</code>로 돌아와서
 
-``` javascript
+``` Javascript
    
   todoListItem.on('change', '.checkbox', function() {
     var id = $(this).closest("li").attr('id'); 
