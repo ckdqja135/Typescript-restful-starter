@@ -17,7 +17,7 @@
   }
   
 ```
-1 : 이 핸들러가 하는 일은 단순히 mux를 만들고 단순하게 mux를 반환하는 함수로 만들어준다.
+1 : 이 핸들러가 하는 일은 단순히 mux를 만들고 단순하게 mux를 반환하는 함수로 만들어준다. <br />
 
 <code>main.go</code>를 작성해보자! <br />
 ``` Go
@@ -143,7 +143,7 @@ localhost:3000/을 입력하면 자동으로 localhost:3000/todo.html으로 리�
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93982628-677ac700-fdbc-11ea-9179-e0ffe0fb2036.png" width = 70%> </img></p>
 항목이 모두 사라져 있다는 것을 확인 할 수 있다. <br />
 
-이제 todo.html이 불러져 올 때 todo.js가 실행될텐데 이 때 서버로 부터 list를 받아오도록 수정해보자!
+이제 todo.html이 불러져 올 때 todo.js가 실행될텐데 이 때 서버로 부터 list를 받아오도록 수정해보자! <br />
 <code>public/todo.js</code>
 
 ``` javascrpit
@@ -263,9 +263,9 @@ addItem에 인자로 받는 item은 json object가 오기 때문에 그냥 item�
 3 : JSON을 반환하기 때문에 사용하기 편하게 render 변수를 만들어 준다. <br />
 4 : Todo struct 생성 <br />
 5 : Todo struct의 variable한 In-memory struct생성 <br />
-    Map이고, id와 todo정보를 가지고 있다.
+    Map이고, id와 todo정보를 가지고 있다. <br />
     
-6 : todoMap 초기화
+6 : todoMap 초기화 <br />
 7 : Todo 포인터형 인스턴스를 list로 가지고 있는 list 변수. <Br />
 8 : forEach를 todoMap을 돌면서 Key, Value를 가져오는데 Key는 필요없고 Value만 가져오기 때문에 key를 list에 Value부분을 append해서 list를 생성해주었다. <br />
 9 : render를 사용해서 JSON 반환 <br />
