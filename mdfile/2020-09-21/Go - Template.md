@@ -30,7 +30,7 @@
 ```
 
 1 : Tmp11라는 템플릿을 만들고 Parse를 통해 내용을 채워준다. <br />
-    .Name 넘어간 data 인스턴스를 말한다.
+    .Name 넘어간 data 인스턴스를 말한다. <br />
 2 : Execute의 첫 번째 칸에는 어디에 결과를 쓸 거냐?에 대한 것이다. 화면에 결과를 출력 시킬 것이기 때문에 os.Stdout를, 두 번째는 어떻게 채울 것이냐? 인데 user데이터를 넣어준다. <br />
 
 이 상태에서 실행을 하면 <br />
@@ -84,7 +84,7 @@ user2도 추가해보자 <br />
 
 확장자의 명은 아무거나 할 수 있는데, tmpl로 해보았고, 문서의 형태이다 보니 이와 같이 써 주면 된다. <br />
 
-그리고 <code>main.go</code>로 넘어와서 main 부분을 수정해준다.
+그리고 <code>main.go</code>로 넘어와서 main 부분을 수정해준다. <br />
 
 ``` Go
   
@@ -100,10 +100,10 @@ user2도 추가해보자 <br />
   }
 ```
 
-1 : ParseFiles에 여러개의 파일들을 가져올 수 있는데 지금은 한 개 이므로 하나만 적는다.
-2 : 마찬가지로 ExecuteTemplate함수를 사용하여 두번째에는 어떤 템플릿 파일을 사용했는지 파일명을 적어주어야 한다.
+1 : ParseFiles에 여러개의 파일들을 가져올 수 있는데 지금은 한 개 이므로 하나만 적는다. <Br />
+2 : 마찬가지로 ExecuteTemplate함수를 사용하여 두번째에는 어떤 템플릿 파일을 사용했는지 파일명을 적어주어야 한다. <br />
 
-이 상태에서 실행하면 정상적으로 출력 되는 것을 알 수 있다.
+이 상태에서 실행하면 정상적으로 출력 되는 것을 알 수 있다. <br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93728453-fdff8a80-fbfa-11ea-814c-7b1128a89245.png" width = 70%> </img></p>
 
@@ -131,7 +131,7 @@ user2도 추가해보자 <br />
   
 ```
 
-이렇게 바꾼 뒤 실행을 하면
+이렇게 바꾼 뒤 실행을 하면 <Br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93728633-b62d3300-fbfb-11ea-9cbf-c46ab04cb036.png" width = 70%> </img></p>
 
@@ -141,7 +141,7 @@ user2도 추가해보자 <br />
 <code>{{if .IsOld}}, {{else}}</code> 뒷 쪽에 '-'를 붙여서 공백을 없애준다. <br />
 그래서 앞쪽에 '-'를 붙이면 앞쪽의 공백이 사라지고, 뒷쪽에 '-'를 붙이면 뒷쪽의 공백이 사라지게 된다. <br />
 
-이것을 적용 후 실행해 보면 빈 공백이 사라진 것을 알 수 있다.
+이것을 적용 후 실행해 보면 빈 공백이 사라진 것을 알 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93728825-b1b54a00-fbfc-11ea-840e-5e8f9ca56e9a.png" width = 70%> </img></p>
 
 그리고 <code>tmplates/tmpl1.tmpl</code>에 HTML 태그를 추가해보자 <br />
@@ -193,9 +193,9 @@ user2도 추가해보자 <br />
 이렇게 수정 해준 뒤 확인해자 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93729348-15d90d80-fbff-11ea-954f-bb7ffd90ec97.png" width = 70%> </img></p>
 
-특수문자 탈락없이 들어갔고, 중요한건 따옴표로 묶여있는데 따로 값에 따옴표를 넣지 않았지만 값이 String이기 때문에 String이 value일 경우 자동으로 따옴표를 묶어준다.
+특수문자 탈락없이 들어갔고, 중요한건 따옴표로 묶여있는데 따로 값에 따옴표를 넣지 않았지만 값이 String이기 때문에 String이 value일 경우 자동으로 따옴표를 묶어준다. <br />
 
-<code>tmplates/tmpl2.tmpl</code>에 템플릿을 하나 더 추가해준다.
+<code>tmplates/tmpl2.tmpl</code>에 템플릿을 하나 더 추가해준다. <br />
 
 ``` Go
 
@@ -210,11 +210,11 @@ user2도 추가해보자 <br />
 
 ```
 
-1 :  "tmpl1.tmpl"를 포함시켜서 가져오는데 이 때 인스턴스는 자기가 받았던 것들 그대로 가져온다.
+1 :  "tmpl1.tmpl"를 포함시켜서 가져오는데 이 때 인스턴스는 자기가 받았던 것들 그대로 가져온다. <br />
 
 
-그 후
-<code>main.go</code>에서 코드를 수정해준다.
+그 후 <br />
+<code>main.go</code>에서 코드를 수정해준다. <Br />
 
 ``` Go
 
