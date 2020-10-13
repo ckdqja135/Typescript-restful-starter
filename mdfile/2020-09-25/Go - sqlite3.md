@@ -366,4 +366,4 @@ PASS가 되는 것을 확인할 수 있다. <br />
 4 : DB를 열면 프로그램이 종료되기 전에 닫아주어야 하는데 sqliteHandler 인스턴스가 사라지기 전에 닫아주어야 하기 때문에 close 함수를 추가한다. <br />
 5 : todos data를 저장할 테이블을 생성 해준다. <br />
 6 : query 실행. <br />
-7 : 그리고 이 database를 계속 사용하기 때문에 &sqliteHander에 값으로 넣어준다. <br />
+7 : 그리고 이 database를 계속 사용하기 때문에 &sqliteHandler에 값으로 넣어준다. <br />
