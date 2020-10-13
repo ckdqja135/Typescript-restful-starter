@@ -59,7 +59,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request) { // 2
 이번에는 gorilla mux가 아닌 gorilla pat을 사용할 것인데, 좀 더 심플한 라우터라고 생각하면 된다. <br />
 [링크](https://github.com/gorilla/pat)를 들어가면 자세한 내용을 볼 수 있으며  <br />
 
-``` Linux
+``` Unix
   
   go get github.com/gorilla/pat
   
