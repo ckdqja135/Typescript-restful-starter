@@ -51,7 +51,7 @@ myapp/app_test.go
   func TestIndex(t *testing.T) {
     assert := assert.New(t)
 
-    ts := httptest.NewServer(NewHandler())
+    ts := httptest.NewServer(NewHandler()) // 1
     defer ts.Close()
 
     resp, err := http.Get(ts.URL) // 2
