@@ -146,7 +146,7 @@ localhost:3000/을 입력하면 자동으로 localhost:3000/todo.html으로 리�
 이제 todo.html이 불러져 올 때 todo.js가 실행될텐데 이 때 서버로 부터 list를 받아오도록 수정해보자! <br />
 <code>public/todo.js</code>
 
-``` javascrpit
+``` JAVASCRIPT
 
   (function($) {
     'use strict';
