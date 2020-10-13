@@ -41,7 +41,8 @@
 
 ```
 
-이렇게 기본적인 서버를 구축 한 뒤 public폴더를 만들어 original폴더를 넣어주고, original폴더에 들어있는 파일들을 public안으로 빼준 뒤, 서버를 실행해 보자! <br />
+이렇게 기본적인 서버를 구축 한 뒤 public폴더를 만들어 original폴더를 넣어주고, original폴더에 들어있는 파일들을 public안으로 빼준 뒤, <br />
+서버를 실행해 보자! <br />
 
 여기서 주의할 점은 localhost:3000/이 아니라 localhost:3000/todo.html로 접속해야 한다는 것이다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93981324-cccdb880-fdba-11ea-93fa-cb9eeb68b4b2.png" width = 70%> </img></p> 
