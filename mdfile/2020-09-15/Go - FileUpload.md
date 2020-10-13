@@ -52,7 +52,7 @@
 ```
 를 보게 되면 Body가 없을 경우에 Decode가 실패하게 되는데 그 때 error가 나고, fmt.Fprint(w, "Bad Request: ", err)를 반환하기 때문이다. <br />
 
-그래서 StatusOK가 아니라 StatusBadRequest가 와야한다. 수정해준다. <br />
+그래서 StatusOK가 아니라 StatusBadRequest가 와야한다. <br />
 
 ``` Go
 
