@@ -268,7 +268,7 @@ body는 {{ yield }}로 템플릿을 지정했지만 title부분도 템플릿으�
 
 ```
 이렇게 만들어 준 뒤 title에 해당하는 템플릿을 만들면 된다! <br />
-</code>template/title-body.html<code>
+<code>template/title-body.html</code>
 
 ``` HTML
 
