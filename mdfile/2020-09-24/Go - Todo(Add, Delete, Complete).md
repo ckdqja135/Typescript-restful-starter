@@ -22,7 +22,7 @@ $(function() {
 ```
   
 저번에 이어서 여기에서 '.todo-list-add-btn'을 클릭했을 때 서버에 add를 요청할 수 있게 만들어보자! <br />
-이 코드를 보면은
+이 코드를 보면은 <br />
 ``` Javascript
  ....
  
@@ -277,7 +277,7 @@ $(function() {
 ```
 
 <code>public/todo.js</code>
-`` Javascript
+``` Javascript
    
   todoListItem.on('change', '.checkbox', function() {
     var id = $(this).closest("li").attr('id'); // 2
