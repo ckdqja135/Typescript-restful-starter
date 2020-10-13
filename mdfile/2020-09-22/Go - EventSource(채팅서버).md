@@ -279,7 +279,7 @@ chat.js가 우리가 만들 파일인데, public 폴더에 생성해준다.
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93841302-1b515900-fcce-11ea-9544-252c269cc1d2.png" width = 70%> </img></p>
 
-addMessage가 정상 동작 하는 것을 확인 할 수 있다. 이제 evnetsource를 열어보자! // 2 번을 지우고 코드를 이어서 수정한다.<br />
+addMessage가 정상 동작 하는 것을 확인 할 수 있다. 이제 evnetsource를 열어보자! '// 2'번을 지우고 코드를 이어서 수정한다.<br />
 
 
 ``` Go
