@@ -344,6 +344,7 @@ $(function() {
     return r
   }
   
+ ```
 1 : complte핸들러 추가 <br />
 2 : completeTodoHandler 함수 <br />
 2-1 ~ 2-2 : remove코드를 가져온다. <br />
