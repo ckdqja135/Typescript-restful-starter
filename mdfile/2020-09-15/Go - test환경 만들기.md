@@ -82,13 +82,13 @@
 
 이 상태에서 실행해주면 hello world가 뜨는 것을 확인할 수 있다. <br />
 
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848044-996c2a80-fce3-11ea-9569-48729eb5f220.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848044-996c2a80-fce3-11ea-9569-48729eb5f220.png" width = 70%> </img></p>
 
 그리고 /bar를 해주면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848170-cae4f600-fce3-11ea-9c2d-4f2b69771f24.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848170-cae4f600-fce3-11ea-9c2d-4f2b69771f24.png" width = 70%> </img></p>
 
 그리고 /foo를 해주면 json파일이 없기 대문에 EOF가 뜨는 것을 확인 할 수 있다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848212-e6e89780-fce3-11ea-949f-f20aebbdc0e7.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848212-e6e89780-fce3-11ea-949f-f20aebbdc0e7.png" width = 70%> </img></p>
 
 이제부터 테스팅 코드를 만들게 될건데 아까 만들었던 myapp폴더에 app_test.go파일을 만들어준다.<br />
 Go에서는 <code>_test</code>만 붙여주면 Test코드로 작동한다. <br />
@@ -119,10 +119,10 @@ Go에서는 <code>_test</code>만 붙여주면 Test코드로 작동한다. <br /
 를 사용하여 다운받자! <br />
 
 그 다음 <code>goconvey</code>라는 명령어를 터미널에 실행하게 되면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848540-d258cf00-fce4-11ea-9af5-98fc3498b48e.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848540-d258cf00-fce4-11ea-9af5-98fc3498b48e.png" width = 70%> </img></p>
 
 <code>http:localhost:8080</code>에 테스트 서버가 돌아가는 것을 확인 할 수 있다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848590-02a06d80-fce5-11ea-8f92-ff91760ff999.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848590-02a06d80-fce5-11ea-8f92-ff91760ff999.png" width = 70%> </img></p>
 
 먼저 build error부터 고쳐보자! <br />
 
@@ -138,7 +138,7 @@ Go에서는 <code>_test</code>만 붙여주면 Test코드로 작동한다. <br /
   
 ```
 으로 수정하게 되면 PASS가 되었음을 확인 할 수 있다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848825-a68a1900-fce5-11ea-9cec-9761486ed809.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848825-a68a1900-fce5-11ea-9cec-9761486ed809.png" width = 70%> </img></p>
 
 이제 이어서 테스트 코드를 만들어보면 <br />
 
@@ -207,7 +207,7 @@ Go에서는 <code>_test</code>만 붙여주면 Test코드로 작동한다. <br /
 
 이 상태로 저장을 하면 goconvey가 테스트를 진행 할 것이고, 결과가 뜨게 된다. <br />
 
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93849449-21076880-fce7-11ea-9d64-2cfaca6a832c.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93849449-21076880-fce7-11ea-9d64-2cfaca6a832c.png" width = 70%> </img></p>
 
 이번에 가져올 패키지는 stretchr의 testfy라는 패키지를 추가할 것인데, 여기서 assert를 가져올 것이다. <br />
 
@@ -341,11 +341,11 @@ Go에서는 <code>_test</code>만 붙여주면 Test코드로 작동한다. <br /
 ```
 
 이렇게 되는데 이때 테스팅을 하게 되면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93850465-236ac200-fce9-11ea-8209-c435763e18b3.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93850465-236ac200-fce9-11ea-8209-c435763e18b3.png" width = 70%> </img></p>
 FAIL이 뜨는 것을 확인 할 수 있다. <br />
 
 그래서 그 원인을 보면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93850525-41382700-fce9-11ea-8ab9-1230ba48a20d.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93850525-41382700-fce9-11ea-8ab9-1230ba48a20d.png" width = 70%> </img></p>
 '!'가 있어야 되는데 없다고 뜬다. <br />
 
 정상적으로 인덱스 경로에 호출 되었다는 것을 알 수 있다. 그래서 인덱스 경로에서 '/bar'경로로 바꾸어주자! <br />
@@ -397,7 +397,7 @@ FAIL이 뜨는 것을 확인 할 수 있다. <br />
 ```
 
 그래서 실행하면 PASS 되는 것을 확인할 수 있다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93850727-ac81f900-fce9-11ea-80ff-f5596ae2b70f.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93850727-ac81f900-fce9-11ea-80ff-f5596ae2b70f.png" width = 70%> </img></p>
 
 이번에는 name과 함께 넣는 함수를 만들어 보자! 기존에 있던 TestBarPathHandler_WithoutName함수를 복붙해준다. <br />
 
@@ -423,7 +423,7 @@ FAIL이 뜨는 것을 확인 할 수 있다. <br />
 2 : 해당 string과 같은지 비교한다. <br />
 
 이렇게 해서 저장을 해주면 테스트 코드가 돌게 되고, 서버 실행 시 제대로 출력 됐음을 알 수 있다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93850972-35009980-fcea-11ea-986c-9a0e280fe77b.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93850972-35009980-fcea-11ea-986c-9a0e280fe77b.png" width = 70%> </img></p>
 
 ### 풀 소스
 <code>myapp/app_test.go</code>
