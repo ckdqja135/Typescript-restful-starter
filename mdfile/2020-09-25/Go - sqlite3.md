@@ -126,7 +126,7 @@ MS-Window에서 사용하기에는 기본적으로 안되고, 무언가를 깔�
 
 1 : dbHandler interface <br />
     interface에 함수 정의만 가져오면 된다. <br />
-이렇게 4가지 함수를 제공하는 인터페이스가 만들어 졌고, 
+이렇게 4가지 함수를 제공하는 인터페이스가 만들어 졌고, <br />
 
 2 : DB를 사용하는 부분을 별도 struct로 만들어 준다. <br />
 
@@ -135,10 +135,10 @@ MS-Window에서 사용하기에는 기본적으로 안되고, 무언가를 깔�
     그리고 이 인터페이스들은 외부로 공개되는 인터페이스가 아니기 때문에 소문자로 private하게 만들어준다. <br /> 
     그리고 해당 함수에 해당했었던 기존 코드들을 그대로 잘라내서 붙여준다. <br />
 
-4 : memoryHandler는 dbHandler interface를 implements하고 있기 때문에 dbHandler만 전역변수로 들고 있으면 된다.
-5 : newMemoryHandler() 추가.
-6 : 반환값이 dbHandler인 newMemoryHandler()생성
-    이 함수가 하는 일은 memoryHandler를 initialize해서 그 인스턴스를 반환하는 역할을 한다.
+4 : memoryHandler는 dbHandler interface를 implements하고 있기 때문에 dbHandler만 전역변수로 들고 있으면 된다. <br />
+5 : newMemoryHandler() 추가. <br />
+6 : 반환값이 dbHandler인 newMemoryHandler()생성 <br />
+    이 함수가 하는 일은 memoryHandler를 initialize해서 그 인스턴스를 반환하는 역할을 한다. <br />
 6-2 : map을 initialize해준다. <br />
 6-3 : m을 반환하는데 반환하는 m의 타입은 memoryHandler{}가 아니라 dbHandler의 인터페이스로 반환한다. <br />
       그 이유는 memoryHandler{}가 dbHandler의 인터페이스를 implements하고 있기 때문이다. <br />
