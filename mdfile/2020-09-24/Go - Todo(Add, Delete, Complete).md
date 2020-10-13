@@ -47,7 +47,7 @@ $(function() {
 ```
 
 1 : todo-list-add-btn을 클릭했을 때 todo-list-input의 값을 읽어서 어떤 것이 추가 되었는지 확인해서 그것을 item에 넣고 바로 add하는 식인데 <br />
-    그 data를 서버로 POST로 보내준다. 그 후 처리가 되면 응답이 올텐데 addItem을 호출해주면 된다. 그리고 item을 넣을 때 값으로 completed와 name이 있기 때문에 <br />
+    그 data를 서버로 POST로 보내준다. 그 후 처리가 되면 응답이 올텐데 addItem을 호출해주면 된다. 그리고 item을 넣을 때 값으로 completed와 name이 있기 때문에
     item을 바로 넣는게 아니라 JSON으로 만들어서 넣어준다. <br />
 
 이제 POST로 Todo를 보낸 다음에 그 응답이 왔을 때 add하기 때문에 바로 보낼 필요가 없어서 todoListItem.append부분을 주석처리 시켜준다. <br />
