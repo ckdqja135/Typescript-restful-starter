@@ -212,14 +212,14 @@
      AccessToken은 구글에 정보를 요청할 때 사용되는 토큰이고, 이 토큰이 만료 될 때 RefreshToken으로 다시 AccessToken을 받아야 하는데 <br />
      한번만 유저정보를 요청 할 것이므로 Access Token을 쓰면 된다. 그래서 저 경로에 Access Token을 붙여서 http.Get으로 요청하면 된다. <br />
      그렇게 할 때 response와 erorr가 나오게 되는데, <br />
-21 : userinfo를 request하는 경로.
-22 : (20번 이어서) 19번과 마찬가지로 처리 해주고,
-23 : error가 없다면 resp의 데이터를 읽어오면 되는데, resp.Body를 모두 읽어서 data를 반환 해준다.
+21 : userinfo를 request하는 경로. <br />
+22 : (20번 이어서) 19번과 마찬가지로 처리 해주고, <br /> 
+23 : error가 없다면 resp의 데이터를 읽어오면 되는데, resp.Body를 모두 읽어서 data를 반환 해준다. <br />
 
 
 이제 저장 후 실행을 시켜보자! <br />
 
-혹시나 실행 시 아래와 같은 창이 뜬다면
+혹시나 실행 시 아래와 같은 창이 뜬다면 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93979391-3d270a80-fdb8-11ea-8b31-2b91e653616b.png" width = 70%> </img></p> 
 
 ``` Go 
