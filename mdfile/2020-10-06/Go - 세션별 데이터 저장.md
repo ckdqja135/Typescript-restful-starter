@@ -219,9 +219,7 @@ expected가 Test Todo가 아니라 testsessionId가 들어가서 생겨난 것�
   }
 
 ```
-여기를 보면 첫번째 인자를 sessionId 넣었고, 두번째 인자를 name으로 넣었다. <br />
-
-그런데 <code>model/sqliteHandler.go</code>를 보면
+여기를 보면 첫번째 인자를 sessionId 넣었고, 두번째 인자를 name으로 넣었다. 그런데 <code>model/sqliteHandler.go</code>를 보면 <br />
 
 ``` Go
 
