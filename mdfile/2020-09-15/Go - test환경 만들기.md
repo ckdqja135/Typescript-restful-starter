@@ -155,7 +155,7 @@
 ```
 
 1 : httptest패키지가 있는데 실제 http프로토콜을 사용하지 않고, 가짜 response 할 수 있는 NewRecorder()를 만들어주고, <br />
-2 : 테스트 용으로 request할 수 있는 코드인데 NewRequest() 인자가 3개가 들어간다. method, target, body가 들어간다.<br/ >
+2 : 테스트 용으로 request할 수 있는 코드인데 NewRequest() 인자가 3개가 들어간다. method, target, body가 들어간다.<br />
     그래서 method에 get, target에 indexpath , body는 없으니까 nil로 해준다. <br />
  
 그 뒤 myapp/app.go에 돌아와서 NewHttpHandler()부분을 수정하여 준다. <br />
