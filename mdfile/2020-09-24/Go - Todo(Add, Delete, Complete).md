@@ -1,6 +1,6 @@
 ### 시작
 <code>public/todo.js</code>
-``` Javascrpit
+``` Javascript
  ....
  
 $(function() {
