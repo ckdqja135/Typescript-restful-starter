@@ -99,7 +99,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request) { // 2
 이렇게 결과를 확인 할 수 있다. 이제 매번 JSON을 쓰고, 템플릿을 전하는게 귀찮기 때문에 간단하게 해주는 패키지를 추가할 것인데,  <br />
 [unrolled -render](https://github.com/unrolled/render)이다. 해당 링크에 들어가면 자세한 내용이 나오며,
 설치는 
-``` Linux
+``` Prompt
   
   github.com/unrolled/render
   
