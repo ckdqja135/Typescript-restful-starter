@@ -247,7 +247,7 @@ Go에서는 <code>_test</code>만 붙여주면 Test코드로 작동한다. <br /
     assert := assert.New(t)
 
     res := httptest.NewRecorder()
-    req := httptest.NewRequest("GET", "/", nil)
+    req := httptest.NewRequest("GET", "/bar", nil)
     
     barHandler(res, req)
     
@@ -267,11 +267,58 @@ Go에서는 <code>_test</code>만 붙여주면 Test코드로 작동한다. <br /
     이것을 사용하면 return 값과 error값이 나오게 되는데 data만 가져온다. <br />
     
 4 : barHander 추가 <br />
+    myapp/app.go에 barHandler 출력값이 'Hello World!'이므로 테스트코드에도 Hello World!로 넣어준다. <br />
 
-그 뒤 저장하면 goconvey가 테스트 코드로 돌릴 것이고, pass가 뜰 것이다.<br />
+이 때 저장 후에 goconvey로 테스팅을 하면 PASS가 뜬다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848825-a68a1900-fce5-11ea-9cec-9761486ed809.png" width = 70%> </img></p>
+
+``` Go
+
+  package myapp
+  
+  import (
+        "io/ioutil"
+        "net/http"
+        "net/http/httptest"
+        "testing"
+
+        "github.com/stretchr/testify/assert"
+  )
+  
+  func TestIndexPathHandler(t *testing.T) {
+      assert := assert.New(t)
+    	res := httptest.NewRecorder() 
+	    req := httptest.NewRequest("GET", "/", nil)
+      
+      indexHandler(res, req)
+      
+      assert.Equal(http.StatusOK, res.Code)
+      data, _ := ioutil.ReadAll(res.Body)
+	    assert.Equal("Hello World", string(data)) 
+  }
+  
+  func TestBarPathHandler_WithoutName(t *testing.T) {
+    assert := assert.New(t)
+
+    res := httptest.NewRecorder()
+    req := httptest.NewRequest("GET", "/", nil)
+    
+    barHandler(res, req)
+    
+    assert.Equal(http.StatusOK, res.Code)
+    data, _ := ioutil.ReadAll(res.Body)
+    assert.Equal("Hello World!", string(data))
+  }
+  
+```
+
+이제 '/bar'를 호출했는데, '/'로 바꾸어서 호출해보도록 하겠다.
+
+그 뒤 저장하면 goconvey가 테스트 코드로 돌릴 것이고, 여전히 pass가 뜰 것이다.<br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848825-a68a1900-fce5-11ea-9cec-9761486ed809.png" width = 70%> </img></p>
 
 여기서 이상한 것은 barHander로 호출되어 '/'로 보내졌을 때 '!'가 없어야 되는데 '!'가 있게 왔다는 의미이다. <br />
-즉 mux를 제대로 사용하고 있지 않아 타겟이 적용이 안되었다는 것이다. <br />
+즉 mux를 제대로 사용하고 있지 않아 타겟이 '/'인데, barHandler()를 직접 호출하다 보니까 타겟이 적용이 안되었다는 것이다. <br />
 그래서 barHandler(res, req)가 아니라 mux를 사용해야 타겟에 제대로 맞추어 사용된다는 것이다. <br />
 그래서 코드를 수정하면 <br />
 
@@ -283,8 +330,8 @@ Go에서는 <code>_test</code>만 붙여주면 Test코드로 작동한다. <br /
     res := httptest.NewRecorder()
     req := httptest.NewRequest("GET", "/", nil)
 
-    mux := NewHttpHandler()
-    mux.ServeHTTP(res, req)
+    mux := NewHttpHandler() // 추가
+    mux.ServeHTTP(res, req) // 추가
 
     assert.Equal(http.StatusOK, res.Code)
     data, _ := ioutil.ReadAll(res.Body)
@@ -302,6 +349,7 @@ FAIL이 뜨는 것을 확인 할 수 있다. <br />
 '!'가 있어야 되는데 없다고 뜬다. <br />
 
 정상적으로 인덱스 경로에 호출 되었다는 것을 알 수 있다. 그래서 인덱스 경로에서 '/bar'경로로 바꾸어주면 <br />
+
 ``` Go
 
   func TestBarPathHandler_WithoutName(t *testing.T) {
