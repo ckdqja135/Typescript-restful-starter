@@ -300,11 +300,11 @@ main.go파일을 수정해준다.
   }
   
 ```
-1 : uploadHander 등록.
-2 : uploadHander 함수 생성.
-    전송된 파일은 request에 실려서 와서 그것을 읽어야 하는데 r.FormFile()이 inputFormFile형태로 날라온 값을 읽겠다는 의미이다.
-    이 함수의 return값이 multipart.File, multipart.FileHeader, error가 나오고 인자값은 key값을 받는데 upload_file로 해준다.
-3 : 에러가 있을 경우    
+1 : uploadHander 등록. <br />
+2 : uploadHander 함수 생성. <br />
+    전송된 파일은 request에 실려서 와서 그것을 읽어야 하는데 r.FormFile()이 inputFormFile형태로 날라온 값을 읽겠다는 의미이다. <br />
+    이 함수의 return값이 multipart.File, multipart.FileHeader, error가 나오고 인자값은 key값을 받는데 upload_file로 해준다. <br />
+3 : 에러가 있을 경우    <br />
 4 : 'upload'된 파일을 저장해줄 폴더를 지정 -> 없으면 폴더를 새로 만들어 주어야 함. <br />
 5 : 디렉토리를 만들어주고 그 디렉토리의 권한을 777을 주어서 read, write, excute할 수 있게 한다. <br />
 6 : filepath를 적어준다. <br />
