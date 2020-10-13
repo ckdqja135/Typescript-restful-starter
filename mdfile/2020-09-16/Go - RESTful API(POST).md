@@ -141,10 +141,10 @@ myapp/app_test.go
 
 1 : GET 메소드로 들어왔을 때 usersHandler가 실행 되도록 한다. <br />
 2 : POST 메소드로 들어왔을 때 createUserHandler가 실행 되도록 한다. <br />
-3 : createUserHandler부분이다. err가 nil이 아니면 에러처리, nil이 아니면 Create해준다.
-4 : 클라이언트가 JSON으로 보낼 때 JSON을 읽어드려야 하는데 그러기 위해 User struct를 만들어준다.
+3 : createUserHandler부분이다. err가 nil이 아니면 에러처리, nil이 아니면 Create해준다. <br />
+4 : 클라이언트가 JSON으로 보낼 때 JSON을 읽어드려야 하는데 그러기 위해 User struct를 만들어준다. <br />
 
- 그 후 터미널을 열고 go test로 실행하여 테스트를 진행해보자!
+ 그 후 터미널을 열고 go test로 실행하여 테스트를 진행해보자! <br />
  
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93309345-5ff87280-f83e-11ea-8ed1-b355d4f33de8.png" width = 70%> </img></p>
 PASS를 확인 할 수 있다.
