@@ -7,7 +7,7 @@ heroku에서는 dyno라는 컨테이너를 쓰는데, 이것이 [statelss](https
 
 그 후 해당 명령어를 입력한다. <br />
 
-``` linux
+``` inux
 
   heroku addons:create heroku-postgresql:hobby-dev
   
