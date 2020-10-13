@@ -23,7 +23,7 @@ $(function() {
   
 저번에 이어서 여기에서 '.todo-list-add-btn'을 클릭했을 때 서버에 add를 요청할 수 있게 만들어보자! <br />
 이 코드를 보면은
-``` Javascrpit
+``` Javascript
  ....
  
 $(function() {
@@ -96,7 +96,7 @@ $(function() {
 
 다시 소스로 돌아와서 
 <code>public/todo.js</code>
-``` javascrpit
+``` javascript
  ....
     
     var item = $(this).prevAll('.todo-list-input').val();
