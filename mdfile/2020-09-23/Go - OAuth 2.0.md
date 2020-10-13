@@ -8,7 +8,7 @@
 완료가 되면 콜백주소를 등록하게 되고, 그 해당 사이트(구글, 페이스북 등)가 클라이언트가 원래 로그인 하려고 했었던 사이트(A)에 콜백 주소를 통해 Refresh Key와 API Key를 알려주게 된다. <br />
 그리고 그 API Key를 통해 회원의 정보를 인가받게 된다. 근데 이 Key는 무한정 있는게 아니라서 Refresh Key를 통해서 재승인 받아야 된다. <br />
 
-그래서 이것을 개발하기 전에 구글, 네이버, 카카오, 페이스북 등에서 OAuth API와 Secret Key를 발급 받아야 한다. <br/ >
+그래서 이것을 개발하기 전에 구글, 네이버, 카카오, 페이스북 등에서 OAuth API와 Secret Key를 발급 받아야 한다. <br />
 
 구글의 경우 [여기](https://console.developers.google.com/)에 들어가서 <br />
 
