@@ -369,12 +369,13 @@ func sendMessage(name, msg string) {
 
 ```
 
-1 : 이렇게 하면 eventsource가 만들어지는데 이것을 es변수에 넣어준다.
-2 : socket을 열어주었으니 닫아주어야 한다.
+그 뒤 <code>main.go</code>에 돌아와 delete mux를 만들어주자. <br />
+1 : 이렇게 하면 eventsource가 만들어지는데 이것을 es변수에 넣어준다.  <br />
+2 : socket을 열어주었으니 닫아주어야 한다. <br />
 3 : mux에서 클라이언트가 '/stream'으로 connection을 요청할 때의 Handler를 추가해준다. <br />
     그래서 es변수를 넣어주면 클라이언트가 '/stream'으로 요청할 때 자동으로 연결이 된다. <br />
     <code>es.SendEventMessage("hello world")</code>를 사용할 때 '/stream'으로 연결된 클라이언트 들에게 메세지를 보낼 수 있다. <br />
-4 : addUserHandler함수 
+4 : addUserHandler함수  <br />
     <code>public/chat.js</code>에서 'users/'에 name값을 POST로 보내서 name값을 읽어온다. <br />
     그리고 이 user가 join했다는 것을 다른 유저에게 알려주기 위해 SendMessage()를 사용하여 출력시켜준다. <br />
 
@@ -390,7 +391,7 @@ func sendMessage(name, msg string) {
     이렇게하면 메세지가 전송이 된다. <br />
     
 10 : 그러면 POST될 때 sendMessage가 호출이 되고 sendMessage가 호출이 되면 msgCh에 Message{name, msg}을 집어넣을 것이고, <br />
-processMsgCh()에서 pop하게 된다. 그래서 processMsgCh()을 실행시켜주어야 하기 때문에 해당 코드로 실행시켜준다.
+processMsgCh()에서 pop하게 된다. 그래서 processMsgCh()을 실행시켜주어야 하기 때문에 해당 코드로 실행시켜준다. <br />
 
 그리고 <code>public/chat.js</code>으로 넘어와서 EventSource()에서 open될 때 이벤트만 등록을 했고, EventSource()를 통해 메세지가 올 때 onmessage가 호출이 되는데 그 부분을 추가해주자! <br />
 
@@ -440,9 +441,9 @@ processMsgCh()에서 pop하게 된다. 그래서 processMsgCh()을 실행시켜�
     
 ```
 
-1 : 윈도우가 닫히기 직전에 불리면 delete로 보낸 뒤, 열었던 es를 닫아준다.
+1 : 윈도우가 닫히기 직전에 불리면 delete로 보낸 뒤, 열었던 es를 닫아준다. <br />
 
-그 뒤 <code>main.go</code>에 돌아와 delete mux를 만들어주자.
+그 뒤 <code>main.go</code>에 돌아와 delete mux를 만들어주자. <br />
 
 ``` Go
 
@@ -477,10 +478,10 @@ processMsgCh()에서 pop하게 된다. 그래서 processMsgCh()을 실행시켜�
 
 이렇게 해서 두 개의 창을 띄워서 실행을 하면 제대로 동작 하는 것을 확인 할 수 있다.<br />
 
-user가 들어 왔을 때
+user가 들어 왔을 때 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93846462-0d580400-fcdf-11ea-823b-3b09de986045.png" width = 70%> </img></p>
 
-user가 채팅을 친 뒤 나갔을 때
+user가 채팅을 친 뒤 나갔을 때 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93846572-61fb7f00-fcdf-11ea-9caf-84257bc58c43.png" width = 70%> </img></p>
 
 ### 풀소스
