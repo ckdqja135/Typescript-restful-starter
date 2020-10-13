@@ -244,14 +244,14 @@ Extensions이라는 옵션이 있는데 템플릿을 읽어올 때 어떤 확장
 }
 
 ```
-1 : body 템플릿에 넣어주기 위해 수정했다.
+1 : body 템플릿에 넣어주기 위해 수정했다. <Br />
 
 이 상태에서 실행하게 되면
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93739238-cdcbe200-fc22-11ea-82c3-11b1a3f03d97.png" width = 70%> </img></p>
 
-정상적으로 작동 되는 것을 확인 할 수 있다.
+정상적으로 작동 되는 것을 확인 할 수 있다. <Br />
 
-body는 {{ yield }}로 템플릿을 지정했지만 title부분도 템플릿으로 지정해주고 싶다면 이렇게 수정해주면 된다.
+body는 {{ yield }}로 템플릿을 지정했지만 title부분도 템플릿으로 지정해주고 싶다면 이렇게 수정해주면 된다. <Br />
 
 ``` HTML
   
@@ -274,16 +274,16 @@ body는 {{ yield }}로 템플릿을 지정했지만 title부분도 템플릿으�
   Partial Go in Web
   
 ```
-title-body라고 이름을 만들면 layout에서 해당 title에 해당하는 이름과 main.go의 body값을 읽은 부분을 채워주게 된다.
+title-body라고 이름을 만들면 layout에서 해당 title에 해당하는 이름과 main.go의 body값을 읽은 부분을 채워주게 된다. <Br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93739730-ee486c00-fc23-11ea-957c-6f5bb9dcbf41.png" width = 70%> </img></p>
 
 마지막으로 설치해볼 패키지는 negroni라는 패키지인데 HTTP 미들웨어이다. <br />
 기본적으로 많이 쓰이는 부가기능들을 제공하는 패키지 라고 생각하면 된다. <br />
+ 
+[링크](https://github.com/urfave/negroni)에 들어가면 자세한 내용을 알 수 있는데 <Br />
+기본적으로 제공하는 것이 Recovery, Logger, Static이다. <Br />
 
-[링크](https://github.com/urfave/negroni)에 들어가면 자세한 내용을 알 수 있는데
-기본적으로 제공하는 것이 Recovery, Logger, Static이다.
-
-이것 또한 설치한다.
+이것 또한 설치한다. <Br />
 
 ``` Linux
   
@@ -325,9 +325,9 @@ main.go를 수정하기 앞서 public 폴더에 index.html을 생성한다. <br 
 
 ```
 
-1 : 이걸 사용하면 핸들러가 하나 나온다.
-2 : mux를 매핑해서 부가기능들을 추가해준다.
-3 : 핸들러의 n을 추가해준다.
+1 : 이걸 사용하면 핸들러가 하나 나온다. <Br />
+2 : mux를 매핑해서 부가기능들을 추가해준다. <Br /> 
+3 : 핸들러의 n을 추가해준다. <Br />
 
 그러면 n이 가지고 있는것이 기본 파일 서버를 가지고 있고, log를 찍는 기능을 제공하고 있다. <br />
 실행해보면 <br />
