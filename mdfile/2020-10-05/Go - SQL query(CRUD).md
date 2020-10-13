@@ -245,7 +245,7 @@ func MakeHandler() http.Handler {
 
 ```
 
-1 : 이 쪽도 마찬가지로 main.go에서 사용하기 때문에 이것도 하나의 패키지인데, 이제는 Model.go의 DBHandler를 만들어서 사용할 것인데, 이 것의 대한 close책임을 이 패키지를 사용한 쪽에 넘겨야 한다. <br />
+1 : 이 쪽도 마찬가지로 main.go에서 사용하기 때문에 이것도 하나의 패키지인데, 이제는 Model.go의 DBHandler를 만들어서 사용할 것이기 때, 이 것의 대한 close책임을 이 패키지를 사용한 쪽에 넘겨야 한다. <br />
 그런데 app.go도 하나의 패키지이고, 이것을 main.go에서 사용하기 때문에 app.go에는 close책임이 없기 때문에 수정해주어야 한다. <br />
 
 1-1 : http.Handler를 포함 타입 이라고 하는데 <br />
