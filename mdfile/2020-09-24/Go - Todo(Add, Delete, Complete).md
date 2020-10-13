@@ -116,7 +116,7 @@ $(function() {
 기존에 있던 item변수에서 가져오는데 이렇게 하면 서버에서 보내준 id값을 읽어 올 수 없기 때문에 서버의 data를 그대로 사용 할 수 있도록 수정 하는데 <br />
 서버가 JSON object로 반환해주기 때문에 그 값을 그대로 사용 할 수 있다.  <br />
 
-``` Javascrpit
+``` Javascript
  ....
     
     var item = $(this).prevAll('.todo-list-input').val();
