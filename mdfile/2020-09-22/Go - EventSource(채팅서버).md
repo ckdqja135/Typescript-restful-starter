@@ -380,10 +380,10 @@ func sendMessage(name, msg string) {
     그리고 이 user가 join했다는 것을 다른 유저에게 알려주기 위해 SendMessage()를 사용하여 출력시켜준다. <br />
 
 5 : 지금 구현한 핸들러들은 멀티쓰레드 환경에서 돌아가고 있기 때문에 핸들해서 바로 보내는 것보다 다른 쓰레드의 큐 형태로 한줄로 보내는게 좋기 때문에 메세지 타입을 만들어 주었다. <br />
-6 : SendMessage()가 될 때 이 채널에 집어 넣어서 다른 채널에 pop해서 사용할 수 있도록 메세지를 집어넣는 채널을 만들었다. <br/ >
-7 : 채널 초기화 <br/ >
-8 : 그리고 그 채널을 name과 msg를 넣어준다. <br/ >
-9 : 그 채널을 pop해서 eventsource로 보내는 함수. 인자로 eventsource의 EventSource를 받는다.<br/ >
+6 : SendMessage()가 될 때 이 채널에 집어 넣어서 다른 채널에 pop해서 사용할 수 있도록 메세지를 집어넣는 채널을 만들었다. <br />
+7 : 채널 초기화 <br />
+8 : 그리고 그 채널을 name과 msg를 넣어준다. <br />
+9 : 그 채널을 pop해서 eventsource로 보내는 함수. 인자로 eventsource의 EventSource를 받는다.<br />
     그러면 이것이 메세지 하나씩 pop해 오는데 json으로 되어있으니 메세지를 marshal해서, <br />
     거기서 들어온 data를 string으로 바꾸고, 두번째 인자가 '어떤 이벤트냐'에 대한 것인데 공백으로 넣고, <br />
     세번째가 유니크 아이디를 넣어야 하는데 그것을 만드는 가장 쉬운 방법은 현재 시간을 넣는 것이기 때문에 현재시간을 넣어준다. <br />
