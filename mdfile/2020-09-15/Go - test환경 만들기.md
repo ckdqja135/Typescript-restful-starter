@@ -90,7 +90,8 @@
 그리고 /foo를 해주면 json파일이 없기 대문에 EOF가 뜨는 것을 확인 할 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93848212-e6e89780-fce3-11ea-949f-f20aebbdc0e7.png" width = 50%> </img></p>
 
-이제부터 테스팅 코드를 만들게 될건데 아까 만들었던 myapp폴더에 app_test.go파일을 만들어준다.
+이제부터 테스팅 코드를 만들게 될건데 아까 만들었던 myapp폴더에 app_test.go파일을 만들어준다.<br />
+Go에서는 <code>_test</code>만 붙여주면 Test코드로 작동한다. <br />
 ``` Go
 
   package myapp
