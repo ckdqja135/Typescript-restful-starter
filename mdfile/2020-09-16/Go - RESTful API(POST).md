@@ -72,8 +72,8 @@ myapp/app_test.go
   }
   
 ```
- 1. Post로 보낼 때 인자가 3개인데 URL, contentType, body이고, response는 response, error가 나온다.
-    test server의 URL과 contentType은 JSON, body는 지난번에 JSON 보낸 것 처럼 strings.NewReader로 작성한다.
+ 1. Post로 보낼 때 인자가 3개인데 URL, contentType, body이고, response는 response, error가 나온다. <br /> 
+    test server의 URL과 contentType은 JSON, body는 지난번에 JSON 보낸 것 처럼 strings.NewReader로 작성한다. <br />
  
  그리고 같은 경로라도 어떤 메소드를 보내냐에 따라서 Handler가 달라져야 하기 때문에 <br />
  <code>myapp/app.go</code>의 코드를 수정하자! <br />
