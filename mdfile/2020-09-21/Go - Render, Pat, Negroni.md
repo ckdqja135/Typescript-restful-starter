@@ -13,7 +13,7 @@
 }
 
 func getUserInfoHandler(w http.ResponseWriter, r *http.Request) {
-	user := User{Name: "tucker", Email: "tucker@naver.com"}
+	user := User{Name: "changbeom", Email: "changbeom@naver.com"}
   
   w.Header().Add("Content-type", "application/json")
   w.WriteHeader(http.StatusOK)
