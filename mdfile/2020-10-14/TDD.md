@@ -1,0 +1,328 @@
+### 시작
+TDD란 Test Driven Development의 약자인데 테스트 주도 개발법이라는 뜻이며 개발방법인데 테스트가 주도하는 개발 방법이라는 의미이다. <br />
+
+기존의 개발법은 설계 - 코딩 - 테스트 테스트에서 문제가 발생하면 다시 코딩하는 방식이였었는데 <br />
+TDD는 테스트 - 코딩 - 개선을 반복하는 방식이다. <br />
+
+간단하게 TDD를 실습해보자면 Calculator("+", 3, 2)를 만들어서 실행시켰을 때 5라는 결과가 나오는 함수를 만들어본다. <br />
+TDD니까 처음부터 테스트를 시켜준다. <br />
+<code>hello.go</code>
+
+``` Go
+
+  package main
+
+  func main() {
+	  Test()
+  }
+
+```
+
+이렇게 작성 후에 코드를 실행 시켜 보면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95935476-539c1100-0e0e-11eb-85e0-0c6e0f0abc26.png" width = 50%> </img></p>
+<code>undefined: Test</code>가 뜨는 것을 확인 할 수 있다. <br />
+
+이제 Test()를 만들어준다. 여기서 Calculate()를 테스트 할 것이다. <br />
+
+``` Go
+
+  package main
+
+  func main() {
+	  Test()
+  }
+  
+  func Test() {
+
+    o := Calculate("+", 3, 2)
+    if o != 5 {
+      fmt.Printf("Test Failed! expected: %d output:%d\n", 5, o)
+      return 
+    }
+  }
+  
+```
+
+Calculate라는 함수를 만들고, 결과값이 5가 아니면 에러문구로 원하는 값과, 실제 나온 값을 출력시켜준다. <br />
+
+이렇게 하고, 다시 실행 시켜준다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95935890-403d7580-0e0f-11eb-8c62-20e1770593bc.png" width = 50%> </img></p>
+당연하게 Calculate라는 함수를 만들지 않았기 때문에 에러가 났다. <br />
+이것이 TDD의 모습이다. 코딩이 없는 상태에서 먼저 테스트 부터 하니까 당연히 에러가 나는 것이고, 실패부터 겪는 것이다. <br />
+
+TDD는 앞서 말했듯이 테스트를 먼저하고, 그 다음에 코딩을 하는데, 테스팅을 하는 시점에서 코드가 없기 때문에 첫번째로는 실패를 하는데, <br />
+실패를 일단 되도록 실패가 없도록 성공으로 바꿔야 한다. <br />
+전체를 다 바꾸는게 아니라 실패된 사항만 성공으로 코딩이다.<br />
+실패를 겪고, 성공을 겪은 그 다음이 개선인데, 개선작업은 성공강화이다. <br />
+성공한 경험을 강화시킨다라는 의미인데, 이것 후에 다시 실패한 사항으로 돌아가고, 반복하는게 TDD이다. <br />
+
+지금 실패를 겪은 사항이 Calculate라는 함수가 없는데, Calculate가 없다라는 에러부분만 극복하도록 만들어준다. <br />
+우선 Calculate()를 만들어준다. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+    return 0
+  }
+  
+  func main() {
+	  Test()
+  }
+  
+  func Test() {
+
+    o := Calculate("+", 3, 2)
+    if o != 5 {
+      fmt.Printf("Test Failed! expected: %d output:%d\n", 5, o)
+      return 
+    }
+  }
+  
+```
+operation과 int 인자를 2개를 받고 결과가 int인 Calculate()를 0을 return하도록 만들어준다. 한번에 만드는 것이 아니라 지금 나타난 실패만 극복할 수 있도록 만들어준다. <br />
+이제 다시 실행해보자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936592-eb9afa00-0e10-11eb-838c-c344f20aaeca.png" width = 50%> </img></p>
+이제 새로운 에러가 나타났다. 원하는 값은 5인데 0이 나왔다. <br />
+이 실패를 성공으로 바꾸려면 return 0이 아니라 return 5를 해주면 된다. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+    return 5
+  }
+  
+  func main() {
+	  Test()
+  }
+  
+  func Test() {
+
+    o := Calculate("+", 3, 2)
+    if o != 5 {
+      fmt.Printf("Test Failed! expected: %d output:%d\n", 5, o)
+      return 
+    }
+  }
+  
+```
+이제 저장 후에 다시 실행하면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936706-2dc43b80-0e11-11eb-9b72-6eb2956abc69.png" width = 50%> </img></p>
+성공했기 때문에 성공 메세지를 출력시켜주도록 한다. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+    return 5
+  }
+  
+  func main() {
+	  Test()
+  }
+  
+  func Test() {
+
+    o := Calculate("+", 3, 2)
+    if o != 5 {
+      fmt.Printf("Test Failed! expected: %d output:%d\n", 5, o)
+      return 
+    }
+    fmt.Println("Success!")
+  }
+  
+```
+
+이 부분이 어떻게 보면 성공강화과정이라고 볼 수 있다. <br />
+
+다시 실행 시키면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 50%> </img></p>
+성공 문구가 뜨는 것을 확인할 수 있다. <br />
+
+이제 이 테스트가 넘어갔으니 다른 테스트도 진행해보자! <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+    return 5
+  }
+  
+  func main() {
+	  Test()
+  }
+  
+  func Test() {
+
+    o := Calculate("+", 3, 2)
+    if o != 5 {
+      fmt.Printf("Test Failed! expected: %d output:%d\n", 5, o)
+      return 
+    }
+    
+    o = Calculate("+", 5, 4)
+    if o != 9 {
+      fmt.Printf("Test Failed! expected: %d output:%d\n", 9, o)
+      return 
+    }
+    fmt.Println("Success!")
+  }
+  
+```
+
+여기서 어떻게 되는지 다시 실행을 시켜준다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95937032-d377aa80-0e11-11eb-9c32-ea04a9598938.png" width = 50%> </img></p>
+에러가 떴다. 9를 원했는데 5가 나왔다. <br />
+이 실패를 겪었기 때문에 첫번째, 두번째 테스트가 성공되도록 바꾸어주자. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+    return a + b
+  }
+  
+  func main() {
+	  Test()
+  }
+  
+  func Test() {
+
+    o := Calculate("+", 3, 2)
+    if o != 5 {
+      fmt.Printf("Test Failed! expected: %d output:%d\n", 5, o)
+      return 
+    }
+    
+    o = Calculate("+", 5, 4)
+    if o != 9 {
+      fmt.Printf("Test Failed! expected: %d output:%d\n", 9, o)
+      return 
+    }
+    fmt.Println("Success!")
+  }
+  
+```
+
+이것도 단순하게 return a + b로 바꾸어주면 된다. <br />
+
+그래서 다시 실행 해보면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 50%> </img></p>
+성공 문구가 뜨는 것을 확인할 수 있다. <br />
+
+지금까지 성공으로 바꾸는 코딩만 했기 때문에 성공강화를 시켜주어야 한다. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+    return a + b
+  }
+  
+  func main() {
+	  Test()
+  }
+  
+  func Test() {
+
+    o := Calculate("+", 3, 2)
+    if o != 5 {
+      fmt.Printf("Test1 Failed! expected: %d output:%d\n", 5, o)
+      return 
+    }
+    
+    o = Calculate("+", 5, 4)
+    if o != 9 {
+      fmt.Printf("Test2 Failed! expected: %d output:%d\n", 9, o)
+      return 
+    }
+    
+    fmt.Println("Success!")
+  }
+  
+```
+
+우선 몇번 테스트가 실패 했는지 확인하기 위해 테스트 번호를 붙여주고, 성공강화가 리팩토링 할 곳이 있으면 리팩토링 하는 것인데 <br />
+지금 여기에서 리팩토링 할 요소는 <br />
+
+``` Go 
+
+  o := Calculate("+", 3, 2)
+  if o != 5 {
+    fmt.Printf("Test1 Failed! expected: %d output:%d\n", 5, o)
+    return 
+  }
+
+  o = Calculate("+", 5, 4)
+  if o != 9 {
+    fmt.Printf("Test2 Failed! expected: %d output:%d\n", 9, o)
+    return 
+  }
+    
+```
+
+반복되고 있는 이 부분이다. 이 반복을 없애는 리팩토링을 진행해보자! <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+    return a + b
+  }
+  
+  func main() {
+	  Test()
+  }
+  
+  func Test() {
+    if !testCalculate("Test1", "+", 3, 2, 5) {
+      return
+    }
+
+    if !testCalculate("Test2", "+", 5, 4, 9) {
+      return
+    }
+
+    fmt.Println("Success!")
+  }
+  
+  func testCalculate(testcase, op string, a, b int, expected int) bool {
+    o := Calulate(op, a, b)
+    if o != expected {
+      fmt.Printf("%s Failed! expected: %d output:%d\n", testcase, expected, o)
+      return false
+    }
+    return true
+  }
+  
+```
+
+testCalculate()라는 함수를 만들어서 테스트 케이스 이름, a , b인자와 원하는 결과 값을 넣어주고, 성공 실패를 bool로 나타내준다. <br />
+그리고 이 안에 반복되는 코드들을 넣어준다. 그 후 실패했을 경우 false, 성공했을 경우 true를 넣어준다. <br />
+그 후 Test()안에 해당 값이 false가 나오면 그냥 return시켜주도록 바꾸어 준다. <br />
+지금 전 코드 보다 훨씬 단순해졌고, 쉬워졌다. <br />
+지금도 성공을 했는지 실행시켜본다. <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 50%> </img></p>
