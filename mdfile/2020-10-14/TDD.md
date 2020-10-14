@@ -538,3 +538,437 @@ testCalculate()라는 함수를 만들어서 테스트 케이스 이름, a , b�
 ```
 이렇게 곱하기 테스트 케이스를 추가하고, 실행을 해보자! <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95939076-484ce380-0e16-11eb-8ed6-77cc48d697f1.png" width = 70%> </img></p>
+21이 나와야 하는데 0이 나왔다고 에러문구가 떴다! 수정해주자. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+     if op == "+" {
+       return a + b
+     } else if op == "-" {
+       return a - b
+     } else if op == "*" {
+       return a * b
+     }
+     return 0
+  }
+  
+  func main() {
+    Test()
+  }
+  
+  func Test() {
+    if !testCalculate("Test1", "+", 3, 2, 5) {
+      return
+    }
+
+    if !testCalculate("Test2", "+", 5, 4, 9) {
+      return
+    }
+    
+    if !testCalculate("Test3", "-", 5, 3, 2) {
+      return
+    }
+    
+    if !testCalculate("Test4", "-", 3, 6, -3) {
+      return
+    }
+    
+    if !testCalculate("Test5", "*", 3, 7, 21) {
+      return
+    }
+
+    fmt.Println("Success!")
+  }
+  
+  func testCalculate(testcase, op string, a, b int, expected int) bool {
+    o := Calulate(op, a, b)
+    if o != expected {
+      fmt.Printf("%s Failed! expected: %d output:%d\n", testcase, expected, o)
+      return false
+    }
+    return true
+  }
+  
+```
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
+
+이제 Calulate()의 if문이 3개가 되었기 때문에 리팩토링 시켜주자! <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+     rst := 0
+     switch op {
+     case "+": 
+         rst = a + b
+     case "-":
+         rst = a - b
+     case "*":
+         rst = a * b
+     }
+    return rst
+  }
+  
+  func main() {
+    Test()
+  }
+  
+  func Test() {
+    if !testCalculate("Test1", "+", 3, 2, 5) {
+      return
+    }
+
+    if !testCalculate("Test2", "+", 5, 4, 9) {
+      return
+    }
+    
+    if !testCalculate("Test3", "-", 5, 3, 2) {
+      return
+    }
+    
+    if !testCalculate("Test4", "-", 3, 6, -3) {
+      return
+    }
+    
+    if !testCalculate("Test5", "*", 3, 7, 21) {
+      return
+    }
+    
+    fmt.Println("Success!")
+  }
+  
+  func testCalculate(testcase, op string, a, b int, expected int) bool {
+    o := Calulate(op, a, b)
+    if o != expected {
+      fmt.Printf("%s Failed! expected: %d output:%d\n", testcase, expected, o)
+      return false
+    }
+    return true
+  }
+  
+```
+
+이렇게 좀 더 보기 좋게 switch문으로 바꾸어 줄 수 있다. 그 후 다시 실행시켜준다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
+
+그 후 몇가지 테스트 케이스를 더 만들어본다. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+     rst := 0
+     switch op {
+     case "+": 
+         rst = a + b
+     case "-":
+         rst = a - b
+     case "*":
+         rst = a * b
+     }
+    return rst
+  }
+  
+  func main() {
+    Test()
+  }
+  
+  func Test() {
+    if !testCalculate("Test1", "+", 3, 2, 5) {
+      return
+    }
+
+    if !testCalculate("Test2", "+", 5, 4, 9) {
+      return
+    }
+    
+    if !testCalculate("Test3", "-", 5, 3, 2) {
+      return
+    }
+    
+    if !testCalculate("Test4", "-", 3, 6, -3) {
+      return
+    }
+    
+    if !testCalculate("Test5", "*", 3, 7, 21) {
+      return
+    }
+    
+    if !testCalculate("Test6", "*", 3, 0, 0) {
+      return
+    }
+    
+    if !testCalculate("Test7", "*", 3, -3, -9) {
+      return
+    }
+
+    fmt.Println("Success!")
+  }
+  
+  func testCalculate(testcase, op string, a, b int, expected int) bool {
+    o := Calulate(op, a, b)
+    if o != expected {
+      fmt.Printf("%s Failed! expected: %d output:%d\n", testcase, expected, o)
+      return false
+    }
+    return true
+  }
+  
+```
+
+이렇게 하고 실행 시키면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
+통과가 되었다. <br />
+
+이제 나누기 테스트 케이스를 추가시켜주자! <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+     rst := 0
+     switch op {
+     case "+": 
+         rst = a + b
+     case "-":
+         rst = a - b
+     case "*":
+         rst = a * b
+     }
+    return rst
+  }
+  
+  func main() {
+    Test()
+  }
+  
+  func Test() {
+    if !testCalculate("Test1", "+", 3, 2, 5) {
+      return
+    }
+
+    if !testCalculate("Test2", "+", 5, 4, 9) {
+      return
+    }
+    
+    if !testCalculate("Test3", "-", 5, 3, 2) {
+      return
+    }
+    
+    if !testCalculate("Test4", "-", 3, 6, -3) {
+      return
+    }
+    
+    if !testCalculate("Test5", "*", 3, 7, 21) {
+      return
+    }
+    
+    if !testCalculate("Test6", "*", 3, 0, 0) {
+      return
+    }
+    
+    if !testCalculate("Test7", "*", 3, -3, -9) {
+      return
+    }
+    
+    if !testCalculate("Test8", "/", 9, 3, 3) {
+      return
+    } 
+
+    fmt.Println("Success!")
+  }
+  
+  func testCalculate(testcase, op string, a, b int, expected int) bool {
+    o := Calulate(op, a, b)
+    if o != expected {
+      fmt.Printf("%s Failed! expected: %d output:%d\n", testcase, expected, o)
+      return false
+    }
+    return true
+  }
+  
+```
+실행 시켜주자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95940854-57ce2b80-0e1a-11eb-89d2-fd5702b56bf1.png" width = 70%> </img></p>
+이번에도 3을 나오길 원했는데 0이 나왔다고 에러창이 떴다. 나누기 케이스를 추가해주자! <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+     rst := 0
+     switch op {
+     case "+": 
+         rst = a + b
+     case "-":
+         rst = a - b
+     case "*":
+         rst = a * b
+     case "/":
+         rst = a / b
+     }
+    return rst
+  }
+  
+  func main() {
+    Test()
+  }
+  
+  func Test() {
+    if !testCalculate("Test1", "+", 3, 2, 5) {
+      return
+    }
+
+    if !testCalculate("Test2", "+", 5, 4, 9) {
+      return
+    }
+    
+    if !testCalculate("Test3", "-", 5, 3, 2) {
+      return
+    }
+    
+    if !testCalculate("Test4", "-", 3, 6, -3) {
+      return
+    }
+    
+    if !testCalculate("Test5", "*", 3, 7, 21) {
+      return
+    }
+    
+    if !testCalculate("Test6", "*", 3, 0, 0) {
+      return
+    }
+    
+    if !testCalculate("Test7", "*", 3, -3, -9) {
+      return
+    }
+    
+    if !testCalculate("Test8", "/", 9, 3, 3) {
+      return
+    } 
+
+    fmt.Println("Success!")
+  }
+  
+  func testCalculate(testcase, op string, a, b int, expected int) bool {
+    o := Calulate(op, a, b)
+    if o != expected {
+      fmt.Printf("%s Failed! expected: %d output:%d\n", testcase, expected, o)
+      return false
+    }
+    return true
+  }
+  
+```
+
+이제 실행을 시켜보자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
+이제 성공을 했으니 성공 강화를 해보자! <br />
+
+``` Go 
+
+  func Calulate(op string, a, b int) int {
+     rst := 0
+     switch op {
+     case "+": 
+         rst = a + b
+     case "-":
+         rst = a - b
+     case "*":
+         rst = a * b
+     case "/":
+         rst = a / b
+     }
+    return rst
+  }
+  
+```
+이 부분 단순한 function을 위해서는 나쁘지는 않지만 지금은 연습하는 것이기 때문에 좀 더 이 부분을 리팩토링 해보도록 하겠다. <br />
+행위를 클래스로 캡슐화해 동적으로 행위를 자유롭게 바꿀 수 있게 해주는 패턴
+같
+[strategy패턴](https://gmlwjd9405.github.io/2018/07/06/strategy-pattern.html)을 사용해서 리팩토링을 진행해보겠다. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  var opMap map[string]func(int, int) int // 1
+  
+  func inintopMap() { // 3
+      opMap = make(map[string]func(int, int) int)
+      
+      opMap["+"] = add
+      opMap["-"] = sub
+      opMap["*"] = mul
+      opMap["/"] = div
+  }
+
+  func add(a, b int) int { // 4
+    return a + b
+  }
+  
+  func sub(a, b int) int {
+    return a - b
+  }
+  
+  func mul(a, b int) int {
+    return a * b
+  }
+
+  func div(a, b int) int {
+    return a / b
+  }
+  
+  func Calulate(op string, a, b int) int { // 5
+     if v, ok := opMap[op]; ok {
+	return v(a, b)
+     }
+     return 0
+  }
+  
+  func main() {
+    inintopMap() // 2
+    Test()
+  }
+  
+  func Test() {
+   ...
+
+    fmt.Println("Success!")
+  }
+
+  ...
+  
+```
+
+1 : opMap이라는 맵을 만들어준다. key 타입은 string, value 타입은 int형 2개를 받고, 결과를 int를 반환하는 람다 함수를 갖는다. <br />
+2 : 이 맵은 main()에서 initOpMap()으로 초기화가 된다. <br />
+3 : 먼저 opMap을 초기화 시켜주고, 각각의 function을 대입시켜준다. <br />
+4 : 그 후 각각의 function을 추가시켜준다. <br />
+5 : opMap이 있으면 v에 a,b를 넣어주고, 없으면 0을 return 시킨다.
+
+이렇게 해서 성공강화를 했고, 실행을 시키면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
+성공하는 것을 볼 수 있다. <br />
+이렇게 까지하면 Test Driven방식으로 Calculate가 완성이 되었다. <br />
