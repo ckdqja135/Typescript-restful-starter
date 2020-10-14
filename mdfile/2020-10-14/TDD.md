@@ -425,3 +425,116 @@ testCalculate()라는 함수를 만들어서 테스트 케이스 이름, a , b�
 
 다시 재실행 해보자! <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
+
+이제 성공 강화를 해야하는데 Calulate()에서 바꾸어야 할 거 같지만 아직까지 if문 2개까지는 괜찮다고 보여지고, 테스트 케이스를 추가해보자. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+     if op == "+" {
+       return a + b
+     } else if op == "-" {
+       return a - b
+     }
+     return 0
+  }
+  
+  func main() {
+    Test()
+  }
+  
+  func Test() {
+    if !testCalculate("Test1", "+", 3, 2, 5) {
+      return
+    }
+
+    if !testCalculate("Test2", "+", 5, 4, 9) {
+      return
+    }
+    
+    if !testCalculate("Test3", "-", 5, 3, 2) {
+      return
+    }
+    
+    if !testCalculate("Test4", "-", 3, 6, -3) {
+      return
+    }
+
+    fmt.Println("Success!")
+  }
+  
+  func testCalculate(testcase, op string, a, b int, expected int) bool {
+    o := Calulate(op, a, b)
+    if o != expected {
+      fmt.Printf("%s Failed! expected: %d output:%d\n", testcase, expected, o)
+      return false
+    }
+    return true
+  }
+  
+```
+이번에는 조금 더 큰 수를 넣어보자! 테스트 케이스는 촘촘할 수 록 좋다. 
+최댓값, 최솟값, 경계값 테스트는 넣을 필요가 있다. (지금은 경계값 테스트는 아니지만..) <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
+
+이제 곱하기 테스트 케이스를 추가해보자 <br />
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+     if op == "+" {
+       return a + b
+     } else if op == "-" {
+       return a - b
+     }
+     return 0
+  }
+  
+  func main() {
+    Test()
+  }
+  
+  func Test() {
+    if !testCalculate("Test1", "+", 3, 2, 5) {
+      return
+    }
+
+    if !testCalculate("Test2", "+", 5, 4, 9) {
+      return
+    }
+    
+    if !testCalculate("Test3", "-", 5, 3, 2) {
+      return
+    }
+    
+    if !testCalculate("Test4", "-", 3, 6, -3) {
+      return
+    }
+    
+    if !testCalculate("Test5", "*", 3, 7, 21) {
+      return
+    }
+
+    fmt.Println("Success!")
+  }
+  
+  func testCalculate(testcase, op string, a, b int, expected int) bool {
+    o := Calulate(op, a, b)
+    if o != expected {
+      fmt.Printf("%s Failed! expected: %d output:%d\n", testcase, expected, o)
+      return false
+    }
+    return true
+  }
+  
+```
+이렇게 곱하기 테스트 케이스를 추가하고, 실행을 해보자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95939076-484ce380-0e16-11eb-8ed6-77cc48d697f1.png" width = 70%> </img></p>
