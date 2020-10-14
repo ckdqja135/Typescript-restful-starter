@@ -972,3 +972,112 @@ testCalculate()라는 함수를 만들어서 테스트 케이스 이름, a , b�
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
 성공하는 것을 볼 수 있다. <br />
 이렇게 까지하면 Test Driven방식으로 Calculate가 완성이 되었다. <br />
+
+나중에 이 코드를 인수인계 했을 때
+
+``` Go
+
+  func main() {
+    inintopMap()
+    // Test()
+  }
+  
+```
+이 부분만 주석처리해서 주면 된다. <br />
+
+만약 추가적인 제곱해주는 기능을 추가하려 할 때 마찬가지로 먼저 테스트 케이스 부터 추가를 해준다.<br />
+
+``` Go
+  ...
+  
+  func Test() {
+    ...
+    if !testCalculate("Test9", "**", 2, 3, 8) {
+      return
+    }
+    ...
+  }
+  
+```
+그 후 또 에러를 확인하고, <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95946617-e2695780-0e27-11eb-813a-63b7a787007a.png" width = 70%> </img></p>
+
+저 부분만 해결 해주기 위해
+
+``` Go
+ ...
+ 
+ func inintopMap() {
+    opMap = make(map[string]func(int, int) int)
+
+    opMap["+"] = add
+    opMap["-"] = sub
+    opMap["*"] = mul
+    opMap["/"] = div
+    opMap["**"] = pow
+   }
+
+  func add(a, b int) int {
+    return a + b
+  }
+  func sub(a, b int) int {
+    return a - b
+  }
+  func mul(a, b int) int {
+    return a * b
+  }
+  func div(a, b int) int {
+    return a / b
+  }
+
+  func pow(a, b int) int {
+    return 8
+  }
+
+```
+이렇게 추가해주고, 다시 실행해서 제대로 실행되는지 확인을 한 뒤 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
+
+제대로 된 기능으로 수정해준다. <br />
+``` Go
+  ...
+  
+  func inintopMap() {
+    opMap = make(map[string]func(int, int) int)
+
+    opMap["+"] = add
+    opMap["-"] = sub
+    opMap["*"] = mul
+    opMap["/"] = div
+    opMap["**"] = pow
+   }
+
+  func add(a, b int) int {
+    return a + b
+  }
+  func sub(a, b int) int {
+    return a - b
+  }
+  func mul(a, b int) int {
+    return a * b
+  }
+  func div(a, b int) int {
+    return a / b
+  }
+
+  func pow(a, b int) int {
+    rst := 1
+    for i := 0; i < b; i++ {
+      rst *= a
+    }
+   return rst
+  }
+
+...
+
+```
+
+그 후 다시 실행을 해서 테스트가 되는지 확인하면 된다. <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
