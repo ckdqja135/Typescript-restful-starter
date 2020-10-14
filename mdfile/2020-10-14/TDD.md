@@ -19,7 +19,7 @@ TDD니까 처음부터 테스트를 시켜준다. <br />
 ```
 
 이렇게 작성 후에 코드를 실행 시켜 보면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95935476-539c1100-0e0e-11eb-85e0-0c6e0f0abc26.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95935476-539c1100-0e0e-11eb-85e0-0c6e0f0abc26.png" width = 70%> </img></p>
 <code>undefined: Test</code>가 뜨는 것을 확인 할 수 있다. <br />
 
 이제 Test()를 만들어준다. 여기서 Calculate()를 테스트 할 것이다. <br />
@@ -46,7 +46,7 @@ TDD니까 처음부터 테스트를 시켜준다. <br />
 Calculate라는 함수를 만들고, 결과값이 5가 아니면 에러문구로 원하는 값과, 실제 나온 값을 출력시켜준다. <br />
 
 이렇게 하고, 다시 실행 시켜준다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95935890-403d7580-0e0f-11eb-8c62-20e1770593bc.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95935890-403d7580-0e0f-11eb-8c62-20e1770593bc.png" width = 70%> </img></p>
 당연하게 Calculate라는 함수를 만들지 않았기 때문에 에러가 났다. <br />
 이것이 TDD의 모습이다. 코딩이 없는 상태에서 먼저 테스트 부터 하니까 당연히 에러가 나는 것이고, 실패부터 겪는 것이다. <br />
 
@@ -85,7 +85,7 @@ TDD는 앞서 말했듯이 테스트를 먼저하고, 그 다음에 코딩을 �
 ```
 operation과 int 인자를 2개를 받고 결과가 int인 Calculate()를 0을 return하도록 만들어준다. 한번에 만드는 것이 아니라 지금 나타난 실패만 극복할 수 있도록 만들어준다. <br />
 이제 다시 실행해보자! <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936592-eb9afa00-0e10-11eb-838c-c344f20aaeca.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936592-eb9afa00-0e10-11eb-838c-c344f20aaeca.png" width = 70%> </img></p>
 이제 새로운 에러가 나타났다. 원하는 값은 5인데 0이 나왔다. <br />
 이 실패를 성공으로 바꾸려면 return 0이 아니라 return 5를 해주면 된다. <br />
 
@@ -114,7 +114,7 @@ operation과 int 인자를 2개를 받고 결과가 int인 Calculate()를 0을 r
   
 ```
 이제 저장 후에 다시 실행하면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936706-2dc43b80-0e11-11eb-9b72-6eb2956abc69.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936706-2dc43b80-0e11-11eb-9b72-6eb2956abc69.png" width = 70%> </img></p>
 성공했기 때문에 성공 메세지를 출력시켜주도록 한다. <br />
 
 ``` Go
@@ -146,7 +146,7 @@ operation과 int 인자를 2개를 받고 결과가 int인 Calculate()를 0을 r
 이 부분이 어떻게 보면 성공강화과정이라고 볼 수 있다. <br />
 
 다시 실행 시키면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
 성공 문구가 뜨는 것을 확인할 수 있다. <br />
 
 이제 이 테스트가 넘어갔으니 다른 테스트도 진행해보자! <br />
@@ -184,7 +184,7 @@ operation과 int 인자를 2개를 받고 결과가 int인 Calculate()를 0을 r
 ```
 
 여기서 어떻게 되는지 다시 실행을 시켜준다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95937032-d377aa80-0e11-11eb-9c32-ea04a9598938.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95937032-d377aa80-0e11-11eb-9c32-ea04a9598938.png" width = 70%> </img></p>
 에러가 떴다. 9를 원했는데 5가 나왔다. <br />
 이 실패를 겪었기 때문에 첫번째, 두번째 테스트가 성공되도록 바꾸어주자. <br />
 
@@ -223,7 +223,7 @@ operation과 int 인자를 2개를 받고 결과가 int인 Calculate()를 0을 r
 이것도 단순하게 return a + b로 바꾸어주면 된다. <br />
 
 그래서 다시 실행 해보면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
 성공 문구가 뜨는 것을 확인할 수 있다. <br />
 
 지금까지 성공으로 바꾸는 코딩만 했기 때문에 성공강화를 시켜주어야 한다. <br />
@@ -325,4 +325,103 @@ testCalculate()라는 함수를 만들어서 테스트 케이스 이름, a , b�
 지금 전 코드 보다 훨씬 단순해졌고, 쉬워졌다. <br />
 지금도 성공을 했는지 실행시켜본다. <br />
 
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
+
+이제 다른 케이스를 만들어준다. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+    return a + b
+  }
+  
+  func main() {
+    Test()
+  }
+  
+  func Test() {
+    if !testCalculate("Test1", "+", 3, 2, 5) {
+      return
+    }
+
+    if !testCalculate("Test2", "+", 5, 4, 9) {
+      return
+    }
+    
+    if !testCalculate("Test3", "-", 5, 3, 2) {
+      return
+    }
+
+    fmt.Println("Success!")
+  }
+  
+  func testCalculate(testcase, op string, a, b int, expected int) bool {
+    o := Calulate(op, a, b)
+    if o != expected {
+      fmt.Printf("%s Failed! expected: %d output:%d\n", testcase, expected, o)
+      return false
+    }
+    return true
+  }
+  
+```
+
+"-"테스트 케이스를 추가했다. 이제 결과를 확인해보자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95938020-f1dea580-0e13-11eb-8b81-143abeb86cfa.png" width = 70%> </img></p>
+
+실패했다. 이제 성공으로 바꾸어줄 코딩을 해야한다. <br />
+
+``` Go
+
+  package main
+  
+  import "fmt"
+  
+  func Calulate(op string, a, b int) int {
+     if op == "+" {
+       return a + b
+     } else if op == "-" {
+       return a - b
+     }
+     return 0
+  }
+  
+  func main() {
+    Test()
+  }
+  
+  func Test() {
+    if !testCalculate("Test1", "+", 3, 2, 5) {
+      return
+    }
+
+    if !testCalculate("Test2", "+", 5, 4, 9) {
+      return
+    }
+    
+    if !testCalculate("Test3", "-", 5, 3, 2) {
+      return
+    }
+
+    fmt.Println("Success!")
+  }
+  
+  func testCalculate(testcase, op string, a, b int, expected int) bool {
+    o := Calulate(op, a, b)
+    if o != expected {
+      fmt.Printf("%s Failed! expected: %d output:%d\n", testcase, expected, o)
+      return false
+    }
+    return true
+  }
+  
+```
+
+이것을 성공으로 바꾸어주기 위해 Calulate()를 수정해주었다. <br />
+
+다시 재실행 해보자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95936856-7da30280-0e11-11eb-8a20-189cccd725c6.png" width = 70%> </img></p>
