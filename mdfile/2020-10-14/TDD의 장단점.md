@@ -151,8 +151,3 @@ facebook이라는 서비스가 있을 때 거기에 유저의 시나리오가 �
 물론 실무에서 잘 된 케이스들이 많은데 그 예가 Open Source Project이다. 이것은 불특정 다수가 들어와서 코드를 헤집어 놓는데 <br />
 이럴 때 TDD를 하면 좋다. Open Source Project중에 TDD를 적용해서 Test Coverage라고 해서 Test가 Cover하고 있는 코드가 몇 %인가가 Test Coverage라고 하는데 <br />
 Test Coverage 90%이상 100%가까이 되는 Open Source Project들이 많다. <br />
-
-
-
-
-
