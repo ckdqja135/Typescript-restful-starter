@@ -44,9 +44,9 @@ http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
   }
 ```
 이 상태에서 실행을 해도 전과 똑같은 화면이 출력된다.
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93288924-f7969a80-f817-11ea-96c0-406c7b274794.png" width = 50%> </img></p>
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93289063-64119980-f818-11ea-88f1-6591ac27b988.png" width = 50%> </img></p>
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93289391-3bd66a80-f819-11ea-90a3-1aaec2dbaf78.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93288924-f7969a80-f817-11ea-96c0-406c7b274794.png" width = 70%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93289063-64119980-f818-11ea-88f1-6591ac27b988.png" width = 70%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93289391-3bd66a80-f819-11ea-90a3-1aaec2dbaf78.png" width = 70%> </img></p>
 
 이 전과 차이가 있다면 기존에는 HTTP에 정적으로 등록했는데 지금은 mux라는 인스턴스를 만들어서 거기에 등록해서 그 인스턴스를 넘겨주는 방식으로 바꾸었다. <br />
 
@@ -72,10 +72,10 @@ http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
 
 이 상태에서 실행 시켜준다. <br />
 먼저 /bar경로로 들어가면 "Hello world!"가 출력되는 것을 볼 수 있는데
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93291380-e05aab80-f81d-11ea-8b85-a7583cc2b5ba.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93291380-e05aab80-f81d-11ea-8b85-a7583cc2b5ba.png" width = 70%> </img></p>
 
 이 상태에서 ?name=bar를 경로에 추가시켜주게 되면
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93291360-d042cc00-f81d-11ea-8918-078d5634315f.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93291360-d042cc00-f81d-11ea-8918-078d5634315f.png" width = 70%> </img></p>
 "Hello bar!"가 출력 되는 것을 알 수 있다. <br />
 
 즉, name=임의적인name값 을 넣으면 Hello 임의적인name 값이 출력됨을 알 수 있다. <br />
@@ -117,7 +117,7 @@ http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
 2 : 이 값을 JSON형태로 파싱을 해주어야 하는데 그것을 위해 NewDecoder(r.Body)를 사용하고, JSON형태의 데이터가 Body에 들어있기 때문에 NewDecoder의 인자로 reader인 r을 받기 때문에 
     r.Body를 넣어준다. <br />
     r.Body에 커서를 두게 되면
-    <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93292083-a5f20e00-f81f-11ea-92bb-82350d87e397.png" width = 40%> </img></p>
+    <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93292083-a5f20e00-f81f-11ea-92bb-82350d87e397.png" width = 50%> </img></p>
     r.Body가 io.Reader를 포함하고 있음을 알 수 있고, NewDecoder는 io.Reader를 인자로 받고 있다는 걸 알 수 있다. <br />
     그리고 Body에서 값을 읽어서 user struct형태로 값을 채워주기 위해 Decode(user)를 사용한다. <br />
     이 부분은 뭔가 데이터가 잘못될 수 있기 때문에 err변수에 넣어준다. <br />
@@ -133,17 +133,17 @@ http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
 6 : 잘 되었다고 알려주기 위해 사용한다. string(data)으로 사용한 이유는 data가 byte[]형식이기 때문에 string으로 형변환 시켜준 것이다. <br />
 
 이 상태에서 실행을 하게 되면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293018-ece10300-f821-11ea-8042-7b35608eb89c.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293018-ece10300-f821-11ea-8042-7b35608eb89c.png" width = 70%> </img></p>
 
 EndOfFile이라는 것이 뜬다. Body에 data를 넣어야 하기 때문에 URL에 데이터를 넣어도 결과는 똑같다. <br />
 이럴 때 필요한 것이 클라이언트 앱이다. <br />
 
 크롬 앱 중에 Advanced REST client 라는 앱을 설치한다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293188-59f49880-f822-11ea-93db-0f3c717aa3d7.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293188-59f49880-f822-11ea-93db-0f3c717aa3d7.png" width = 70%> </img></p>
 
 앱을 키고 실행한다. <br />
 POST로 바꾸어주고, 주소는 <code>http://localhost:3000/foo</code>로 지정해준 뒤, Body 부분에 user struct부분에 맞추어 JSON형태의 값을 넣어준 뒤 데이터를 날려준다.
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293713-9379d380-f823-11ea-80df-511d5d8b48a5.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93293713-9379d380-f823-11ea-80df-511d5d8b48a5.png" width = 70%> </img></p>
 
 결과를 보면
 ``` JSON
@@ -180,14 +180,14 @@ Email과 시간을 제외한 모든 값들이 제대로 들어가지 않았다. 
 이렇게 하면 Decode하고 Marshal할 때 해당 컬럼 이름에 맞추어서 해준다. <br />
 다시 실행해보자! <br />
 
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294450-7d6d1280-f825-11ea-8d9e-9682f97f7f7d.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294450-7d6d1280-f825-11ea-8d9e-9682f97f7f7d.png" width = 70%> </img></p>
 제대로 들어간 것을 확인할 수 있다. <br />
 하지만 우리가 입력했던 형식이랑은 다르게 출력이 되었는데 그 이유는 JSON이 아닌 TEXT로 인식하고 있기 때문이다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294565-db015f00-f825-11ea-9991-344c396d7fb1.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294565-db015f00-f825-11ea-9991-344c396d7fb1.png" width = 70%> </img></p>
 그래서 <code>func (f *fooHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)</code> 부분에 <br />
 <code>w.Header().Add("content-type", "application/json")</code>을 추가해준 뒤 다시 실행시키면 <br />
 
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294897-ca9db400-f826-11ea-9ea5-5054ed88f4c9.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294897-ca9db400-f826-11ea-9ea5-5054ed88f4c9.png" width = 70%> </img></p>
 정상적으로 동작하는 것을 확인 할 수 있다. 
 
 ### 풀 소스
