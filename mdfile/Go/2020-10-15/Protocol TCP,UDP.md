@@ -54,7 +54,7 @@ TCP에선 3Way handshake. 직역하면 3방향 악수인데 보통 연결을 맺
 보낸 쪽에서 그 편지가 잘 도착 했는지 알 수 있는 방법은 받은 쪽에서 답장을 해주면 잘 갔다는 걸 알 수 있다. <br />
 하지만 답장하는 입장에서 답장이 잘 갔는지 확인하려면 마찬가지로 답장을 받은 쪽에서 잘 받았다고 보내야 알 수 있을 것이다. <br />
 
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96084852-c2ef2f00-0efa-11eb-9bb4-ad1dfefccc85.png" width = 50%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96084852-c2ef2f00-0efa-11eb-9bb4-ad1dfefccc85.png" width = 70%> </img></p>
 그래서 이렇게 A가 B에게 Connect Request를 했을 때(1 way) B가 A에게 OK를 보내게 되고(2 way) B는 A가 OK를 잘 받았는지 못 받았는지 알 수 없기 때문에 A가 B에게 잘 받았다고 알려줘야한다. (3 way)
 이렇게 해서 3Way handshake가 된다. <br />
 
