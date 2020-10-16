@@ -105,6 +105,7 @@ Rollback을 만들려면 상태를 기록하고, 뒤로감기, 앞감기 기능�
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96225283-d3bba580-0fcb-11eb-8e2d-3f4d5f1df7ab.gif" width = 70%> </img></p>
 그리고 LOL게임에서 Replay기능도 상당히 어려운 기술인데, 앞감기와 뒷감기를 만듦으로써 Replay기능을 부가기능으로 쉽게 만드는 장점이 있지만 만들기 어렵다는 단점이 있다. <br />
 <br />
+
 Rollback 또 다른 문제는 **중간 접속처리**가 어렵다. <br />
 이 문제는 사실 Rollback의 문제라기 보다 Deterministic방식 자체의 문제로 볼 수 있는데 Deterministic방식이 어떤것이 문제냐면 <br />
 입력을 기반으로 하고 있다. 어떤 상태를 공유하는 게 아니라 입력을 주고 받는다. 그렇기 때문에 캐릭터의 상태를 만들기 위해서는 그 간의 입력했던 모든 값들이 들어와야 한다. <br />
