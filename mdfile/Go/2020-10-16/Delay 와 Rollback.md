@@ -101,9 +101,9 @@ C가 먼저 쏜 것이라 A를 먼저 맞추었고, A는 B에게 공격을 못�
 이 두가지를 제대로 사용하고 있는 게임이 '오버워치'인데 시간을 되돌리는 캐릭터인 '트레이서'라는 캐릭터가 Rollback기능을 만드는 부가기능으로 볼 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96225080-82131b00-0fcb-11eb-8571-f6cf966d0492.gif" width = 70%> </img></p>
 Rollback을 만들려면 상태를 기록하고, 뒤로감기, 앞감기 기능을 만들어야 하는데 이것을 만들다 보니 '트레이서'라는 캐릭터가 사용하는 '시간역행'이라는 스킬을 만들기가 쉬워졌다고 볼 수 있다. <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96225283-d3bba580-0fcb-11eb-8e2d-3f4d5f1df7ab.gif" width = 70%> </img></p>
 그리고 LOL게임에서 Replay기능도 상당히 어려운 기술인데, 앞감기와 뒷감기를 만듦으로써 Replay기능을 부가기능으로 쉽게 만드는 장점이 있지만 만들기 어렵다는 단점이 있다. <br />
-
-
 
 
 
