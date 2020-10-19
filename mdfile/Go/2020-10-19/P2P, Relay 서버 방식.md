@@ -55,7 +55,7 @@ Relay서버는 말 그대로 정해진 서버가 있고, 클라이언트들이 �
 그런데 아직 IPv4로도 잘 쓸 수 있는 기술이 나와서 여전히 IPv6가 아닌 IPv4를 사용하고 있다. <br />
 이 기술이 IP Mapping이다. 모든 컴퓨터에 고정 IP를 할당할 수 없다. 컴퓨터가 너무 많아졌고, ip를 다 정할 수 없다. <br />
 
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96396636-9ee56380-1202-11eb-9d26-a7c326c06365.png" width = 70%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96421304-95272480-1231-11eb-9365-e323086aead3.png" width = 70%> </img></p>
 그래서 맨 앞에 컴퓨터 한 대만 고정IP를 정해놓고 모든 패킷을 얘가 받아서 분배를 해준다. <br />
 그래서 그 안에 있는 컴퓨터들은 고정IP가 있을 필요가 없고, 맨 앞에 있는 컴퓨터가 지정해주는 번호만 알고 있으면 되는 것이다. <br />
 기본적으로 ICP나 UDP와 같은 인터넷 프로토콜은 IP기반으로 돌아가기 때문에 맨 앞에 있는 컴퓨터가 그 안에 있는 컴퓨터들에게 IP를 할당 해준다고 생각하면 된다. <br />
