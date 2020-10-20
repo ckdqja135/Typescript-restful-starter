@@ -68,7 +68,7 @@ Work Thread는 패킷이 계속 날라오면 패킷을 계속 Read하고, Read�
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96550746-35418400-12ec-11eb-9671-15abec4929f0.png" width = 70%> </img></p>
 이런 형태의 구조는 크게 보면 Network I/O와 작업영역인 Work Thread쪽으로 나뉘어지고, 중간에 Queue가 있는 형태인데 이러한 구조는 어떤 서버의 구조든 다 비슷한 구조로 사용하게 된다. <br />
 Work Thread쪽이 하나냐 여러개냐에 따라 멀티쓰레드구조냐 싱글스레드구조냐가 달라지게 된다. <br />
-NetWork I/O는 Select 또는 IOCP써서 만들기 때문에 거의 멀티쓰레드라 생각하면 된다. <br />n
+NetWork I/O는 Select 또는 IOCP써서 만들기 때문에 거의 멀티쓰레드라 생각하면 된다. <br />
 
 NetWork I/O쪽으로 패킷이 막 날라오면 날라온 패킷을 큐에 계속 쌓고, 큐가 패킷을 쌓으면 매 Tick마다 매 업데이트 프레임마다 이 큐를 하나씩 다 가지고 와서 모두 처리하고, Actor의 Tick도 다 돌고나서 <br />
 하나의 프레임이 끝나고 다음으로 넘어간다. <br />
