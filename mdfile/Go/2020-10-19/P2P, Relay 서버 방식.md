@@ -2,8 +2,8 @@
 P2P는 Peer To Peer방식이라 해서 클라이언트 끼리 직접적으로 연결하는 방식이다. <br  />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96392946-9851ee80-11f8-11eb-8287-9f29c53b647e.png" width = 70%> </img></p>
 보통 1:1에서는 클라이언트와 클라이언트가 연결하는 형태이며, 예를들어 5명이 연결하는 다대다 형태일 때 2가지로 나뉘는데 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96393195-64c39400-11f9-11eb-8281-8909ca594401.png" width = 70%> </img></p>
 방장을 정해서 방장에게 커넥트하는 방식. 방장이 모든 커넥션을 가지고 있는 방식이 있고, <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96393195-64c39400-11f9-11eb-8281-8909ca594401.png" width = 70%> </img></p>
 다른 하나는 풀리 커넥션(Fully Connection)이라 해서 모두가 모두에게 커넥션 하는 방식이 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96393389-ea474400-11f9-11eb-8848-a9eabcd93bab.png" width = 70%> </img></p>
 
