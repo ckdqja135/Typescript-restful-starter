@@ -22,7 +22,7 @@ P1이 Time이 0ms일 때 버튼을 눌렀다고 가정하고, 이 버튼이 P2�
 그랬을 때 양 쪽 입력처리를 공평하게 처리하는 방법은 눌렀을 때 바로 적용되는게 아니라 양쪽 모두 입력에 지연시간 만큼의 Delay를 주는 것이다. <br />
 그래서 P1의 입력값에 100의 Delay를 주어서 100ms에 실행하고, P2의 입력값이 50에서 딜레이를 주어서 150ms에 적용되면 아래의 그림처럼 상황이 똑같아진다. <br />
 
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96219032-ea103400-0fc0-11eb-9cd0-2de5fa6b122b.png" width = 70%> </img></p>P
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96219032-ea103400-0fc0-11eb-9cd0-2de5fa6b122b.png" width = 70%> </img></p>
 P1에서 P1의 입력값이 100ms에 적용되고, P2에도 P1의 입력값이 100ms에 적용되고, P2의 입력값이 P2에는 150ms, P1에도 150ms에 적용이 되는 것을 알 수 있다. <br />
 두 컴퓨터가 양쪽이 똑같은 시간에 똑같은 입력을 처리하게 되고, 이 때는 Sync가 맞게 된다. <br />
 
