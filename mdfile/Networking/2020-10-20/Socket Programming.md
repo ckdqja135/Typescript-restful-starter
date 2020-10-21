@@ -67,7 +67,8 @@ NIC를 통해서 데이터가 들어오게 되고, 소켓을 통해서 프로그
 |:------:|:---:|:---:|
 |특징|요청이 완료될 때 까지 다음으로 넘어가지 않는다. |요청을 날려놓고 바로 빠져나가서 요청한 데이터가 오면 처리한다.|
 
-
+#### 동기식의 예
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96689281-2971c280-13bd-11eb-85fc-cbd5d9e35505.png" width = 70%> </img></p>
 비동기식 방식을 크게 네트워크에서 두 가지로 나눌 수 있는데 <br />
 서버에서는 비동기식으로 사용한다고 생각하면 되는데 네트워킹에서는 Select방식과 윈도우에서 제공하는 IOCP방식이 있다. <br />
 Select방식은 PreRequest방식이고, IOCP방식은 PostRequest방식이다. <br />
