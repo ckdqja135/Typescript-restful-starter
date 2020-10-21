@@ -2,6 +2,8 @@
 Protocol은 우리말로 하면 약속, 규약 이라는 의미이고, Network Protocol은 통신 규약이다. <br />
 서로 간에 어떤 통신을 하기 위해서는 어떤 약속이 필요하다. <br />
 
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96694455-73f63d80-13c3-11eb-9991-5539b0a82dab.png" width = 70%> </img></p>
+
 프로토콜에는 여러가지가 있다. 여기서 전부 다 알아보진 않고, 게임에서 필요한 TCP, UDP만 다뤄보도록 한다. <br />
 여기에 베이스가 되는게 IP라는 프로토콜이 있다. 이것이 하위 계층이고, TCP, UDP가 상위 계층이다. <br />
 TCP, UDP위에 HTTP, SMTP, 등등이 있다. <br />
