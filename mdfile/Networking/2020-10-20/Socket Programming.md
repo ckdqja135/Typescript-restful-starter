@@ -17,7 +17,7 @@
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/96535881-cce3aa00-12cd-11eb-9334-7f33733ff539.png" width = 70%> </img></p>
 그 표면과 똑같이 생긴것을 만들어 놓고 뒤집어서 그 위를 반듯하게 깎아버리면 바퀴가 달린 자동차는 잘 달릴 수 있을 것이다. <br />
 이것을 어댑팅한다고 하는데 울퉁불퉁한 부분을 적응해서 골고루 평평하게 만들어준다고 하는데 <br />
-이것을 [Adapter 패턴](https://lee1535.tistory.com/72) 이라고도 한다. <br />
+이것을 [Adapter 패턴](https://lee1535.tistory.com/72)이라고도 한다. <br />
 
 그래서 HAL도 이런 Adapter패턴이고, 이런 Adapter패턴은 프로그래밍 할 때 많이 사용 되는 패턴 중에 하나이다. <br />
 
