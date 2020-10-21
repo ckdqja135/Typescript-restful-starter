@@ -1,1 +1,1 @@
-1. [MMORPG 서버 구조(2)](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Networking/2020-10-21/MMORPG%20%EC%84%9C%EB%B2%84%20%EA%B5%AC%EC%A1%B0(2)(%EC%8B%B1%EA%B8%80%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%20vs%20%EB%A9%80%ED%8B%B0%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4))
+1. [MMORPG 서버 구조(2)](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Networking/2020-10-21/MMORPG%20%EC%84%9C%EB%B2%84%20%EA%B5%AC%EC%A1%B0(2)(%EC%8B%B1%EA%B8%80%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%20vs%20%EB%A9%80%ED%8B%B0%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4).md)
