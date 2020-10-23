@@ -339,3 +339,6 @@ Person이라는 Struct가 있는데 기능을 추가해볼 것인데 기능이�
 
 이게 중요한 문제인데 Golang에서 함수 호출의 변수는 무조건 무조건 복사로 일어난다. <br />
 InputGrade()는 Student의 메소드이지만 그 안에 있는 함수의 입력값들이 모두 복사가 된다. 그래서 s Student도 복사가 되고, name string, grade string도 복사가 된다. <br />
+
+
+26:32
