@@ -340,5 +340,88 @@ Person이라는 Struct가 있는데 기능을 추가해볼 것인데 기능이�
 이게 중요한 문제인데 Golang에서 함수 호출의 변수는 무조건 무조건 복사로 일어난다. <br />
 InputGrade()는 Student의 메소드이지만 그 안에 있는 함수의 입력값들이 모두 복사가 된다. 그래서 s Student도 복사가 되고, name string, grade string도 복사가 된다. <br />
 
+가령 예를 들어서 
+``` Go
 
-26:32
+  func Add(x, y int) {
+  
+  }
+  
+  func main() {
+    a := 2 
+    b := 3
+    
+    Add(a,b)
+  }
+  
+```
+
+Add라는 함수가 있고, 이 Add의 a,b를 호출하면 a라는 값이 복사되어 x는 2가 되고, y는 3이 되는데 <br />
+main함수에 있는 a와 Add함수에 있는 x와 b와 y는 서로 다른 것이다. <br />
+
+그렇기 때문에 여기서
+``` Go 
+
+  
+
+``` Go
+    package main
+
+    import "fmt"
+
+    type Student struct { 
+      name string
+      class  int
+
+      grade Grade
+    }
+
+    type Grade struct {
+      name string
+      grade string
+    }
+
+    func (s Student) ViewGrade() { 
+      fmt.Println(s.grade)
+    }
+    
+    func (s Student) InputGrade(name string, grade string) {
+      s.grade.name = name
+      s.grade.grade = grade
+    }
+    
+    func InputGrade(s student, name string, grade string) {
+      s.grade.name = name
+      s.grade.grade = grade
+    }
+  
+    func ViewGrade(s Student) {
+      fmt.Println(s.grade)
+    }
+
+    func main() { 
+      var s Student
+      s.name = "길동"
+      s.class = 1
+
+      s.grade.name = "과학"
+      s.grade.grade = "C"
+
+      s.ViewGrade()
+      ViewGrade(s)
+      
+      s.InputGrade("수학", "A+")
+      s.ViewGrade()
+    }
+      
+  ```
+  
+<code> s.InputGrade("수학", "A+") </code> 이 부분의 s는 InputGrade 함수의(메소드지만) 입력값으로 처리가 되는 것이다. <br />
+그래서 수학, A+은 InputGrade함수의 입력 값이된다. s, name, grade모두 입력값이 된다. <br />
+그런식으로 봤을 때 이 값들은 복사되어 넘어가기 때문에 <code>s.InputGrade("수학", "A+")</code>의 s와 <code>InputGrade(s student, name string, grade string)</code>의 s는 서로 다른 값이다. <br />
+서로 메모리 변수를 가지고 있다고 보면 되고, 서로 값만 복사되서 같을 뿐이지 서로 다르다. <br />
+그래서 <code>InputGrade(s student, name string, grade string)</code>의 과목명과 성적을 바꾼다 하더라도 실제 s의 name이 바뀌지 않는다. <br />
+
+그래서 저것들 변경시키기 위해서는 포인터가 필요하다. <br />
+함수 호출 과정에서는 무조건 복사로 일어난다는 것, 복사가 일어났을 때 값이 전달 되는 것이지 그 메모리가 그대로 전달되는 것이 아니라는 것이다. <br />
+그래서 이것들을 해결하기 위해서는 '포인터'가 나온 것이다. <br />
