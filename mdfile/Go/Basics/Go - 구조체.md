@@ -359,10 +359,7 @@ InputGrade()는 Student의 메소드이지만 그 안에 있는 함수의 입력
 Add라는 함수가 있고, 이 Add의 a,b를 호출하면 a라는 값이 복사되어 x는 2가 되고, y는 3이 되는데 <br />
 main함수에 있는 a와 Add함수에 있는 x와 b와 y는 서로 다른 것이다. <br />
 
-그렇기 때문에 여기서
-``` Go 
-
-  
+그렇기 때문에 여기서 
 
 ``` Go
     package main
