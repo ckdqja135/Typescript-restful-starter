@@ -71,8 +71,8 @@ p의 메모리 주소가 실제 값을 나타내기 위해서는
 
     p = &a
     a = 3
-    
-	  fmt.Println(a)
+
+    fmt.Println(a)
     fmt.Println(p)
     fmt.Println(*p)
   }
