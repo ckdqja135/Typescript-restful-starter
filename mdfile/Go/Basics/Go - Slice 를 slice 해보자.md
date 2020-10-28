@@ -214,3 +214,35 @@ a의 맨끝을 없앤다는 것은 처음부터 맨 끝에서 하나 뺀거 까�
 없어진 맨 뒤에 숫자들이 출력되는 것을 알 수 있다. <Br />
 
 그러면 이제는 맨 앞에 값을 없애보자. <br />
+``` Go
+  package main
+
+  import "fmt"
+
+  func RemoveBack(a []int) ([]int, int) {
+    return a[:len(a)-1], a[len(a)-1]
+  }
+
+  func RemoveFront(a []int) ([]int, int) {
+    return a[1:], a[0]
+  }
+
+  func main() {
+    a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+    for i := 0; i < 5; i++ {
+      var front int
+      a, front = RemoveFront(a)
+      fmt.Printf("%d, ", front)
+    }
+    fmt.Println()
+    fmt.Println(a)
+
+  }
+```
+RemoveFront()를 만들어서 마찬가지로 없어진 슬라이스와 맨 앞에 값을 반환하도록 해준다. <br />
+a의 맨 앞을 빼고 그 다음 부터인 인덱스 2번째부터 끝까지 반환하면 되고, 없어진 맨 앞에 값은 인덱스 0번째 값 부터 이므로 위와 같이 해준다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97407694-62baad00-193e-11eb-8f93-79679dc806f1.png" width = 70%> </img></p>
+
+이거는 실제로 메모리 상에서 사라지게 하는 것은 아니라는 점. 다시 한번 알아 두어야 한다. 아까도 말했지만 그냥 가리키는 포인터만 바뀌게 되는 것이다. <br />
+
