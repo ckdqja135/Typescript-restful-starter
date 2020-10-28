@@ -23,7 +23,8 @@ Slice는 []안에 ':'을 붙여서 숫자 2개를 적는다. <br />
 이 뜻은 첫번째 부분은 시작 index이고 두번째 부분은 마지막Index 부분인데 5~6번째까지 가져온다.<br />
 ``` Text
 a[StartIndex : EndIndex]
-``
+```
+
 Start부터 해서 End까지 하는데 End는 포함되지 않는다. <br />
 그래서 만약에 <br />
 ``` Go
@@ -122,4 +123,94 @@ b는 잘라낸게 아니라 a의 5번째부분을 가리키고 있기 때문에 
 
 그래서 슬라이스는 말 그대로 잘라오는게 아니라 그 일부분을 가리킨 슬라이스를 새로 만든 것이고, 같은 메모리를 가리키고 있다는 것을 주의하고 알고 있어야 한다. <br />
 
+몇가지 슬라이스를 활용한 예제들을 살펴보자! <br />
+배열이 아래와 같이 있을 때 배열의 맨끝을 하나씩 삭제하려고 한다. 어떻게 해야할까? <br />
+``` Go
+a := []int {1,2,3, .... 10}
+```
+처음에 10을 없애고, 9를 없애고, 8을 없애는 식으로 하나씩 지워나가는 것을 만들어보자 <br />
 
+``` Go
+  package main
+
+  import "fmt"
+
+  func RemoveBack(a []int) []int {
+    return a[:len(a)-1]
+  }
+
+  func main() {
+    a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+    for i := 0; i < 5; i++ {
+        a = RemoveBack(a)
+    }
+    
+    fmt.Println(a)
+
+  }
+
+```
+하나씩 지워가는 RemoveBack()이라는 함수를 만든다고 하자. 이 함수의 입력값은 슬라이스를 받고, 출력은 슬라이로 나가도록 한다. <br />
+그랬을 때 a가 for문을 도는데 5번을 돈다고 가정하자. <br />
+그 후 a를 출력하도록 만들자. <br />
+
+그러면 어떻게 Back을 해야 할까? <br />
+``` Go
+  package main
+
+  import "fmt"
+
+  func RemoveBack(a []int) []int {
+    return a[:len(a)-1]
+  }
+
+  func main() {
+    a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+    for i := 0; i < 5; i++ {
+        a = RemoveBack(a)
+    }
+    
+    fmt.Println(a)
+
+  }
+
+```
+a의 맨끝을 없앤다는 것은 처음부터 맨 끝에서 하나 뺀거 까지만 간다는 것이기 때문에 다음과 같이 작성해준다. <br />
+이 때 출력 시켜보자. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97403151-3bacad00-1937-11eb-9ed9-9f980b0bbfe9.png" width = 70%> </img></p>
+처음 RemoveBack을 하면 10이 없어지고, 그 다음은 9가 없어지고, 그 다음은 8, 7....해서 5번을 돌기 때문에 남은건 1,2,3,4,5이다. <br />
+
+좀 더 확실히 알기위해 없어지는 과정을 찍어보면 이렇다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97403381-a3fb8e80-1937-11eb-9013-fb3322b09920.png" width = 70%> </img></p>
+
+이번에는 맨 뒤에 값을 없애는데 맨 뒤에 값을 반환하는 함수를 만들어보자 <br />
+``` Go
+  package main
+
+  import "fmt"
+
+  func RemoveBack(a []int) ([]int, int) {
+    return a[:len(a)-1], a[len(a)-1]
+  }
+
+  func main() {
+    a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+    for i := 0; i < 5; i++ {
+      var back int
+      a, back = RemoveBack(a)
+      fmt.Printf("%d, ", back)
+    }
+    fmt.Println()
+    fmt.Println(a)
+
+  }
+```
+
+함수에서 return값이 다중으로 나오면 위와 같이 ()로 묶어 주어야 하고, 맨 뒤에 값은 back으로 받고 출력시켜준다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97404066-d954ac00-1938-11eb-8524-56a983566366.png" width = 70%> </img></p>
+없어진 맨 뒤에 숫자들이 출력되는 것을 알 수 있다. <Br />
+
+그러면 이제는 맨 앞에 값을 없애보자. <br />
