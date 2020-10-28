@@ -55,7 +55,7 @@ a[0:9]
 
 ```
 
-a는 1~10까지 가지고 있는 배열이고, b는 a의 슬라이스인데 5~7번째까지 값을 가져오는 슬라이스이다. <br />
+a는 1 ~ 10까지 가지고 있는 배열이고, b는 a의 슬라이스인데 5~7번째까지 값을 가져오는 슬라이스이다. <br />
 그래서 b의 요소를 출력해보면 <br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97397576-ec617f00-192c-11eb-8bf8-8ff2a690e965.png" width = 70%> </img></p>
