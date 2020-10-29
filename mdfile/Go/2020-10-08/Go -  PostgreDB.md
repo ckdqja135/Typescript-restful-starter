@@ -1,4 +1,4 @@
-### 시작
+## 시작
 현재까지 Todos를 Heroku에 배포를 했다. <br />
 heroku에서는 dyno라는 컨테이너를 쓰는데, 이것이 [statelss](https://velog.io/@makeitcloud/%EB%9E%80-Stateless-Stateful-%EC%9D%B4%EB%9E%80)라 fileDB를 사용할 수 없게 되어 <br />
 실제 DB를 사용해야 하는데 heroku가 클라우드 서비스이기 때문에 PostgreDB라는 DB서비스를 10000레코드까지만 무료로 제공하고 있다. <br />
