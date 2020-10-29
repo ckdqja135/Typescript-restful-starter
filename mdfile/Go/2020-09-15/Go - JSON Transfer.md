@@ -1,4 +1,4 @@
-### 시작
+## 시작
 
 [Web Handler](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-09-15/Go%20-%20Web%20Handler.md)에 이어서 main함수의 
 
@@ -190,7 +190,7 @@ Email과 시간을 제외한 모든 값들이 제대로 들어가지 않았다. 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93294897-ca9db400-f826-11ea-9ea5-5054ed88f4c9.png" width = 70%> </img></p>
 정상적으로 동작하는 것을 확인 할 수 있다. 
 
-### 풀 소스
+## 풀 소스
 
 ``` Go
 
