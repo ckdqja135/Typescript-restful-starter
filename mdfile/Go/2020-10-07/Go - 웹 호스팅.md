@@ -1,4 +1,4 @@
-### 시작
+## 시작
 [HEROKU](https://id.heroku.com/login)를 들어가 회원가입 후 로그인을 해준다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95299531-d7a74380-08b8-11eb-83b0-27373f2b24cb.png" width = 70%> </img></p> 
 
