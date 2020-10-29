@@ -1,4 +1,4 @@
-### 시작
+## 시작
 
 #### Template?
 쉽게 얘기하면 어떤 틀을 의미한다.
@@ -302,7 +302,7 @@ body내용이 include한 tmpl1내용이 오는것을 확인할 수 있다. <Br /
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93732491-905c5a00-fc0c-11ea-8aec-253fca1cc331.png" width = 70%> </img></p>
 
 
-### 풀 소스
+## 풀 소스
 
 <code>main.go</code>
 ``` Go
