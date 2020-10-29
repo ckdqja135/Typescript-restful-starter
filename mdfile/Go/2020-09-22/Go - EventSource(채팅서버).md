@@ -479,7 +479,7 @@ processMsgCh()에서 pop하게 된다. 그래서 processMsgCh()을 실행시켜�
 이렇게 해서 두 개의 창을 띄워서 실행을 하면 제대로 동작 하는 것을 확인 할 수 있다.<br />
 
 user가 들어 왔을 때 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93846462-0d580400-fcdf-11ea-823b-3b09de986045.png" width = 70%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97541641-d32e0080-1a08-11eb-8fca-4552a192b164.png" width = 70%> </img></p>
 
 user가 채팅을 친 뒤 나갔을 때 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97539935-2c486500-1a06-11eb-8a69-49bf9ed5f94c.png" width = 70%> </img></p>
