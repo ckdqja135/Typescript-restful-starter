@@ -66,7 +66,7 @@ func main() {
 ```
 b는 타입이 Student의 포인터 타입으로 해놓고, a의 주소를 b에 넣어주고, b의 age를 30으로 바꾸어 주었을 때 어떻게 되는지 보자 <br />
 
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97523534-ea0f2b80-19e5-11eb-9583-738d95e578b3.png" width = 70%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97523643-22af0500-19e6-11eb-9652-5ce9c6e42573.png" width = 70%> </img></p>
 a의 나이가 바뀌었다. 포인터 부분을 알고 있다면 당연하게 받아드려질 것이다. <br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97523221-0494d500-19e5-11eb-8c8b-656faa1785fa.png" width = 70%> </img></p>
