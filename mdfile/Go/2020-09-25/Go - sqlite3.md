@@ -1,6 +1,4 @@
-
-
-### SQLite 설치
+## SQLite 설치
 
 Go에서 SQLite를 사용하기 위해서 [mattn/go-sqlite3](https://github.com/mattn/go-sqlite3)를 사용할 것인데 <br />
 이 패키지가 사용하는 것이 CGO라는 것을 사용한다. <br />
