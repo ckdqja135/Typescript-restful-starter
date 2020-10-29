@@ -1,4 +1,4 @@
-### 시작
+## 시작
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95412966-30341a80-0965-11eb-9579-dfa05d49ceb1.png" width = 70%> </img></p> 
 위와 같은 에러는 main함수의 os.Getenv()에서 발생하여 <br />
