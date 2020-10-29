@@ -1,4 +1,4 @@
-### 시작
+## 시작
 들어가기 앞서서 한 가지 소개할 것이 있는데 소프트웨어 공학쪽에 유명한 책이 있다. <br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95947290-3cb6e800-0e29-11eb-91b2-5d2991f01961.png" width = 70%> </img></p>
