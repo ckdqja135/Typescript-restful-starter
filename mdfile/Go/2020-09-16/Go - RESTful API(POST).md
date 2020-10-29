@@ -1,4 +1,4 @@
-### 시작
+## 시작
 [GET](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/2020-09-16/Go%20-%20RESTful%20API(GET).md)에 이어서 myapp/app_test.go를 수정한다.
 
 myapp/app_test.go
@@ -295,7 +295,7 @@ func TestGetUserInfo(t *testing.T) {
 POST로 정보를 JSON 형태로 보냈을 때 이 정보를 서버가 받아서 새로운 등록을 해서 그 유저의 정보를 return하게 했고, 해당 유저의 정보의 기록을 map에 기록을 했고, <br />
 그 뒤 유저가 등록되어 있어 GET으로 /users/에 똑같이 id를 붙여 보낼 시 해당하는 유저의 정보를 JSON으로 보내준 것이기 때문에 user2로 파싱을 해서 테스팅 할 수 있게 했다. <br />
 
-### 풀소스
+## 풀소스
 
 myapp/app_test.go
 ``` Go
