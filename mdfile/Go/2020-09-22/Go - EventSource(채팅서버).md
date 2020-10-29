@@ -482,7 +482,7 @@ user가 들어 왔을 때 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93846462-0d580400-fcdf-11ea-823b-3b09de986045.png" width = 70%> </img></p>
 
 user가 채팅을 친 뒤 나갔을 때 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93846572-61fb7f00-fcdf-11ea-9caf-84257bc58c43.png" width = 70%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97539935-2c486500-1a06-11eb-8a69-49bf9ed5f94c.png" width = 70%> </img></p>
 
 ## 풀소스
 <code>main.go</code>
