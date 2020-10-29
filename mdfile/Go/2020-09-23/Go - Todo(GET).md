@@ -1,4 +1,4 @@
-### 시작
+## 시작
 부트스트랩과 지금까지 배운것을 토대로 TodoList를 만들어 보려고 한다. <br />
 
 먼저 알아볼 것은 부트스트랩인데, public폴더에 있는 파일들을 다운 받으면 된다. <br />
@@ -360,6 +360,8 @@ addItem에 인자로 받는 item은 json object가 오기 때문에 그냥 item�
 이렇게 수정해 준 뒤 다시 실행 하면 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93988803-1ec70c00-fdc4-11ea-9bba-f3fe6bfc6ffe.png" width = 70%> </img></p>
 정상적으로 체크 되어 있는 것을 확인 할 수 있다. <br />
+
+## 풀소스
 
 <code>main.go</code>
 ``` Go
