@@ -1,4 +1,4 @@
-### 시작
+## 시작
 
 #### EventSource?
 [링크](https://developer.mozilla.org/ko/docs/Web/API/EventSource)에 들어가면 자세한 내용을 알 수 있는데, <br />
@@ -484,7 +484,7 @@ user가 들어 왔을 때 <br />
 user가 채팅을 친 뒤 나갔을 때 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93846572-61fb7f00-fcdf-11ea-9caf-84257bc58c43.png" width = 70%> </img></p>
 
-### 풀소스
+## 풀소스
 <code>main.go</code>
 ``` Go 
   
