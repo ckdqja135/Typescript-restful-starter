@@ -1,4 +1,4 @@
-### 시작
+## 시작
 
 #### OAuth?
 자체 회원가입을 가지지 않고(또는 있음에도), 외부 유명한 사이트(구글, 페이스북, 등등)를 통해 계정의 정보를 가져오는것을 말한다. <br />
@@ -245,7 +245,7 @@
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93979220-03ee9a80-fdb8-11ea-819f-8e18a095a3cf.png" width = 70%> </img></p> 
 
 
-### 풀소스
+## 풀소스
 
 <code>main.go</code>
 
