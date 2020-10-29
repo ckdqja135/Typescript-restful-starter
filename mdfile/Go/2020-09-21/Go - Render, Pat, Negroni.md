@@ -1,4 +1,4 @@
-### 시작
+## 시작
 
 먼저 심플한 코드 부터 작성하자 <br />
 <code>main.go</code>
@@ -339,7 +339,7 @@ main.go를 수정하기 앞서 public 폴더에 index.html을 생성한다. <br 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93740537-aaeefd00-fc25-11ea-9e79-4273c75a0321.png" width = 70%> </img></p>
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93740641-e12c7c80-fc25-11ea-8889-e5a67a9907d9.png" width = 70%> </img></p>
 
-### 풀소스
+## 풀소스
 <code>main.go</code>
 ``` Go
   
