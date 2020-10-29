@@ -1,4 +1,4 @@
-### 시작
+## 시작
 지난번에 만들었던 Todos에 Login 화면을 추가 해보자! 풀소스 부분에 <code>public/signin.css</code>와 <code>public/signin.html</code>파일이 있다. <br />
 
 이것을 열어보면 아래와 같이 단순하게 구글 로그인과 페이스북 로그인을 지원하는 Page이다. <br />
