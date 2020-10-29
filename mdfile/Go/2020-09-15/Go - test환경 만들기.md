@@ -1,4 +1,4 @@
-### 시작
+## 시작
 
 지난번에 이어서 myapp이라는 폴더를 만든 뒤, app.go파일을 만들어준다.<br />
 패키지를 분리하는게 테스팅하기 편리하기 때문에 여기에 지난번에 main에 만들었던 코드들을 들어낼 것이다. <br />
@@ -425,7 +425,7 @@ FAIL이 뜨는 것을 확인 할 수 있다. <br />
 이렇게 해서 저장을 해주면 테스트 코드가 돌게 되고, 서버 실행 시 제대로 출력 됐음을 알 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93850972-35009980-fcea-11ea-986c-9a0e280fe77b.png" width = 70%> </img></p>
 
-### 풀 소스
+## 풀 소스
 <code>myapp/app_test.go</code>
 ``` Go
   
