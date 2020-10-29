@@ -1,4 +1,4 @@
-### 시작
+## 시작
 
 기존에 있는 코드에 이어서 테스트 코드 부터 만든다.
 
@@ -196,7 +196,7 @@ func TestDeleteUsers(t *testing.T) {
 다시 id값을 2로 했을 때 정상적으로 삭제 되는 것을 확인 할 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93436372-aa90f200-f905-11ea-9eb0-ffdc1e5bc19e.png" width = 70%> </img></p>
 
-### 풀 소스
+## 풀 소스
 <code>myapp/app_test.go</code>
 ``` Go
 
