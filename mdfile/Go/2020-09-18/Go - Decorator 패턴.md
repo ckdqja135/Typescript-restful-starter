@@ -1,4 +1,4 @@
-###  시작
+##  시작
 
 #### Decorator?
 기본 기능에 추가할 수 있는 많은 종류의 부가 기능에서 파생되는 다양한 조합을 동적으로 구현할 수 있는 패턴이다. <br />
@@ -251,7 +251,7 @@ Decorator 패턴은 &EncryptComponent, &UnzipComponent, &ZipComponent, &DecryptC
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/93578404-3ffcb680-f9d8-11ea-8658-596158b4591b.png" width = 70%> </img></p>
 그대로 동작 하고 있음을 알 수 있다.
 
-### 풀 소스
+## 풀 소스
 <code>cipher/cipher.go</code>
 ``` Go
   package cipher
