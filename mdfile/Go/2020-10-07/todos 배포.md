@@ -1,4 +1,4 @@
-### 시작
+## 시작
 우선 기존에 만들었었던 todos 파일을 사용자 계정 폴더에 빼내어 준다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95311049-14c70200-08c8-11eb-8ff8-82905756c76e.png" width = 70%> </img></p> 
 
