@@ -151,8 +151,150 @@ s = append(s, 400)
 <code>Capacity - Length</code>를 하게 되면 남는 공간이 나오는데 s의 cap이 3개고, len이 3이기 때문에 남는 공간이 없다. <br />
 그러면 append는 더 큰 곳으로 이사를 가야 하기 때문에 더 큰 메모리 공간(일반적으로 cap의 2배)을 만든다. cap이 3이기 때문에 6개를 만든다. <br />
 그 후 원래 있던 값들을 더 큰 메모리 공간에 모두 복사한 다음에 400을 넣는다. <br />
-|100|200|300|400|
-|------|---|---|---|
+|100|200|300|400|||
+|------|---|---|---|---|---|
 
-이렇게 되면 Length는 4가 되고, 포인터는 |100| 이 값을 가리키게 된다. <br />
-			       	      |------|
+이렇게 되면 Length는 4가 되고, cap이 6이 되고, 포인터는 100 부분을 가리키게 된다. <br />
+그러면 배열이 3개짜리와 6개짜리 2개가 생겼다. len는 4로 늘었고 cap도 6으로 늘었고, 포인터도 바뀌었다. 이것도 마찬가지로 슬라이스 구조체인데 <br />
+이렇게 만들어진 새로운 슬라이스 구조체를 return시켜서 기존에 있던 s의 값에 덮어써지는 것이다. <br />
+
+이 과정을 해보자 <br />
+``` Go
+	package main
+
+	import "fmt"
+
+	func main() {
+		var s []int
+
+		s = make([]int, 3)
+
+		s[0] = 100
+		s[1] = 200
+		s[2] = 300
+
+		s = append(s, 400)
+
+		fmt.Println(s, len(s), cap(s))
+
+	}
+```
+이것을 출력시켜보면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97518178-1ae96380-19da-11eb-9423-4086fccfeebc.png" width = 70%> </img></p>
+|100|200|300|400|||
+|------|---|---|---|---|---|
+이러한 배열이 만들어 졌고 길이가 4, cap이 6인 것을 알 수 있다.<br />
+
+새롭게 만든 슬라이스를 s에 대입을 했는데 그렇다는 얘기는 이 append의 결과를 다른 슬라이스에 저장할 수도 있다는 말이 되는데 그렇게 되는지 확인해보자 <br />
+그래서 새로운 슬라이스 t를 만들고, t를 출력하게 되면 어떻게 되는지 보자<br />
+
+``` Go
+	package main
+
+	import "fmt"
+
+	func main() {
+		var s []int
+		var t []int
+		s = make([]int, 3)
+
+		s[0] = 100
+		s[1] = 200
+		s[2] = 300
+
+		t = append(s, 400)
+		fmt.Println(s, len(s), cap(s))
+		fmt.Println(t, len(t), cap(t))
+
+	}
+
+```
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97518530-b2e74d00-19da-11eb-9092-a98571bff504.png" width = 70%> </img></p>
+기존의 s는 <br />
+|100|200|300|
+|------|---|---|
+Length가 3이고 cap이 3인데 
+t는 <br />
+|100|200|300|400|||
+|------|---|---|---|---|---|
+길이가 4, cap이 6인 것을 알 수 있다.<br />
+
+이렇게 보면 s와 t는 완전히 다른 슬라이스라는것을 알 수 있다. s는 요소가 3개짜리고 100,200,300이 들어있으면 <br />
+t는 요소가 4개짜리고 100,200,300,400이 들어있다. <br />
+그래서 이 append의 역할은 내가 추가 하고 싶은 슬라이스를 받아서 그 슬라이스에 넣을 공간이 있는지 확인을 하고, 넣을 공간이 없으면 새로운 공간을 만들어서 기존의 값들을 모두 복사하고, 맨 뒤에 값을 추가한 다음에 새롭게 만들어진 슬라이스를 반환하는 것이고 그것을 대입 연산자로 대입한다. <br />
+그렇기 때문에 넣었던 슬라이스와 다른 슬라이스가 나올 수 있다는 것이다. <br />
+
+그런데 넣었던 슬라이스와 같은 포인터가 나올수도 있다. u라는 슬라이스를 추가하여 확인해보자 <Br />
+이번에는 t에 500을 넣고 출력해준다. <br />
+
+``` Go
+	package main
+
+	import "fmt"
+
+	func main() {
+		var s []int
+		var t []int
+		s = make([]int, 3)
+
+		s[0] = 100
+		s[1] = 200
+		s[2] = 300
+
+		t = append(s, 400)
+		fmt.Println(s, len(s), cap(s))
+		fmt.Println(t, len(t), cap(t))
+		
+		fmt.Println("////////////////////")
+		var u []int 
+		u = append(t, 500)
+		
+		fmt.Println(s, len(s), cap(s))
+		fmt.Println(t, len(t), cap(t))
+		fmt.Println(u, len(u), cap(u))
+
+	}
+```
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97519080-f42c2c80-19db-11eb-8c5e-bf631ea98bf9.png" width = 70%> </img></p>
+
+구분자 뒤로 보면 s,t는 변한 것이 없지만 u는 500이 추가되었지만 len은 변했지만 cap이 변하지 않았다. <br />
+이 상황에서 u의 첫번째 값을 9999로 바꾸고 구분자를 다시 표시하고 s,t,u를 출력해준다. <br />
+
+``` Go
+	package main
+
+	import "fmt"
+
+	func main() {
+		var s []int
+		var t []int
+		s = make([]int, 3)
+
+		s[0] = 100
+		s[1] = 200
+		s[2] = 300
+
+		t = append(s, 400)
+		fmt.Println(s, len(s), cap(s))
+		fmt.Println(t, len(t), cap(t))
+		fmt.Println("////////////////////")
+
+		var u []int
+		u = append(t, 500)
+
+		fmt.Println(s, len(s), cap(s))
+		fmt.Println(t, len(t), cap(t))
+		fmt.Println(u, len(u), cap(u))
+
+		u[0] = 9999
+		fmt.Println("////////////////////")
+		fmt.Println(s, len(s), cap(s))
+		fmt.Println(t, len(t), cap(t))
+		fmt.Println(u, len(u), cap(u))
+	}
+```
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97519287-5be27780-19dc-11eb-9a54-9ebfc746cab0.png" width = 70%> </img></p>
+여기서 봐야할 게 마지막 부분인데 방금 u의 첫번째 부분을 바꾸었는데 t의 첫번째 값도 바뀐 것을 알 수 있다. s와는 다른 슬라이스기 때문에 s는 바뀌지 않았다.(포인터가 다르기 때문)<br />
+
+여기까지 슬라이스에 대해 좀 더 자세히 알아보았다. <br />
