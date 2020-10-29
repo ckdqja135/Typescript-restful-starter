@@ -182,6 +182,7 @@ s = append(s, 400)
 ```
 이것을 출력시켜보면 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97518178-1ae96380-19da-11eb-9423-4086fccfeebc.png" width = 70%> </img></p>
+
 |100|200|300|400|||
 |------|---|---|---|---|---|
 이러한 배열이 만들어 졌고 길이가 4, cap이 6인 것을 알 수 있다.<br />
