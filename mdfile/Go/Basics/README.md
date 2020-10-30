@@ -6,4 +6,4 @@
 6. [Go - Slice](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Slice.md)
 7. [Go - Go - Slice 를 slice 해보자](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Slice%20%EB%A5%BC%20slice%20%ED%95%B4%EB%B3%B4%EC%9E%90.md)
 8. [Go - Slice 심화](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Slice%20%EC%8B%AC%ED%99%94.md)
-9. [Go - Instance?](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Instance%3F.md)
+9. [Go - Instance?](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Instance.md)
