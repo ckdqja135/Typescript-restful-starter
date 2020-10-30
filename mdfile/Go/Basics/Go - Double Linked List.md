@@ -234,3 +234,14 @@ main()에 PrintReverse()를 추가한 뒤 실행하여 확인해보자 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97673801-b9a3bc00-1acf-11eb-97f8-f99aeeb06b46.png" width = 70%> </img></p>
 
 거꾸로 출력되는 것을 알 수 있다. 이것이 **Double Linked List**이다. <br />
+
+그래서 정리해보면 일반적인 Linked List는 next로 연결이 되어있다. 그래서 Add를 할려면 맨 뒤에 것에 하나를 추가하면 되고, Remove할려면 그 전에 것을 찾아서 그 다음에 있는 것을 건너뛰어 버리고 중간에 있는 것을 지워버리면 된다. <br/ >
+
+Double Linked List는 양쪽을 다 가리키고 있고, 내 전, 다음으로 갈 수 있다. <br />
+추가할 때는 마찬가지로 맨 뒤에 것에 하나를 추가해주고, 링크만 제대로 맞춰주면 된다. 지워줄 때는 건너 뛰어 버리고 중간에 있는것을 지우는데 기존의 prev도 맞춰서 갱신해주어야 한다. <br />
+
+그러면 실제적으로 Linked List, Slice하고 뭐가 틀린것인지 살펴보자 <br />
+Slice는 배열인데 Slice에 값이 있고 <br />
+
+|1|2|3|4|5|6|
+|------|---|---|---|---|---|
