@@ -232,4 +232,5 @@ main()에 PrintReverse()를 추가한 뒤 실행하여 확인해보자 <br />
 ```
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97673801-b9a3bc00-1acf-11eb-97f8-f99aeeb06b46.png" width = 70%> </img></p>
+
 거꾸로 출력되는 것을 알 수 있다. 이것이 **Double Linked List**이다. <br />
