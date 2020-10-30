@@ -383,7 +383,7 @@ tail이 입력으로 들어오기 때문에 맨처음부터 시작해서 끝까�
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97662270-e5b44280-1ab9-11eb-84dd-33572886a328.png" width = 70%> </img></p>
 방법은 굉장히 간단한데, root노드에서 다음 것을 건너뛰고, 그 다음 것을 가리키면 된다. <br />
-그 다음 연결을 끊어주게 되면 삭제하려는 노드가 없어진다. 어떻게 없어지냐면 저번에 [Garbage Collector](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Garbage%20Collector.md)에 알아보았을 때 아무도 사용하지 않고, 참조하지 않으면 레퍼런스 카운트가 0이 되면서 메모리에서 사라지게 된다. <br />
+그 다음 연결을 끊어주게 되면 삭제하려는 노드가 없어진다. 어떻게 없어지냐면 저번에 [Garbage Collector](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Garbage%20Collector.md) 에 알아보았을 때 아무도 사용하지 않고, 참조하지 않으면 레퍼런스 카운트가 0이 되면서 메모리에서 사라지게 된다. <br />
 
 이렇게 전 노드에서 가르키는 다음 노드만 바꾸게 되면 Remove가 되는 것이다. <br />
 
