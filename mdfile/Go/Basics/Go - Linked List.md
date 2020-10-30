@@ -374,5 +374,339 @@ tail이 입력으로 들어오기 때문에 맨처음부터 시작해서 끝까�
 그래서 두번째방법은 메모리(변수)를 더 써서 알고리즘을 획기적으로 개선 시켰다. <br />
 보통은 메모리를 많이 쓰면 속도가 빨라지긴 한다. (항상 그런것은 아니지만) <br />
 
+***
+
 지금까지 Linked List를 Add했는데 이제 Remove하는 방법을 알아보자 <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97662031-4db65900-1ab9-11eb-838f-3ca3047d719d.png" width = 70%> </img></p>
+저 가운데 있는 노드를 없애려고 할 때 어떻게 하면 될까? <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97662270-e5b44280-1ab9-11eb-84dd-33572886a328.png" width = 70%> </img></p>
+방법은 굉장히 간단한데, root노드에서 다음 것을 건너뛰고, 그 다음 것을 가리키면 된다. <br />
+그 다음 연결을 끊어주게 되면 삭제하려는 노드가 없어진다. 어떻게 없어지냐면 저번에 [Garbage Collector](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Garbage%20Collector.md)에 알아보았을 때 아무도 사용하지 않고, 참조하지 않으면 레퍼런스 카운트가 0이 되면서 메모리에서 사라지게 된다. <br />
+
+이렇게 전 노드에서 가르키는 다음 노드만 바꾸게 되면 Remove가 되는 것이다. <br />
+
+이제 Remove를 해보자. <br />
+
+ ``` Go
+ 	package main
+
+	import "fmt"
+
+	type Node struct {
+		next *Node
+		val  int
+	}
+
+	func AddNode(tail *Node, val int) *Node {
+		node := &Node{val: val}
+		tail.next = node
+		return node
+	}
+
+	func RemoveNode(prev *Node) {
+		prev.next = prev.next.next
+
+	}
+
+	func PrintNodes(root *Node) {
+		node := root
+		for node.next != nil {
+			fmt.Printf("%d -> ", node.val)
+			node = node.next
+		}
+		fmt.Printf("%d\n", node.val)
+	}
+	
+	func main() {
+		var root *Node
+		var tail *Node
+
+		root = &Node{val: 0}
+		tail = root
+
+		for i := 1; i < 10; i++ {
+			tail = AddNode(tail, i)
+		}
+		PrintNodes(root)
+
+		RemoveNode(root)
+
+		PrintNodes(root)
+	}
+```
+
+Remove를 하기 위해서 지우고자 하는 전 노드가 필요하기 때문에 지우고자 하는 전 노드를 받아준다. <br />
+그렇게 해서 그 전 노드의 next가 그 다음 노드의 다음 노드를 가리키고 있으면 된다. <code>prev.next.next</code>를 사용하면 건너뛰게 된다. <br />
+그리고 노드들을 출력하는 함수도 만들어 노드들이 출력되도록 수정해주고, Remove를 하기전과 하고난 뒤를 출력시켜준다. <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97663199-46dd1580-1abc-11eb-8828-f70b6b9bcb31.png" width = 70%> </img></p>
+루트 노드의 그 다음노드가 사라진 것을 확인할 수 있다. <br />
+
+이렇게 지우면 되는데 지우기 할 때 한가지 주의할 점이 있다. <br />
+중간에 끼어있는 노드는 방금처럼 지우면 된다. 문제는 맨 앞에있는 노드를 지우고자 할 때 문제가 된다. <br />
+맨 앞에 있는 노드를 지우고자 할 때는 그 전 노드가 없기 때문에 그냥 root만 그 다음 노드로 바꾸어주면 된다. <br />
+두번째로 맨 끝에 있는 노드를 지우고자 할 때는 그 전 노드의 next를 nil로 바꾸고 tail을 그 전 노드를 가리키도록 바꾸면 된다. <br />
+
+이제 remove를 고쳐보자 <br />
+
+remove하는 함수에 그 전 노드를 받는게 아니라 지우고자 하는 노드를 입력받도록 수정해주고 추가로 root도 알고 있어야 하고, tail도 알고 있어야 되므로 root와 tail도 받도록 수정해준다. <br />
+만약에 지우고자하는 노드를 입력받으면 root부터 시작해서 그 전 노드를 찾아야 한다. <br />
+
+그래서 아래와 같이 RemoveNode()함수를 수정해준다. <br />
+
+``` Go 
+	func RemoveNode(node *Node, root *Node, tail *Node) {
+
+		prev := root
+		for prev.next != node {
+			prev = prev.next
+		}
+		prev.next = prev.next.next
+
+	}
+```
+
+prev가 root이고, for문으로 해서 prev의 next가 현재노드가 아니면 prev는 prev의 next이고, prev의 next가 현재노드와 같아지면 for문을 빠져나오게 되어서 prev는 지우고자 하는 노드의 전 노드가 될 것이다. <br />
+이렇게 하면 지워질텐데 문제는 내가 지우고자 하는 노드가 root인 경우인데 Remove를 하면 root도 바뀔 수 있지만 tail도 바뀔 수 있기 때문에 바뀐 root와 바뀐 tail을 알고 있어야 한다. <br />
+수정해보면 <br />
+
+``` Go
+	func RemoveNode(node *Node, root *Node, tail *Node) (*Node, *Node) {
+		if node == root { // 1
+			root = root.next
+			return root, tail
+		}
+		
+		prev := root
+		for prev.next != node {
+			prev = prev.next
+		}
+		
+		if node == tail { // 2
+			prev.next = nil
+			tail = prev
+		} else {
+			prev.next = prev.next.next
+		}
+		return root, tail
+	}
+```
+
+1 : root는 새로운 root로 바꿔주는데 새로운 root는 기존 root의 next가 되고, root와 tail을 반환시켜주고 <br />
+2 : 만약에 지우고자 하는 노드가 tail과 같으면 prev의 next가 nil이고, tail은 prev가 되고, 같지 않으면 한칸 건너뛰는 것으로 처리한다. <br />
+
+또 한가지 중요한 점이 있는데 노드가 하나일 때 삭제하려는 경우인데 root와 tail이 같은 곳을 가리키고 있을 때 이 노드를 지울려 할 때 root와 tail은 모두 nil이 될 것이다. <br />
+이 부분도 수정해주자 <br />
+
+``` Go
+func RemoveNode(node *Node, root *Node, tail *Node) (*Node, *Node) {
+	if node == root {
+		root = root.next
+		if root == nil {
+			tail = nil
+		}
+		return root, tail
+	}
+
+	prev := root
+	for prev.next != node {
+		prev = prev.next
+	}
+	
+	if node == tail {
+		prev.next = nil
+		tail = prev
+	} else {
+		prev.next = prev.next.next
+	}
+	return root, tail
+}
+```
+
+이렇게 root를 지우려 했을 때 새로운 root가 root의 next가 되는데 그 새로운 root가 nil이면 tail도 nil로 바꾸어준다. <br />
+그렇게 되면 return될 때 nil과 nil이 반환 된다. <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97665991-0f706800-1ac0-11eb-957b-1d353ff2e71a.png" width = 70%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97666018-1e571a80-1ac0-11eb-9f17-66595ca37950.png" width = 70%> </img></p>
+그래서 지우고자 하는 노드가 루트가 아닌 경우 그 전 노드를 찾아야 하기 때문에 그 노드까지 전진해서 그 전 노드를 찾고 그 전 노드를 찾았는데 지우고자 하는 노드가 tail인 경우에는 prev의 next가 nil이 되고, tail은 그 prev노드를 가리키게 될 것이다. <br />
+
+그리고 tail이 아니고 중간에 낀 경우에는 아까 처음에 했듯이 한칸 건너 뛰는 것으로 수정해준다. <br />
+그렇게 해서 새로운 root와 tail을 반환하는 함수가 된다. <Br />
+
+이제 main()로 넘어와서 <br />
+
+``` Go
+	func main() {
+		var root *Node
+		var tail *Node
+
+		root = &Node{val: 0}
+		tail = root
+
+		for i := 1; i < 10; i++ {
+			tail = AddNode(tail, i)
+		}
+		PrintNodes(root)
+
+		root, tail = RemoveNode(root.next, root, tail)
+
+		PrintNodes(root)
+	}
+```
+
+RemoveNode()에서 지울 때 root의 next를 지울려고 할 때 이제는 지우는 노드를 집어넣고, root와 tail도 넣어주고 반환값으로 새로운 root와 tail 반환되기 때문에 위와 같이 수정해준다. <br />
+
+그래서 다음과 같이 수정을 시켜주고 실행을 시켜준다. <br />
+
+``` Go
+	package main
+
+	import "fmt"
+
+	type Node struct {
+		next *Node
+		val  int
+	}
+
+	func AddNode(tail *Node, val int) *Node {
+		node := &Node{val: val}
+		tail.next = node
+		return node
+	}
+
+	func RemoveNode(node *Node, root *Node, tail *Node) (*Node, *Node) {
+		if node == root {
+			root = root.next
+			if root == nil {
+				tail = nil
+			}
+			return root, tail
+		}
+
+		prev := root
+		for prev.next != node {
+			prev = prev.next
+		}
+		if node == tail {
+			prev.next = nil
+			tail = prev
+		} else {
+			prev.next = prev.next.next
+		}
+		return root, tail
+	}
+
+	func main() {
+		var root *Node
+		var tail *Node
+
+		root = &Node{val: 0}
+		tail = root
+
+		for i := 1; i < 10; i++ {
+			tail = AddNode(tail, i)
+		}
+		PrintNodes(root)
+
+		root, tail = RemoveNode(root.next, root, tail)
+
+		PrintNodes(root)
+	}
+
+	func PrintNodes(root *Node) {
+		node := root
+		for node.next != nil {
+			fmt.Printf("%d -> ", node.val)
+			node = node.next
+		}
+		fmt.Printf("%d\n", node.val)
+	}
+```
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97666404-f1573780-1ac0-11eb-937d-78673cc29eba.png" width = 70%> </img></p>
+지운것이 root의 next니까 루트의 next가 지워진것을 확인할 수 있고, 이번에는 root를 지워보도록 하자 <br />
+
+main()에서 <br />
+
+``` Go
+	func main() {
+		var root *Node
+		var tail *Node
+
+		root = &Node{val: 0}
+		tail = root
+
+		for i := 1; i < 10; i++ {
+			tail = AddNode(tail, i)
+		}
+		PrintNodes(root)
+
+		root, tail = RemoveNode(root.next, root, tail)
+
+		PrintNodes(root)
+
+		root, tail = RemoveNode(root, root, tail) 
+
+		PrintNodes(root)
+}
+```
+
+이렇게 추가 시켜준 다음에 실행 시켜 보자 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97666544-4430ef00-1ac1-11eb-91bb-35204dd809e3.png" width = 70%> </img></p>
+
+처음에 root 다음 노드인 1번을 지워서 1번이 사라졌고, 그 다음에 root를 지우니까 0번이 없어지고 2번이 root로 변경 되는 것을 알 수 있다. <br />
+이번에는 맨 끝(tail)을 지워보고, tail의 값도 출력시켜 주자 <br />
+
+``` Go
+	func main() {
+		var root *Node
+		var tail *Node
+
+		root = &Node{val: 0}
+		tail = root
+
+		for i := 1; i < 10; i++ {
+			tail = AddNode(tail, i)
+		}
+		PrintNodes(root)
+
+		root, tail = RemoveNode(root.next, root, tail)
+
+		PrintNodes(root)
+
+		root, tail = RemoveNode(root, root, tail)
+
+		PrintNodes(root)
+
+		root, tail = RemoveNode(tail, root, tail)
+
+		PrintNodes(root)
+		fmt.Printf("tail:%d\n", tail.val)
+	}
+```
+이렇게 수정시켜주고 출력시켜준다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97666842-d89b5180-1ac1-11eb-8284-c95ccf4815c5.png" width = 70%> </img></p>
+맨 끝이 지워진 것을 알 수 있고, tail은 8로 바뀐 것을 알 수 있다. <br />
+
+노드들을 지우는 것을 다시한번 살펴보자 예시로 중간에 지우는 경우를 가정하자 <br />
+중간에 있는 노드를 지우려 할 때 그 전 노드를 찾아야 한다. 방향이 한 방향 밖에 안되니까 내가 현재 지우고자 하는 노드를 알고 있다 하더라도 내 전의 노드가 어떤 것인지 알 수 없다. <br />
+그 전에 노드를 알기 위해서는 root부터 시작해서 다음 노드가 내가 지우고자 하는 노드인지 전진하며 확인해야 한다. prev를 찾아야 한다. <br />
+찾아서 그 next의 Link를 끊고, 그 Link를 지우고자 하는 다음 노드에 연결시키면 된다. <br />
+
+이렇게 지우는 것인데 생각해보자 만약 내가 지우고자 하는 노드의 앞에 100만개가 있다고 가정해보자 그러면 내가 지우고자 하는 노드의 전 노드를 찾기 위해서는 몇번의 for문이 반복될까? <br />
+역시 100만번 반복해야한다. 내가 지우고자 하는 노드가 root면 1번이지만 내가 지우고자 하는 노드가 2번째에 있으면 역시 1번만 돌면 된다. <br />
+3번 째에 있으면 2번 돌면 된다. 마찬가지로 100만번 째 있으면 100만 번 돌아야 된다. <br />
+그러면 Remove를 하기 위해서 O(N)만큼 반복해야한다. 지우고자 하는 노드가 어디있을 지 아무도 모른다.<br />
+이게 왜 O(N)이냐면 그 전 노드를 찾아야 하기 때문에 O(N)이다. 그 전 노드를 찾아야 Link를 건너 뛸 수 있기 때문에 그 전 노드를 알아야 하고, 그래서 root부터 시작해서 찾아 가야 한다. <br />
+
+그럴 때 이걸 빠르게 만들려면 어떻게 해야할까? 내가 전 노드를 알고 있으면 된다. 이걸 Double Linked List 라고 하는데 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97667525-72173300-1ac3-11eb-9f1d-7c7333e84577.png" width = 70%> </img></p>
+이렇게 Link를 양방향으로 만드는 것이다. 이렇게 되면 나는 next도 알게 되고, prev도 알게 된다. <br />
+내가 어떤 노드를 지우고자 할 때 root부터 쭉 순회하는게 아니라 prev Link를 찾아가서 그 전 노드를 찾으면 된다. <br />
+
+그렇다면 Double Linked List에서 Remove는 어떻게 될까? 앞에서 갈 필요가 없으니까 현재 지우고자 하는 노드에서 prov로 가면 되기 때문에 O(1)이 된다. <br />
+
+비고법에 대해 잠깐 얘기를 하자면 알고리즘에서 어떤 시간을 나타내는 방식중에 하나인데 어떤 요소의 갯수가 몇개가 있는지에 따라서 알고리즘의 속도가 바뀔 때 그 요소의 갯수와 알고리즘의 상관관계를 나타내는게 비고법이다. <br />
 
