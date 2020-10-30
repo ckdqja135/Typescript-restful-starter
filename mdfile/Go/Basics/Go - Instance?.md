@@ -9,7 +9,7 @@ type Student struct {
   grade int
 }
 ```
-
+ 
 이렇게 구성되어 있는게 Student일 때 이것이 복사가 된다 했는데 a라는 애를 만들어서 name이 "aaa", age가 20, grade가 10일 때 마찬가지로 메모리 공간에 a라는 애가 있을 것이다. <br />
 그런데 이 때 <code>b = a</code>를 해버리게 되면 b라는 공간을 만들어서 a의 값을 복사하게 된다. <br />
 
