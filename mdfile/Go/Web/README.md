@@ -5,3 +5,8 @@
 5. [Go - FileUpload](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/2020-09-15/Go%20-%20FileUpload.md)
 6. [Go - RESTful API(GET)](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Web/Go%20-%20RESTful%20API(GET).md)
 7. [Go - RESTful API(POST)](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Web/Go%20-%20RESTful%20API(POST).md)
+8. [Go - RESTful API(DELETE)](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Web/Go%20-%20RESTful%20API(DELETE).md)
+9. [Go - RESTful API(PUT, GET list)](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Web/Go%20-%20RESTful%20API(PUT%2C%20GET%20list).md)
+10. [Go - Decorator 패턴](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Web/Go%20-%20Decorator%20%ED%8C%A8%ED%84%B4.md)
+11. [Go - Render, Pat, Negroni](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Web/Go%20-%20Render%2C%20Pat%2C%20Negroni.md)
+12. [Go - Template](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Web/Go%20-%20Template.md)
