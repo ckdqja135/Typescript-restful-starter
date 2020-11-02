@@ -496,7 +496,7 @@ Queue는 <code>queue[0], queue[1:]</code>를 사용하여 맨 앞에 것 부터 
 |------|---|---|---|
 |0|1|2|3|
 
-이렇게 있다고 가정하면 길이는 4가 된다. 그래서 4-1까지인 3까지인데 3을 포함하지 않게 되어 맨 뒤에 것이 없어지게 된다. <br />
+이렇게 있다고 가정하면 길이는 4가 된다. (위에는 데이터 밑에는 인덱스) 그래서 4-1까지인 3까지인데 3을 포함하지 않게 되어 맨 뒤에 것이 없어지게 된다. <br />
 
 |1|2|3|
 |------|---|---|
@@ -525,3 +525,462 @@ Queue는 맨 앞에 것인 <code>queue[0]</code>이 front에 대입되게 되고
 이것이 반복되는 것이 Queue이다. <br />
 
 그러면 Stack과 Queue를 위와 같은 배열로 만드는 것과 Linked List로 만들 때 어떤 차이가 있는지 알아보자 <br />
+우선 Stack을 배열로 구현 했을 때를 보자 <br />
+
+|1|2|3|4|
+|------|---|---|---|
+
+이렇게 배열안에 값이 있다고 했을 때 값을 추가하면 맨 뒤에 값이 추가된다. 그랬을 때 Capacity가 다 차게 되면 더 큰 배열을 만들고 그 값들 옮겨 담는다고 했었다. <br />
+그 때 속도는 O(N)이 필요하다. (이 때는 Queue도 마찬가지이다.) <br />
+
+꺼낼 때는 Stack은 맨 뒤에서 부터 하나씩 꺼내기 때문에 Capacity는 그대로 있고, Length만 하나씩 줄어든다. Length만 움직이게 되는 것이기 떄문에 배열을 옮길 필요가 없다. <br />
+그렇기 때문에 꺼내는건 O(1)이다. <br />
+
+Queue는 꺼낼 때 StartIndex가 하나씩 전진하며 꺼내기 때문에 O(1)이 된다.<br />
+정리하자면 Queue와 Stack은 요소를 추가할 때는 O(1)이지만 Capacity가 다 떨어졌을 때는 O(N)이 되고, 요소를 꺼낼 때는 항상 O(1)이 된다. <br />
+
+이번에는 Stack과 Queue를 Linked List로 만들었을 때로 넘어가보자 <br />
+Linked List는 넣을 때는 맨뒤로 넣으면 되는데 tail을 알고 있기 때문에 O(1)이다. <br />
+Stack에서 뺄 때는 그 요소를 빼고 링크만 끊으면 되기 때문에 O(1)이다. Queue도 마찬가지이다. <br />
+
+그래서 정리하자면 Slice로 했을 때 데이터를 넣을때는 O(N), 뺄때는 O(1)이고 <br />
+Linked List로 했을 때는 모두 O(1)이다. Linked List가 더 빠르지만 Slice로 해도 크게 무리는 없다. <br />
+데이터를 넣을때 O(N)이 발생하지만 간혹 간혹 발생하기 때문인데 이 말이 무슨말이냐면 배열이 처음에는 1개, 2개, 4개, 8개..... 로 늘어나서 배열의 크기가 나중에는 엄청 커다랗게 될텐데 <br />
+배열이 이렇게 어느정도까지 성장할 때 까지는 시간이 걸리지만 한번 성장하고 난 다음에는 시간이 크게 걸리지 않는다. <br />
+하지만 O(N)보다는 느리고 Linked List로 만들면 더 빠를 수 있다. 정도로만 알고 있으면 된다. <br />
+
+그리고 저번에도 말했듯이 배열하고 리스트는 메모리상의 구획이 틀리다. 그래서 배열처럼 따닥따닥 붙어있는 상황에서 좋은점은 캐시미스가 덜 나기 때문에 반복문에서 더 빠르게 수행할 수 있다는 점이다.  <br />
+
+이런 차이만 있다. 정도로만 알고 있으면 된다. 그래서 Slice로 만드나, Linked List로 만드나 적은 요소에서는 커다란 차이가 없다. <br />
+
+***
+
+이제는 Linked List로 이용해서 만들어보자 <br />
+
+하기 앞서 dataStruct폴더에 stack.go를 추가해준다. <br />
+
+``` Go
+package dataStruct
+
+type Stack struct {
+	ll *LinkedList
+}
+
+func NewStack() *Stack {
+	return &Stack{ll: &LinkedList{}}
+}
+
+func (s *Stack) Push(val int) {
+	s.ll.AddNode(val)
+}
+```
+Stack이라는 struct를 추가해주고, LinkedList를 안에 넣어준다. <br />
+그 아래에 Stack의 기능을 추가해주는데 먼저 Add 해주는 Push를 추가해준다. <br />
+Push()안에 <code>LinkedList.go</code>의 AddNode()를 가져온다. <br />
+그 다음에 NewStack()이라는 생성자를 하나 만들어준다. 이 함수는 초기화 시켜주는 것인데 새로운 LinkedList를 하나 만들어서 그 주소를 넣어서 초기화해서 그것을 반환하는 함수이다. <br />
+그 다음 꺼내오는 함수인 POP()을 만들어주는데 <code>LinkedList.go</code>안에 Pop()에 쓸만한 함수가 없기 때문에 하나 추가해준다. <br />
+
+<code>dataStack/LinkedList.go</code>
+``` Go
+func (l *LinkedList) Back() int {
+	if l.Tail != nil {
+		return l.Tail.Val
+	}
+	return 0
+}
+```
+
+맨 뒤에 값을 반환하는 Back()을 만들어준다. Tail이 nil이 아니면 Tail의 Val를 반환해주고, nil이면 0을 반환시킨다. <br />
+<code>stack.go</code>로 넘어와서 Pop()코드를 추가 시켜준다. <br />
+``` Go
+package dataStruct
+
+type Stack struct {
+	ll *LinkedList
+}
+
+func NewStack() *Stack {
+	return &Stack{ll: &LinkedList{}}
+}
+
+func (s *Stack) Push(val int) {
+	s.ll.AddNode(val)
+}
+
+func (s *Stack) Pop() int {
+	back := s.ll.Back()
+}
+
+```
+
+back이라는 변수에 Back()함수를 넣어 저장시켜주고, 맨 뒤에 값을 지워야하기 때문에 <code>LinkedList.go</code>로 넘어와 PopBack()을 추가해준다. <br />
+
+<code>LinkedList.go</code>
+``` Go
+func (l *LinkedList) PopBack() {
+	if l.Tail == nil {
+		return
+	}
+	l.RemoveNode(l.Tail)
+}
+```
+Tail이 없는 경우에는 지울 필요가 없기 때문에 있는 경우엔 그냥 넘어가고, Tail이 있는 경우엔 Tail을 지워준다. <br />
+다시 이것을 <code>stack.go</code>로 넘어와서 Pop()안에 추가 시켜준다. <br />
+``` Go
+package dataStruct
+
+type Stack struct {
+	ll *LinkedList
+}
+
+func NewStack() *Stack {
+	return &Stack{ll: &LinkedList{}}
+}
+
+func (s *Stack) Push(val int) {
+	s.ll.AddNode(val)
+}
+
+func (s *Stack) Pop() int {
+	back := s.ll.Back()
+	s.ll.PopBack()
+	return back
+}
+```
+PopBack() 써서 맨 뒤를 지운 다음에 back을 반환시켜준다. <br />
+이렇게 하면 Stack이 만들어질 것이다. 이제 <code>main.go</code>에서 사용해보자.<br />
+
+``` Go
+package main
+
+import (
+	"fmt"
+
+	"./dataStruct"
+)
+
+func main() {
+	stack := []int{}
+
+	for i := 1; i <= 5; i++ {
+		stack = append(stack, i)
+	}
+
+	fmt.Println(stack)
+
+	for len(stack) > 0 {
+		var last int
+		last, stack = stack[len(stack)-1], stack[:len(stack)-1]
+		fmt.Println(last)
+	}
+
+	queue := []int{}
+	for i := 1; i <= 5; i++ {
+		queue = append(queue, i)
+	}
+
+	fmt.Println(queue)
+
+	for len(queue) > 0 {
+		var front int
+		front, queue = queue[0], queue[1:]
+		fmt.Println(front)
+	}
+
+	stack2 := dataStruct.NewStack()
+
+	for i := 1; i <= 5; i++ {
+		stack2.Push(i)
+	}
+}
+```
+Linked List형태의 Stack을 stack2로 지정했다. NewStack()을 사용했기 때문에 새로운 Stack을 만들어서 그 메모리 주소를 반환하기 때문에 새로운 Stack이 stack2에 대입이 될 것이다. <br />
+그 후 마찬가지로 1 ~ 5까지 stack2에다 Push를 해준다. <br />
+그리고 비었는지 확인하기 위해 <code>stack.go</code>와 <code>dataStack/LinkedList.go<code>에 Empty()를 만들어준다. <br />
+	
+<code>dataStack/LinkedList.go<code>
+``` Go
+func (l *LinkedList) Empty() bool {
+	return l.Root == nil
+}
+```
+Root가 없으면 Empty()가 True이고, 있으면 False이다. <br />
+	
+<code>stack.go</code>
+``` Go
+func (s *Stack) Empty() bool {
+	return s.ll.Empty()
+}
+```
+마찬가지로 LinkedList.go의 Empty()를 사용하여 확인해준다.  <br />
+<code>main.go</code>로 돌아와 계속해서 작성하자. <br />
+``` Go
+package main
+
+import (
+	"fmt"
+
+	"./dataStruct"
+)
+
+func main() {
+	stack := []int{}
+
+	for i := 1; i <= 5; i++ {
+		stack = append(stack, i)
+	}
+
+	fmt.Println(stack)
+
+	for len(stack) > 0 {
+		var last int
+		last, stack = stack[len(stack)-1], stack[:len(stack)-1]
+		fmt.Println(last)
+	}
+
+	queue := []int{}
+	for i := 1; i <= 5; i++ {
+		queue = append(queue, i)
+	}
+
+	fmt.Println(queue)
+
+	for len(queue) > 0 {
+		var front int
+		front, queue = queue[0], queue[1:]
+		fmt.Println(front)
+	}
+
+	stack2 := dataStruct.NewStack()
+
+	for i := 1; i <= 5; i++ {
+		stack2.Push(i)
+	}
+	
+	fmt.Println("newStack")
+	
+	for !stack2.Empty() {
+		val := stack2.Pop()
+		fmt.Printf("%d ->", val)
+	}
+}
+```
+
+stack2가 비어있지 않을 때까지 Pop()을 해서 출력시켜준다. <br />
+그리고 그 위에 새로운 Stack이 시작된다고 알려준다. 이렇게 해서 실행을 시켜보자 <br />
+
+이 상태에서 실행을 시켜보면 에러가 난다.  <br />
+그래서 VS Code안에 디버그 버튼이 있는데 그것을 눌러보면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97835492-a71ec200-1d1d-11eb-85b8-11c68666d4fb.png" width = 70%> </img></p>
+현재 함수가 호출된 상태가 나온다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97835577-d59c9d00-1d1d-11eb-8ce9-71a2d3c910ef.png" width = 70%> </img></p>
+
+그래서 보게 되면 
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97522424-12e1f180-19e3-11eb-9bc9-836f70a3029f.png" width = 70%> </img></p>
+RemoveNode()를 하는데 에러가 난 것이다. <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97835751-3a57f780-1d1e-11eb-8768-9425b79b427f.png" width = 70%> </img></p>
+그 원인을 보면 Root를 다음 것으로 갱신하는데 그 Root가 nil인 상태인 것이다. 그러니까 아무것도 없는 것에 접근을 하니까 에러가 난 것이다. <br />
+이것이 Access Violation이 난 것인데 이 부분을 고쳐주도록 하자. <br />
+
+``` Go
+func (l *LinkedList) RemoveNode(node *Node) {
+	if node == l.Root {
+		l.Root = l.Root.Next
+		if l.Root != nil { // 바뀐 부분
+			l.Root.Prev = nil
+		}
+		node.Next = nil
+		return
+	}
+
+	Prev := node.Prev
+
+	if node == l.Tail {
+		Prev.Next = nil
+		l.Tail.Prev = nil
+		l.Tail = Prev
+	} else {
+		node.Prev = nil
+		Prev.Next = Prev.Next.Next
+		Prev.Next.Prev = Prev
+	}
+	node.Next = nil
+}
+```
+위와 같이 Root가 nil이 아닌 경우에면 바꾸어 주도록 한다. <br />
+
+그 후 다시 실행을 시켜주자 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97836120-ef8aaf80-1d1e-11eb-8bc5-680d1df9d052.png" width = 70%> </img></p>
+이제 에러 없이 잘 동작하는 것을 알 수 있다. <br />
+
+이제 Queue도 만들어보자 마찬가지로 dataStruct패키지안에 queue.go를 추가해준다. <br />
+
+``` Go
+package dataStruct
+
+type Queue struct {
+	ll *LinkedList
+}
+
+func NewQueue() *Queue {
+	return &Queue{ll:&LinkedList{}}
+}
+
+func (q *Queue) Push(val int) {
+	q.ll.AddNode(val)
+}
+```
+마찬가지로 생성함수인 NewQueue()를 만들어준다. <br />
+그리고 데이터를 넣어주는 Push()을 만들어준다. <br />
+데이터를 빼오는 Pop()을 만들어주어야 하는데 앞에서부터 빼오기 때문에 linkedList.go에서 Front()를 만들어준다. <br />
+
+<code>dataStruct/linkedList</code>
+``` Go
+func (l *LinkedList) Front() int {
+	if l.Root != nil {
+		return l.Root.Val
+	}
+	return 0
+}
+```
+
+Root가 nil이 아니면 Root의 값을 반환하고, nil이면 0을 반환하도록 만들어준다. <br />
+다시 <code>dataStruct/queue.go</code>로 넘어와서 <br />
+``` Go
+func (q *Queue) Pop() int {
+	front := q.ll.Front()
+	q.ll.PopFront()
+	return front
+}
+```
+queue에서 Front()을 하면 front값을 저장해놓고, 맨 앞에서 하나 지워줘야 하기 때문에 <code>dataStruct/linkedList.go</code>에서 PopFront()를 만들어준다. <br />
+
+<code>dataStruct/linkedList.go</code>
+``` Go
+func (l *LinkedList) PopFront() {
+	if l.Root == nil {
+		return
+	}
+	l.RemoveNode(l.Root)
+}
+```
+PopFront()는 Root를 없애는 것이니까 Root가 없으면 그냥 반환해주고, Root가 있으면 지워주도록 하자. <br />
+
+다시 <code>dataStruct/queue.go</code>로 넘어와서 비었는지 확인하는 Empty()를 만들어준다.<br />
+``` Go
+package dataStruct
+
+type Queue struct {
+	ll *LinkedList
+}
+
+func NewQueue() *Queue {
+	return &Queue{ll: &LinkedList{}}
+}
+
+func (q *Queue) Push(val int) {
+	q.ll.AddNode(val)
+}
+
+func (q *Queue) Pop() int {
+	front := q.ll.Front()
+	q.ll.PopFront()
+	return front
+}
+
+func (q *Queue) Empty() bool {
+	return q.ll.Empty()
+}
+```
+
+이제 main에 넘어와서 <code>queue.go</code>를 이용해서 만들어보자 <br />
+``` Go
+package main
+
+import (
+	"fmt"
+
+	"./dataStruct"
+)
+
+func main() {
+	stack := []int{}
+
+	for i := 1; i <= 5; i++ {
+		stack = append(stack, i)
+	}
+
+	fmt.Println(stack)
+
+	for len(stack) > 0 {
+		var last int
+		last, stack = stack[len(stack)-1], stack[:len(stack)-1]
+		fmt.Println(last)
+	}
+
+	queue := []int{}
+	for i := 1; i <= 5; i++ {
+		queue = append(queue, i)
+	}
+
+	fmt.Println(queue)
+
+	for len(queue) > 0 {
+		var front int
+		front, queue = queue[0], queue[1:]
+		fmt.Println(front)
+	}
+
+	stack2 := dataStruct.NewStack()
+
+	for i := 1; i <= 5; i++ {
+		stack2.Push(i)
+	}
+
+	fmt.Println("newStack")
+
+	for !stack2.Empty() {
+		val := stack2.Pop()
+		fmt.Printf("%d ->", val)
+	}
+
+	queue2 := dataStruct.NewQueue()
+
+	for i := 1; i <= 5; i++ {
+		queue2.Push(i)
+	}
+
+	fmt.Println("newQueue")
+
+	for !queue2.Empty() {
+		val := queue2.Pop()
+		fmt.Printf("%d ->", val)
+	}
+
+}
+```
+<code>queue2 := dataStruct.NewQueue()</code>에서 마찬가지로 새로운 queue로 초기화 시켜주고, 아까 stack2 했던 부분을 그대로 복사하여 stack2부분을 queue2로 바꾸어준다. <br />
+이제 실행 시켜준 뒤 출력을 확인해보자 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97837739-31692500-1d22-11eb-9330-4707727ca51b.png" width = 70%> </img></p>
+정상적으로 출력되는 것을 확인할 수 있다. <br />
+
+여기까지 Slice, Linked List로 Stack과 Queue를 만들었다. <br />
+***
+이것을 어디에 사용하는지 알아보자 우선 Stack의 경우 예시 코드를 살펴보면 <br />
+``` Go
+{
+	int a 
+		for ... {
+			int b
+		}
+}
+```
+이라 할 때 나중에 선언된 b가 먼저 없어지게 된다. 이 경우 a를 만들고, b를 만들었고, 없어지는 순서는 b가 없어지고 그 다음에 a가 사라진다. <br />
+들어간 순서와 반대로 없어지게 되는데 Stack으로 만들면 처음에 a가 만들어지고, 그 다음에 b가 만들어지기 때문에 b가 먼저 없어지고, 그 다음에 a가 없어지는데 <br />
+이 처럼 맨 마지막에 넣는 것이 맨 처음으로 빼고 싶을 때 Stack을 사용한다. <br />
+
+Queue는 대기열이다. 어떤 줄을 세우고 싶을 때 Queue를 사용한다. <br />
+예를 들면 어떤 번호를 뽑았는데 뽑은 번호 순서대로 실행시키고 싶을 때 Queue를 쓰고 <br />
+대기를 시켜 줄을 세워서 그 순서대로 하고 싶을 때도 Queue를 쓰고 <br />
+LOL 같은 경우에도 게임시작 버튼을 눌러서 매칭할 때도 먼저 누른 사람 순서대로 잡아주는데 그 때도 Queue를 쓴다. <Br />
