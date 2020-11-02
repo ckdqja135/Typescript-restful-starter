@@ -3,3 +3,5 @@
 3. [Go - JSONTransfer](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/2020-09-15/Go%20-%20JSON%20Transfer.md) 
 4. [Go - test환경 만들기](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/2020-09-15/Go%20-%20test%ED%99%98%EA%B2%BD%20%EB%A7%8C%EB%93%A4%EA%B8%B0.md)
 5. [Go - FileUpload](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/2020-09-15/Go%20-%20FileUpload.md)
+6. [Go - RESTful API(GET)](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Web/Go%20-%20RESTful%20API(GET).md)
+7. [Go - RESTful API(POST)](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Web/Go%20-%20RESTful%20API(POST).md)
