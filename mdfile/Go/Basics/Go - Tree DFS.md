@@ -269,3 +269,110 @@ tree에 AddNode를 해서 현재 값을 저장한다. val를 처음에 1로 두�
 	}
 ```
 특정 타입의 값을 받는게 아니라 모든 타입의 값을 받을 수 있도록 interface를 이용하면 할 수 있지만 지금 저것을 사용할 때는 아니기 때문에 그냥 int로 놔두고 <br />
+슬라이스를 이용해서 스택을 만들어준다. <br />
+
+<code>dataStruct/tree.go</code>
+``` Go
+func (t *Tree) DFS2() {
+		s := []*TreeNode{}
+		s = append(s, t.Root)
+		
+		for len(s) > 0 {
+				var last *TreeNode
+				last, s = s[len(s)-1], s[:len(s)-1]
+				
+				fmt.Printf("%d->", last.Val)
+				
+				for i := 0; i < len(last.Childs); i++ {
+						s = append(s, last.Childs[i])
+				}
+		}
+}
+```
+
+Tree노드를 갖는 슬라이스를 만들어준다. <br />
+슬라이스 맨 끝에 추가해준다. <br />
+스택의 값을 가지고 있는 경우 맨 처음에 Pop을 하는데 맨 마지막에 있는 값을 하나 가져오고, 없앤 슬라이스를 하나 대입시켜준다.<br />
+이 부분을 설명하자면 s라는 배열이 아래와 같이 있고 <br />
+|1|2|3|4|
+|------|---|---|---|
+|0|1|2|3|
+<code>Last, s = s[len(s)-1], s[:len(s)-1</code>에서 <code>s[len(s)-1]</code>이 값은 Last에 대입이 되고, <code>s[:len(s)-1</code>값은 s에 대입이 된다. <br />
+<code>s[len(s)-1]</code>이 값은 s의 인덱스로 참조하는 값인데 s의 길이 - 1 인데 현재 s의 길이는 4이다.<br />
+인덱스는 3이기 때문에 맨 마지막것을 가지고 오기 위해서는 길이에서 -1을 해야한다. 그래서 Last의 값은 3이 들어가게 되고 <br />
+<code>s[:len(s)-1</code>은 맨 처음부터 시작해서 3번째 인덱스까지인데 3번째 인덱스를 포함하지 않기 때문에 s는 <br />
+
+|1|2|3|
+|------|---|---|
+
+이 되어 맨 마지막 4가 없어지는 것을 알 수 있다. 그래서 맨 마지막 값을 가져오고, 맨 마지막 값을 없애는 형태라고 보면 된다. <br />
+이어서 맨 마지막 것을 가지고 왔고, last에 대한 하고싶은 연산(출력)을 해준 뒤에 childs 노드 수 만큼 돌면서 childs 노드를 스택에 집어 넣어준다. <br />
+
+이렇게 하면 스택을 이용한 DFS가 끝이 난다. <br />
+
+그 후 <code>main.go</code>로 넘어와서 2번째 DFS를 출력시켜주자. <br />
+
+``` Go
+package main
+
+import (
+	"fmt"
+
+	"./dataStruct"
+)
+
+func main() {
+	tree := dataStruct.Tree{}
+
+	val := 1
+	tree.AddNode(val)
+	val++
+
+	for i := 0; i < 3; i++ {
+		tree.Root.AddNode(val)
+		val++
+	}
+
+	for i := 0; i < len(tree.Root.Childs); i++ {
+		for j := 0; j < 2; j++ {
+			tree.Root.Childs[i].AddNode(val)
+			val++
+		}
+	}
+
+	tree.DFS1()
+	fmt.Println()
+
+	tree.DFS2()
+}
+```
+
+이제 실행시켜보자 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97946324-739b7080-1dcd-11eb-8081-2acc47af61d8.png" width = 70%> </img></p>
+앞에 재귀 호출 했던 것과 출력순서가 다른데 거꾸로 가기 때문인데 순서를 같게 하려면 빼낼 때 childs를 append할 때 첫번째부터 마지막까지 하는게 아니라 거꾸로 마지막부터 처음까지 append 해주면 된다. <br />
+
+<code>dataStruct/tree.go</code>
+``` Go
+	func (t *Tree) DFS2() {
+		s := []*TreeNode{}
+		s = append(s, t.Root)
+
+		for len(s) > 0 {
+			var last *TreeNode
+			last, s = s[len(s)-1], s[:len(s)-1]
+
+			fmt.Printf("%d->", last.Val)
+
+			for i := len(last.Childs) - 1; i >= 0; i-- {
+				s = append(s, last.Childs[i])
+			}
+		}
+	}
+```
+
+이렇게 수정 해준 뒤에 출력시켜보자 <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97946569-31befa00-1dce-11eb-8fae-e6c82040acde.png" width = 70%> </img></p>
+순서가 똑같아 진 것을 알 수 있다. <br />
+
+지금까지 DFS를 재귀호출과 스택을 사용하여 구현해 보았다. <br />
