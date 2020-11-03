@@ -33,7 +33,7 @@ type Student struct {
 
     fmt.Println(a)
     fmt.Println(a)
-  }
+  } 
 ```
 
 이렇게 b에 a값을 복사한 뒤에 b의 age값을 30으로 두었을 때 어떻게 출력이 되는지 확인해보자 <br />
