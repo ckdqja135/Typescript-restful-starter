@@ -408,7 +408,7 @@ func newSqliteHandler() dbHandler {
 
 package model
 
-func (s *sqliteHandler) getTodos() []*Todo { // 2
+func (s *sqliteHandler) getTodos() []*Todo { // 1
   todos := []*Todo{} // 1
   rows, err := s.db.Query("SELECT id, name, completed, createdAt FROM todos") // 2
   if err != nil { // 3
