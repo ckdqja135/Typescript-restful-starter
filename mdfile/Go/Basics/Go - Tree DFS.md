@@ -173,5 +173,9 @@ tree에 AddNode를 해서 현재 값을 저장한다. val를 처음에 1로 두�
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97936252-47c4be80-1dbe-11eb-8df7-c37875629266.png" width = 70%> </img></p>
 이렇게 있다고 하면 맨 처음 1부터 스택에 넣는다. <br />
 
-|1|
+||
 |------|
+||
+||
+||
+|1|
