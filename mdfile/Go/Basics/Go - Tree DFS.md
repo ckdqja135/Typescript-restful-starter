@@ -171,7 +171,9 @@ tree에 AddNode를 해서 현재 값을 저장한다. val를 처음에 1로 두�
 
 이제 재귀호출을 사용하지 않고 Stack을 사용하여 만드는 방법을 알아보자. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97936252-47c4be80-1dbe-11eb-8df7-c37875629266.png" width = 70%> </img></p>
-이렇게 있다고 하면 맨 처음 1부터 스택에 넣는다. <br />
+이렇게 있다고 하고, 값을 아래와 같은 방향으로 넣었다 가정하면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97937152-2d401480-1dc1-11eb-8789-cce708aea73c.png" width = 70%> </img></p>
+우선 맨 처음 1부터 스택에 넣는다. <br />
 
 |  |
 |------|
@@ -204,3 +206,66 @@ tree에 AddNode를 해서 현재 값을 저장한다. val를 처음에 1로 두�
 |  |
 |6|
 |5|
+
+그 후 이렇게 스택에 저장되어 6,5가 Pop되어 최종적으로 1-4-3-8-7-2-6-5이 출력되게 된다. <br />
+
+이것이 스택의 방식이고, 스택을 이용해서 만드는 방법은 
+> 1. 현재 스택에 있는 걸 하나 Pop한다. 맨 처음에 Root를 넣고, 현재 스택에 있는 것을 Pop한다. <br />
+> 2. 그것에 대한 연산을 한 뒤, 그 자식들을 전부 스택에 넣는다. <br />
+> 3. 그리고 다시 돌아가서 Pop하고, Pop한 자식을 스택에 넣는다. <br />
+
+이것의 반복이 된다. <br />
+
+그래서 슈도코드를 짜보면 <br />
+``` Go
+	DFS {
+		Stack
+		Stack. push(root)
+		
+		for !Stack.empty() {
+			n = Stack.pop()
+				foreach.n.childs
+					stack.push
+		}
+	}
+```
+
+스택이 있고, 스택에다 root를 집어 넣는다.(push)<br />
+그리고 스택이 더 이상 없을 때 까지 for문을 도는데 스택이 뭔가 있으면 스택에서 첫번째 노드를 Pop한다. <br />
+그러면 첫번째 노드가 나올텐데, 그것에 대한 연산을 하고, 그것의 자식들을 스택에 Push한다. <br />
+
+이런식으로 돌아가는게 스택의 DFS이다. <br />
+
+이제 코딩을 시작하자! <br />
+
+전 시간에 만들었던 Stack은 여기에서 쓸 수 가 없다. 기존 linkedList.go에서 노드의 Value값을 int만 가질 수 있게 했었다. <br />
+
+``` Go
+	type Node struct {
+		Next *Node
+		Prev *Node
+		Val  int
+	}
+```
+
+지금은 스택에 int값을 넣는게 아니라 node의 포인터형을 넣어야 하기 때문에 <br />
+
+``` Go
+	type Node struct {
+		Next *Node
+		Prev *Node
+		Val  *TreeNode
+	}
+```
+
+이렇게 바꾸어야 하는데 이렇게 바꾸면 다른 곳도 바꿔야 할 부분들이 많아진다. <br />
+물론 방법은 있다. <br />
+
+``` Go
+	type Node struct {
+		Next *Node
+		Prev *Node
+		Val  interface{}
+	}
+```
+특정 타입의 값을 받는게 아니라 모든 타입의 값을 받을 수 있도록 interface를 이용하면 할 수 있지만 지금 저것을 사용할 때는 아니기 때문에 그냥 int로 놔두고 <br />
