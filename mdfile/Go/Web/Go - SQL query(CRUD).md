@@ -422,7 +422,18 @@ func (s *sqliteHandler) getTodos() []*Todo { // 1
   }
   return todos
 }
+``` 
+1-1 : data를 저장할 쿼리문을 만들어야 하는데, data를 읽어서 그 data를 반환시켜주어야 하기 때문에 data를 반환시켜주는 list를 만들어준다. <br />
+1-2 : 쿼리문 작성. <br />
+      Query()를 보면 query문을 먼저 작성하고, 전달인자(argument)를 넣으면 성공시에 sql.Rows, 실패시에 error가 나오게 된다. <br />
+1-3 : 에러가 있을 시 에러 처리. <br />
+1-4 : 데이터가 잘 뽑아져 나왔을 시 각 행(row)을 돌면서 데이터를 가져와야 하기 때문에 for문으로 반복문을 돌려주는데, for.Next()는 다음행으로 가겠다는 의미이며, <br />
+      다음 행이 없을 때 return false가 되어 return true가 될 때 까지 돌면서 레코드들을 읽어준다. <br />
+      rows.Scan()을 쓰게 되면 쿼리안에 있던 값들이 각각에 맞춰서 가져오게 되는데, 이 data를 담을 todo객체를 만들어서 Scan()안에 받아올 각 항목들을 넣어주면 된다. <br />
+      그 후 todo에 들어간 값들을 todos에 저장해준 뒤, todos를 return 해준다.<br />
+1-5 : 그 다음 row를 close시켜준다. <br />
 
+``` Go
 
 func (s *sqliteHandler) addTodo(name string) *Todo { // 2
    stmt, err := s.db.Prepare("INSERT INTO todos (name, completed, createdAt) VALUES (?, ?, datetime('now'))") // 1
@@ -448,16 +459,6 @@ func (s *sqliteHandler) addTodo(name string) *Todo { // 2
 }
 
 ```
-1-1 : data를 저장할 쿼리문을 만들어야 하는데, data를 읽어서 그 data를 반환시켜주어야 하기 때문에 data를 반환시켜주는 list를 만들어준다. <br />
-1-2 : 쿼리문 작성. <br />
-      Query()를 보면 query문을 먼저 작성하고, 전달인자(argument)를 넣으면 성공시에 sql.Rows, 실패시에 error가 나오게 된다. <br />
-1-3 : 에러가 있을 시 에러 처리. <br />
-1-4 : 데이터가 잘 뽑아져 나왔을 시 각 행(row)을 돌면서 데이터를 가져와야 하기 때문에 for문으로 반복문을 돌려주는데, for.Next()는 다음행으로 가겠다는 의미이며, <br />
-      다음 행이 없을 때 return false가 되어 return true가 될 때 까지 돌면서 레코드들을 읽어준다. <br />
-      rows.Scan()을 쓰게 되면 쿼리안에 있던 값들이 각각에 맞춰서 가져오게 되는데, 이 data를 담을 todo객체를 만들어서 Scan()안에 받아올 각 항목들을 넣어주면 된다. <br />
-      그 후 todo에 들어간 값들을 todos에 저장해준 뒤, todos를 return 해준다.<br />
-1-5 : 그 다음 row를 close시켜준다. <br />
-
 2-1 : 여기서도 쿼리문을 작성해주어야 하는데 s.db.Prepare()로 Statement를 만들어준다. <br />
       Prepare의 반환값으로 Statement값과 error값이 나온다. <br />
 2-2 : error 처리 <br />
