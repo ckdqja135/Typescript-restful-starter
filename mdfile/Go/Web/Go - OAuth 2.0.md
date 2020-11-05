@@ -108,50 +108,6 @@
       http.SetCookie(w, cookie) // 9
       return state // 10
     }
-
-    func googleAuthCallback(w http.ResponseWriter, r *http.Request) { 
-    oauthstate, _ := r.Cookie("oauthstate") // 12
-
-    if r.FormValue("state") != oauthstate.Value {  // 13
-      log.Printf("invalid google oauth state cookie:%s state:%s\n", oauthstate.Value, r.FormValue("state"))
-      http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
-      return
-    }
-
-    data, err := getGoogleUserInfo(r.FormValue("code")) // 14
-    if err != nil { // 15
-      log.Println(err.Error())
-      http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
-      return
-    }
-
-    fmt.Fprint(w, string(data)) // 16
-  }
-  
-  const oauthGoogleUrlAPI = "https://www.googleapis.com/oauth2/v2/userinfo?access_token=" // 21 
-  
-  func getGoogleUserInfo(code string) ([]byte, error) { // 17
-    token, err := googleOauthConfig.Exchange(context.Background(), code) // 18
-    if err != nil { // 19
-      return nil, fmt.Errorf("Failed to Exchange %s\n", err.Error())
-    }
-
-    resp, err := http.Get(oauthGoogleUrlAPI + token.AccessToken) // 20
-    if err != nil { // 21
-      return nil, fmt.Errorf("Failed to Get UserInfo %s\n", err.Error())
-    }
-
-    return ioutil.ReadAll(resp.Body) // 23
-  }
-  
-  func main() {
-    mux := pat.New()
-    mux.HandleFunc("/auth/google/login", googleLoginHandler) // 1
-    mux.HandleFunc("/auth/google/callback", googleAuthCallback) // 11
-    n := negroni.Classic()
-    n.UseHandler(mux)
-    http.ListenAndServe(":3000", n)
-    
 ```
 
 1 : 구글 로그인 핸들러 <br />
@@ -188,6 +144,27 @@
 9 : write에 지금 만든 쿠키를 넣어주고, <br />
 10 : string을 리턴해야 하기 때문에 state값을 리턴 해준다. <br />
 
+``` Go
+    func googleAuthCallback(w http.ResponseWriter, r *http.Request) { 
+    oauthstate, _ := r.Cookie("oauthstate") // 12
+
+    if r.FormValue("state") != oauthstate.Value {  // 13
+      log.Printf("invalid google oauth state cookie:%s state:%s\n", oauthstate.Value, r.FormValue("state"))
+      http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+      return
+    }
+
+    data, err := getGoogleUserInfo(r.FormValue("code")) // 14
+    if err != nil { // 15
+      log.Println(err.Error())
+      http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+      return
+    }
+
+    fmt.Fprint(w, string(data)) // 16
+  }
+```
+
 11 : 구글 콜백 핸들러. <br />
 12 : 이 핸들러가 불리면 아까 저장했던 쿠키를 읽어오고 <br />
 13 : request값에 state값을 넣어주기 위해 FormValue()를 사용한다. <br />
@@ -197,6 +174,33 @@
 14 : 구글이 Request에 코드를 알려주는데 그 코드를 가지고 구글에 다시 요청을 해서 userinfo를 가져올 수 있다. <br />
 15 : 에러가 있을 시 에러처리 후 Redirect시켜준다. <br />
 16 : 에러가 없을 시 유저의 정보를 보낸다. <br />
+
+``` Go
+  const oauthGoogleUrlAPI = "https://www.googleapis.com/oauth2/v2/userinfo?access_token=" // 21 
+  
+  func getGoogleUserInfo(code string) ([]byte, error) { // 17
+    token, err := googleOauthConfig.Exchange(context.Background(), code) // 18
+    if err != nil { // 19
+      return nil, fmt.Errorf("Failed to Exchange %s\n", err.Error())
+    }
+
+    resp, err := http.Get(oauthGoogleUrlAPI + token.AccessToken) // 20
+    if err != nil { // 21
+      return nil, fmt.Errorf("Failed to Get UserInfo %s\n", err.Error())
+    }
+
+    return ioutil.ReadAll(resp.Body) // 23
+  }
+  
+  func main() {
+    mux := pat.New()
+    mux.HandleFunc("/auth/google/login", googleLoginHandler) // 1
+    mux.HandleFunc("/auth/google/callback", googleAuthCallback) // 11
+    n := negroni.Classic()
+    n.UseHandler(mux)
+    http.ListenAndServe(":3000", n)
+    
+```
 17 : 14번의 함수를 작성한다. code가 오게되고 반환값은 data와 error가 된다. <br />
 18 : googleOauthConfig을 이용해서 tokken을 받아오는 코드인데, <br />
      받은 code와 tokken을 Exchange()(교환)한다. 이 때 Exchange할 때 들어가는 인자가 context값과 code값이 들어가는데, <br />
@@ -215,7 +219,6 @@
 21 : userinfo를 request하는 경로. <br />
 22 : (20번 이어서) 19번과 마찬가지로 처리 해주고, <br /> 
 23 : error가 없다면 resp의 데이터를 읽어오면 되는데, resp.Body를 모두 읽어서 data를 반환 해준다. <br />
-
 
 이제 저장 후 실행을 시켜보자! <br />
 
