@@ -1,7 +1,7 @@
 ## 시작
 들어가기 앞서서 한 가지 소개할 것이 있는데 소프트웨어 공학쪽에 유명한 책이 있다. <br />
 
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/95947290-3cb6e800-0e29-11eb-91b2-5d2991f01961.png" width = 70%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/99337366-7a45df80-28c5-11eb-86a8-12578775f454.png" width = 70%> </img></p>
 
 [맨먼스 미신](https://www.amazon.com/Mythical-Man-Month-Software-Engineering-Anniversary/dp/0201835959)이라는 책인데 여기서 나오는 유명한 말이 있다. <br />
 
