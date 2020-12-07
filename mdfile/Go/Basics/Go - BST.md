@@ -75,4 +75,204 @@ left <= Parent <= right
 그러면 6이 없을 때는 어떨까? <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101359127-300db800-38df-11eb-870f-81e499b53286.png" width = 70%> </img></p>
 5보다 크므로 오른쪽에 가고, 8보다 작으므로 왼쪽으로 가고, 7보다 작으므로 다음 노드로 갈 때 다음 노드가 없으므로 6이 없는 것을 알 수 있다. 이 때도 마찬가지로 3번에 알아낸다. <br />
-그래서 이 떄는 O(log2^N)이 된다.
+그래서 이 때는 O(log2^N)이 된다. <br />
+
+아래의 화면은 그래프를 그리는 사이트에서 O(N)의 속도와 O(log2^N)의 속도를 측정해보기 위해 그린 그래프인데 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101359485-af02f080-38df-11eb-832c-8fe26204ec16.png" width = 70%> </img></p>
+첫번째 그래프(빨간색)은 y(갯수)가 늘어나면 x(시간)도 늘어나는 O(N)의 형태의 그래프이고, 두번째 그래프(파란색)은 O(log2^N)형태의 그래프인데 <br />
+이를 통해 O(log2^N)은 O(N)에 비해 훨씬 빠르다는 것을 알 수 있다. <br />
+
+이제 이 부분을 코딩해보자! <br />
+<code>binaryTree.go</code>
+``` Go 
+package dataStruct
+
+import "fmt"
+
+type BinaryTreeNode struct {
+	Val   int
+	left  *BinaryTreeNode
+	right *BinaryTreeNode
+}
+
+type BinaryTree struct { // 1
+	Root *BinaryTreeNode
+}
+
+func NewBinaryTree(v int) *BinaryTree { // 3
+	tree := &BinaryTree{}
+	tree.Root = &BinaryTreeNode{Val: v}
+	return tree
+}
+
+func (n *BinaryTreeNode) AddNode(v int) *BinaryTreeNode { // 2
+	if n.Val < v { // 1
+		if n.left == nil { // 2
+			n.left = &BinaryTreeNode{Val: v}
+			return n.left
+		} else {
+			return n.left.AddNode(v) // 3
+		}
+	} else {
+		if n.right == nil { // 4 
+			n.right = &BinaryTreeNode{Val: v} // 5
+			return n.right
+		} else { // 6
+			return n.right.AddNode(v)
+		}
+	}
+}
+
+```
+1 : tree Type을 만들어준다. <br />
+2 : BinaryTreeNode의 AddNode라는 함수를 만들어서 Value를 넣도록 한다. <br />
+2-1 : 현재 노드의 값보다 새로들어온 노드의 값이 작을 때 -> 왼쪽에 붙여준다. <br />
+2-2 : 왼쪽에 있는 노드가 없으면 왼쪽에 추가해준다. <br />
+2-3 : 왼쪽에 노드가 있는 경우 왼쪽 노드에 다시 AddNode()함수를 재귀호출해서 그 결과를 반환해준다. <br />
+2-4 : 현재 노드의 값보다 새로들어온 노드의 값이 작지 않으면 -> 오른쪽에 붙여 준다. <br />
+2-5 : 마찬가지로 오른쪽에 값이 없으면 오른쪽에 추가해준다. <br />
+2-6 : 오른쪽 노드가 있으면 오른쪽 노드에 AddNode()함수를 재귀호출해서 그 결과를 반환해준다. <br />
+3 : Tree를 새로 만드는 함수. 처음 시작값을 받고, 새로 만들어진 BinaryTree를 반환시켜준다. <br />
+
+이제 <code>main.go</code>로 넘어와서 
+<code>main.go</code>
+``` 
+package main
+
+import (
+	"./dataStruct"
+)
+
+func main() {
+	tree := dataStruct.NewBinaryTree(5) // 1
+	tree.Root.AddNode(3) // 2
+	tree.Root.AddNode(2)
+	tree.Root.AddNode(4)
+	tree.Root.AddNode(8)
+	tree.Root.AddNode(7)
+	tree.Root.AddNode(6)
+	tree.Root.AddNode(10)
+	tree.Root.AddNode(9)
+
+	tree.Print() // 3
+}
+```
+1 : 처음 RootNode가 5인 BinaryTree를 생성한 뒤 <br />
+2 : 값을 넣어준다. <br />
+3 : 출력하는 함수가 있다고 가정하고 호출한 뒤 <br />
+<code>binaryTree.go</code>에서 만들어주자! <br />
+
+<code>binaryTree.go</code>
+``` Go
+func (t *BinaryTree) Print() { // 1
+	q := []*BinaryTreeNode{} // 2
+	q = append(q, t.Root) // 3
+	currentDepth := 0
+
+	for len(q) > 0 { // 4
+		var first depthNode // 1
+		first, q = q[0], q[1:] // 2
+	}
+}
+```
+1 : 출력을 위한 Print함수를 생성해준다. <br />
+    이 때 BFS를 사용해서 출력을 할 것이다. <br />
+2 :  BFS는 큐(Queue)를 사용하므로 먼저 큐를 생성해준다. <br />
+출력 값을 보게 되면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101361730-b4ae0580-38e2-11eb-8f3a-439ec6a0effb.png" width = 70%> </img></p>
+출력이 뭔가 이상하게 되었다. 이 부분은 <code>binaryTree.go</code>에서 add할 때 <br />
+3 : 큐에 Push한다. <br />
+4 : 큐가 비어있지 않았으면 for문을 돈다. <br />
+4-1 : 첫번째 노드를 저장할 변수를 선언 한다. <br />
+4-2 : 첫번째 노드와 큐를 갱신시켜준다. <br />
+      first는 큐의 첫번째 값이고, q값은 큐를 첫번째의 값을 뺀 값을 넣어주어야 하므로 두번째 부터 넣어준다. <br />
+
+그 다음 현재 노드를 집어넣어야 하는데 현재 나온 노드가 몇번째 층에 나온 노드인지 알기 위해서 코드를 수정해준다. <br />
+<code>binaryTree.go</code>
+``` Go
+type depthNode struct { // 1
+	depth int
+	node  *BinaryTreeNode
+}
+
+func (t *BinaryTree) Print() { // 2
+	q := []depthNode{} // 1
+	q = append(q, depthNode{depth: 0, node: t.Root}) // 2
+	currentDepth := 0 // 3
+
+	for len(q) > 0 {
+		var first depthNode
+		first, q = q[0], q[1:]
+
+		if first.depth != currentDepth { // 4
+			fmt.Println() // 5
+			currentDepth = first.depth
+		}
+		fmt.Print(first.node.Val, " ") // 6
+
+		if first.node.left != nil { // 7
+			q = append(q, depthNode{depth: currentDepth + 1, node: first.node.left})
+		}
+		if first.node.right != nil { // 8
+			q = append(q, depthNode{depth: currentDepth + 1, node: first.node.right})
+		}
+	}
+}
+```
+1 : 깊이와 노드를 같이 가지고 있는 struct를 만들어준다. <br />
+2-1 : 그리고 이 struct를 가지는 슬라이스를 만들어주고, <br />
+2-2 : Push할 때 처음의 depth는 0, node는 Rootnode를 넣어준다. <br />
+2-3 : 현재 Depth를 표시하는 변수. <br />
+2-4 : first와 현재 depth가 다르면 
+2-5 : 한 줄을 띄워주고, currentDepth를 first.depth로 바꾸어주고, <br />
+2-6 : 값을 출력시켜준다. <br />
+2-7 : left가 있다면 큐의 맨 뒤에 집어 넣는다. <br />
+      큐에 집어 넣을 때 depth는 현재 depth의 1 더한 값(자식 노드니까)을 넣어주고, node는 first.node.left를 넣어주고, <br />
+2-8 : right가 있다면 <br />
+      큐에 집어 넣을 때 depth는 현재 depth의 1 더한 값(자식 노드니까)을 넣어주고, node는 first.node.right를 넣어준다. <br />
+
+``` Go
+func (n *BinaryTreeNode) AddNode(v int) *BinaryTreeNode {
+ // 현재 값이 새로 들어온 값 보다 작으면 
+	if n.Val < v {
+		if n.left == nil {
+			n.left = &BinaryTreeNode{Val: v}
+			return n.left
+		} else {
+			return n.left.AddNode(v)
+		}
+	} else {
+		if n.right == nil {
+			n.right = &BinaryTreeNode{Val: v}
+			return n.right
+		} else {
+			return n.right.AddNode(v)
+		}
+	}
+}
+```
+이 부분에서 문제가 생긴건데 현재 값이 새로 들어온 값 보다 작을 때 오른쪽에 넣어야 되는데 왼쪽에 넣었다. 그래서 현재값이 더 큰 경우, 새로 들어온 값이 작은경우에 왼쪽에 넣을 수 있도록 아래와 같이 바꾸어준다.<br />
+
+``` Go
+func (n *BinaryTreeNode) AddNode(v int) *BinaryTreeNode {
+ // 현재 값이 새로 들어온 값 보다 작으면 
+	if n.Val > v {
+		if n.left == nil {
+			n.left = &BinaryTreeNode{Val: v}
+			return n.left
+		} else {
+			return n.left.AddNode(v)
+		}
+	} else {
+		if n.right == nil {
+			n.right = &BinaryTreeNode{Val: v}
+			return n.right
+		} else {
+			return n.right.AddNode(v)
+		}
+	}
+}
+```
+그러면 아래와 같이 정상적으로 바뀐 것을 알 수 있다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101362313-4c135880-38e3-11eb-8556-2c804d94183f.png" width = 70%> </img></p> 
+
