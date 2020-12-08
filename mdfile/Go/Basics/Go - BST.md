@@ -276,3 +276,186 @@ func (n *BinaryTreeNode) AddNode(v int) *BinaryTreeNode {
 그러면 아래와 같이 정상적으로 바뀐 것을 알 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101362313-4c135880-38e3-11eb-8556-2c804d94183f.png" width = 70%> </img></p> 
 
+이번에는 실제로 검색하는 것을 만들어보자! <br />
+<code>main.go</code>
+``` Go
+package main
+
+import (
+	"fmt"
+
+	"./dataStruct"
+)
+
+func main() {
+	tree := dataStruct.NewBinaryTree(5)
+	tree.Root.AddNode(3)
+	tree.Root.AddNode(2)
+	tree.Root.AddNode(4)
+	tree.Root.AddNode(8)
+	tree.Root.AddNode(7)
+	tree.Root.AddNode(6)
+	tree.Root.AddNode(10)
+	tree.Root.AddNode(9)
+
+	tree.Print()
+
+	if tree.Search(6) {
+		fmt.Println("found 6")
+	} else {
+		fmt.Println("Not found 6")
+	}
+}
+```
+main 함수에 이렇게 추가해주고, 트리 안에 6을 찾도록 해보자! <br />
+그 후 <code>binaryTree.go</code>로 와서 Search함수를 추가해주자! <br />
+``` Go
+func (t *BinaryTree) Search(v int) bool { // 1
+	return t.Root.Search(v)
+}
+
+func (n *BinaryTreeNode) Search(v int) bool { // 2
+	if n.Val == v { // 3
+		return true
+	} else if n.Val > v { // 4
+		if n.left != nil {
+			return n.left.Search(v)
+		}
+		return false // 5
+	} else {
+		if n.right != nil { // 6
+			return n.right.Search(v)
+		}
+		return false // 7
+	}
+}
+
+```
+1 : Binary Tree의 함수. 찾아야 되는 값 v를 받고, 반환값으로 bool형으로 한다. <br />
+    그리고 tree의 Root의 Search라는 함수를 호출 하도록 해준다. <br />
+
+2 : 그런데 Root에 Search라는 함수가 없기 때문에 만들어준다. <br />
+    이번에는 BinaryTreeNode의 Search함수를 만들어준다. <br />
+3 : 내가 찾아야 되는 값과 현재 노드와의 값이 같은 경우 True를 return 시켜주고, <br />
+4 : 같지 않고, 내 값이 찾아야 되는 값보다 큰 경우 왼쪽에 있을 가능성이 높으므로 왼쪽 노드에서 Search하도록 해주고, <br />
+5 : 없는 경우인데 없다는 얘기는 나보다 작은 수가 없다는 의미 이므로 false를 return 시켜준다. <br />
+6 : 오른쪽 노드가 있으면 오른쪽에 찾아보고, <br />
+7 : 오른쪽에도 없으면 나보다 큰 값이 없는 것이므로 이 경우도 없는 수가 되어 false를 return 시켜준다. <br />
+
+이렇게 Search 함수가 만들어졌고, 제대로 찾는지 확인해보자! <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101485046-ecc64e80-399d-11eb-9bc1-81ff3bff7f0c.png" width = 70%> </img></p> 
+
+이번에는 찾았는지 여부만 반환하는게 아니라 몇번만에 찾았는지도 반환시켜보자! <br />
+<code>main.go</code>
+``` Go
+func main() {
+	tree := dataStruct.NewBinaryTree(5)
+	tree.Root.AddNode(3)
+	tree.Root.AddNode(2)
+	tree.Root.AddNode(4)
+	tree.Root.AddNode(8)
+	tree.Root.AddNode(7)
+	tree.Root.AddNode(6)
+	tree.Root.AddNode(10)
+	tree.Root.AddNode(9)
+
+	tree.Print()
+
+	if found, cnt := tree.Search(6); found { // 1
+		fmt.Println("found 6")
+	} else {
+		fmt.Println("Not found 6")
+	}
+}
+```
+
+1 : 이 부분을 초기문이라고 해서 Search()를 먼저 실행하고, 그 결과를 found와 cnt에 대입하는 것이고, found가 true인 경우 fmt.Println("found 6")를 출력시킨다는 의미이다. <br />
+
+그 후 <code>binaryTree.go</code>로 와서 수정시켜주자! <br />
+
+``` Go
+
+func (t *BinaryTree) Search(v int) (bool, int) {
+	return t.Root.Search(v, 1)
+}
+
+func (n *BinaryTreeNode) Search(v int, cnt int) (bool, int) {
+	if n.Val == v {
+		return true, cnt
+	} else if n.Val > v {
+		if n.left != nil {
+			return n.left.Search(v, cnt+1)
+		}
+		return false, cnt
+	} else {
+		if n.right != nil {
+			return n.right.Search(v, cnt+1)
+		}
+		return false, cnt
+	}
+}
+```
+
+이렇게 BinaryTree의 Search엔 초기값이기 때문에 cnt를 1 넣어주어 반환하도록 하고, BinaryTreeNode의 Search엔 cnt를 입력받아 bool과 cnt를 return하도록 수정해준다. <br />
+
+이제 <code>main.go</code>로 넘어와 cnt도 출력할 수 있게 수정해준 뒤 실행시켜준다. <br />
+``` Go
+func main() {
+	tree := dataStruct.NewBinaryTree(5)
+	tree.Root.AddNode(3)
+	tree.Root.AddNode(2)
+	tree.Root.AddNode(4)
+	tree.Root.AddNode(8)
+	tree.Root.AddNode(7)
+	tree.Root.AddNode(6)
+	tree.Root.AddNode(10)
+	tree.Root.AddNode(9)
+
+	tree.Print()
+
+	if found, cnt := tree.Search(6); found {
+		fmt.Println("found 6 cnt : ", cnt)
+	} else {
+		fmt.Println("Not found 6 cnt : ", cnt)
+	}
+}
+```
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101486644-56475c80-39a0-11eb-887b-a20f984e7389.png" width = 70%> </img></p> 
+
+이번에는 없는 숫자를 찾아보자! <br />
+``` Go
+func main() {
+	tree := dataStruct.NewBinaryTree(5)
+	tree.Root.AddNode(3)
+	tree.Root.AddNode(2)
+	tree.Root.AddNode(4)
+	tree.Root.AddNode(8)
+	tree.Root.AddNode(7)
+	tree.Root.AddNode(6)
+	tree.Root.AddNode(10)
+	tree.Root.AddNode(9)
+
+	tree.Print()
+
+	if found, cnt := tree.Search(6); found {
+		fmt.Println("found 6 cnt : ", cnt)
+	} else {
+		fmt.Println("Not found 6 cnt : ", cnt)
+	}
+	
+	if found, cnt := tree.Search(12); found {
+		fmt.Println("found 12 cnt : ", cnt)
+	} else {
+		fmt.Println("Not found 12 cnt : ", cnt)
+	}
+}
+```
+정상적으로 출력되는 것을 알 수 있다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101486826-97d80780-39a0-11eb-8419-54ed5a23551d.png" width = 70%> </img></p> 
+
+이진검색트리를 사용하는 이유는 검색을 빨리하기 위해서이다. <br />
+여기서의 검색은 많은 용도로 사용한다. 가령 예를들면 회원가입 시 ID를 입력할 때 ID를 DataBase에 저장해야 하는데 이걸 저장할 때 <br />
+ID의 가 ABCD라고 할 때 문자열을 비교하는건 까다롭기 때문에 문자열을 HASH처리해서 숫자로 만들거나 회원가입 순서로 번호를 지정할 수 있는데, 그 번호를 이진트리 같은 곳에 넣고 <br />
+그 아이디에 해당하는 값이 있는지 확인하는데 이 때 처음부터 끝까지 찾는거 보단 빠르기 때문에 이진트리 검색을 사용한다. <br />
