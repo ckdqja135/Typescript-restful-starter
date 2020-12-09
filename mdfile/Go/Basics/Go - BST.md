@@ -1,3 +1,5 @@
+## 시작
+
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101354665-d904e480-38d8-11eb-9f7d-ab07a5bcaa28.png" width = 70%> </img></p>
 위의 그림 같이 자식이 두 개 밖에 없는 것을 이진트리라고 한다. <br />
 
@@ -459,3 +461,132 @@ func main() {
 여기서의 검색은 많은 용도로 사용한다. 가령 예를들면 회원가입 시 ID를 입력할 때 ID를 DataBase에 저장해야 하는데 이걸 저장할 때 <br />
 ID의 가 ABCD라고 할 때 문자열을 비교하는건 까다롭기 때문에 문자열을 HASH처리해서 숫자로 만들거나 회원가입 순서로 번호를 지정할 수 있는데, 그 번호를 이진트리 같은 곳에 넣고 <br />
 그 아이디에 해당하는 값이 있는지 확인하는데 이 때 처음부터 끝까지 찾는거 보단 빠르기 때문에 이진트리 검색을 사용한다. <br />
+
+## 최종 코드
+<code>main.go</code>
+``` Go
+package main
+
+import (
+	"fmt"
+
+	"./dataStruct"
+)
+
+func main() {
+	tree := dataStruct.NewBinaryTree(5)
+	tree.Root.AddNode(3)
+	tree.Root.AddNode(2)
+	tree.Root.AddNode(4)
+	tree.Root.AddNode(8)
+	tree.Root.AddNode(7)
+	tree.Root.AddNode(6)
+	tree.Root.AddNode(10)
+	tree.Root.AddNode(9)
+
+	tree.Print()
+	fmt.Println()
+
+	if found, cnt := tree.Search(6); found {
+		fmt.Println("found 6 cnt : ", cnt)
+	} else {
+		fmt.Println("Not found 6 cnt : ", cnt)
+	}
+
+	if found, cnt := tree.Search(12); found {
+		fmt.Println("found 12 cnt : ", cnt)
+	} else {
+		fmt.Println("Not found 12 cnt : ", cnt)
+	}
+}
+```
+
+<code>binaryTree.go</code>
+``` Go
+package dataStruct
+
+import "fmt"
+
+type BinaryTreeNode struct {
+	Val   int
+	left  *BinaryTreeNode
+	right *BinaryTreeNode
+}
+
+type BinaryTree struct {
+	Root *BinaryTreeNode
+}
+
+func NewBinaryTree(v int) *BinaryTree {
+	tree := &BinaryTree{}
+	tree.Root = &BinaryTreeNode{Val: v}
+	return tree
+}
+
+func (n *BinaryTreeNode) AddNode(v int) *BinaryTreeNode {
+	if n.Val > v {
+		if n.left == nil {
+			n.left = &BinaryTreeNode{Val: v}
+			return n.left
+		} else {
+			return n.left.AddNode(v)
+		}
+	} else {
+		if n.right == nil {
+			n.right = &BinaryTreeNode{Val: v}
+			return n.right
+		} else {
+			return n.right.AddNode(v)
+		}
+	}
+}
+
+type depthNode struct {
+	depth int
+	node  *BinaryTreeNode
+}
+
+func (t *BinaryTree) Print() {
+	q := []depthNode{}
+	q = append(q, depthNode{depth: 0, node: t.Root})
+	currentDepth := 0
+
+	for len(q) > 0 {
+		var first depthNode
+		first, q = q[0], q[1:]
+
+		if first.depth != currentDepth {
+			fmt.Println()
+			currentDepth = first.depth
+		}
+		fmt.Print(first.node.Val, " ")
+
+		if first.node.left != nil {
+			q = append(q, depthNode{depth: currentDepth + 1, node: first.node.left})
+		}
+		if first.node.right != nil {
+			q = append(q, depthNode{depth: currentDepth + 1, node: first.node.right})
+		}
+	}
+}
+
+func (t *BinaryTree) Search(v int) (bool, int) {
+	return t.Root.Search(v, 1)
+}
+
+func (n *BinaryTreeNode) Search(v int, cnt int) (bool, int) {
+	if n.Val == v {
+		return true, cnt
+	} else if n.Val > v {
+		if n.left != nil {
+			return n.left.Search(v, cnt+1)
+		}
+		return false, cnt
+	} else {
+		if n.right != nil {
+			return n.right.Search(v, cnt+1)
+		}
+		return false, cnt
+	}
+}
+```
