@@ -51,7 +51,7 @@ Heap을 사용하면 최대 값과 최소 값을 찾기 좋다. <br />
 그렇다면 이 Heap을 어떻게 만드는지 살펴보자. <br />
 규칙은 위에 말했듯이 부모Node가 자식Node보다 크거나 같고, 자식Node는 부모Node보다 작거나 같다. <br />
 
-먼저 Heap Tree에 element추가 할 때 어떻게 하는지 알아보자. <br />
+먼저 Heap Tree에 element추가(Push) 할 때 어떻게 하는지 알아보자. <br />
 가령 Heap이 아래와 같이 구성되어 있을 때 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101618278-2017e480-3a55-11eb-9a82-761bc4915014.png" width = 70%> </img></p>
 여기서 새로 들어온 값이 생기면 맨 아래에 넣고, 새로 들어온 값이 부모Node보다 큰지 값을 비교를 한다. <br />
@@ -70,10 +70,19 @@ Heap을 사용하면 최대 값과 최소 값을 찾기 좋다. <br />
 아래와 같은 Tree가 있다고 가정하면 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101619300-6e79b300-3a56-11eb-9114-191623cc57a5.png" width = 70%> </img></p>
 먼저 10이 빠져 나오게 된다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101354665-d904e480-38d8-11eb-9f7d-ab07a5bcaa28.png" width = 70%> </img></p>
 그렇게 되면 빈자리가 생기고, 빈자리를 채워야 하는데 맨 끝에 있는 값을 맨 위로 올린다.<br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101619402-92d58f80-3a56-11eb-8326-72f48a98198f.png" width = 70%> </img></p>
 그 다음 맨 끝 부분이 없어지게 되고, 맨 위에 있는 값 기준으로 자기보다 큰 값이 존재하면 위치를 바꾼다. <br />
 그래서 오른쪽에 있는 7과 8을 바꾼다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101619587-d3cda400-3a56-11eb-8223-63a4e47de0e8.png" width = 70%> </img></p>
 그 후 또 비교를 하여 자식Node 중에 자기보다 큰 값이 있는지 비교한다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101620015-5ce4db00-3a57-11eb-82aa-fc146d7b6753.png" width = 70%> </img></p>
+맨 위에 값과 비교할 값이 없으면 빠진 쪽이 오른쪽이므로 오른쪽 부모(root)Node와 자식Node를 비교하여 큰 값이 있는지 비교한다. 있으면 Swap을 해주고, 없으면 끝이 난다.<br />
+이런식으로 계속 POP을 진행하여 수를 빼내오면 큰 값부터 작은 값 순서대로 Sorting이 되게 된다. <br />
+
+그래서 Heap을 이용하면 정렬을 만들 수 있다. <br />
+
+그 다음 Heap의 속도를 알아보자. <br />
+Heap의 속도를 볼 때 Push하는 게 있고, POP하는 게 있는데 Push부터 알아보자면 <br />
+Push할 때는 맨 아래로 집어 넣고, 부모와 비교하여 Swap하는데 새로 들어온 값이 Swap해야 되는 반복횟수는 그 값의 층수에 비례된다. <br />
+
