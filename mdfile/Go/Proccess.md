@@ -58,3 +58,105 @@ nohup이라는 데몬을 사용하면 프로그램을 종료하는 시그널을 
 쉘 스크립트를 실행하기만 하면 됩니다. <br />
 
 쉘 스크립트? : 쉘을 통하여 프로그램을 만든 것. <br />
+
+## 그 외
+### systemd 서비스로 SleepService 만들기 
+systemd 를 이용해서 서비스로 만들기 위해서는 `“/lib/systemd/system/sleepservice.service”` 아래에 <br />
+다음과 같은 것을 만든다.  <br />
+
+``` Shell
+[Unit] 
+Description=Sleep service 
+ConditionPathExists=/home/ubuntu/work/src/sleepservice/sleepservice 
+After=network.target 
+
+[Service] 
+Type=simple 
+User=sleepservice
+Group=sleepservice 
+LimitNOFILE=1024 
+Restart=on-failure 
+RestartSec=10 
+startLimitIntervalSec=60 
+WorkingDirectory=/home/ubuntu/work/src/sleepservice 
+ExecStart=/home/ubuntu/work/src/sleepservice/sleepservice --name=foo 
+
+# make sure log directory exists and owned by syslog 
+PermissionsStartOnly=true 
+ExecStartPre=/bin/mkdir -p /var/log/sleepservice
+ExecStartPre=/bin/chown syslog:adm /var/log/sleepservice 
+ExecStartPre=/bin/chmod 755 /var/log/sleepservice 
+StandardOutput=syslog 
+StandardError=syslog 
+SyslogIdentifier=sleepservice 
+
+[Install] 
+WantedBy=multi-user.target
+```
+위의 파일에서 사용된 패스들은 여러분의 경로에 맞게 수정 하면 될 것 이다.  <br />
+물론 sleepservice 라는 서비스 이름 자체도 말이다. <br />
+
+해당 프로그램 전용 사용자를 만들고 , 깃헙에서 만들어 둔것이 있으면 제대로 된 위치로 옮기고, 755 권한을 준다. <br />
+
+``` Bash
+$ cd /tmp 
+$ sudo useradd sleepservice -s /sbin/nologin -M 
+$ wget https://raw.githubusercontent.com/fabianlee/blogcode/master/golang/sleepservice/systemd/sleepservice.service 
+$ sudo mv sleepservice.service /lib/systemd/system/. 
+$ sudo chmod 755 /lib/systemd/system/sleepservice.service
+```
+
+**systemctl** 를 이용해서 sleepservice.service 를  enable 시키고 시작시키고, journalctl 을 통해 제대로 시작되는지 확인한다.
+
+``` Bash
+$ sudo systemctl enable sleepservice.service
+
+$ sudo systemctl start sleepservice
+
+$ sudo journalctl -f -u sleepservice
+
+May 21 16:20:43 xenial1 sleepservice[4037]: 2017/05/21 16:20:43 hello foo
+May 21 16:20:43 xenial1 sleepservice[4037]: 2017/05/21 16:20:43 About to sleep 1526ms before looping again
+May 21 16:20:45 xenial1 sleepservice[4037]: 2017/05/21 16:20:45 hello foo
+May 21 16:20:45 xenial1 sleepservice[4037]: 2017/05/21 16:20:45 About to sleep 196ms before looping again
+```
+
+그 밖에도 기존의 etc/init.d 를 이용해서 할 수도 있다. <br />
+
+#### 1) /etc/init.d 아래 스크립트 작성 (Golang 프로그램을 시작시키거나 멈추는 run 스크립트를 부팅시 호출 해준다.) 
+
+``` Shell
+#! /bin/sh
+# /etc/init.d/myservice
+
+
+USERNAME=who??
+COMMAND_MYSERVICE_SCRIPT="/home/$USERNAME/myservice/run"
+
+
+case "$1" in
+  start)
+    echo "Starting myservice .."
+    sudo -u $USERNAME $COMMAND_MYSERVICE_SCRIPTstart
+  
+    echo "Done!!"
+    ;;
+  stop)
+    echo "Stopping myservice .."
+    sudo -u $USERNAME $COMMAND_MYSERVICE_SCRIPTstop
+    echo "Done!!"
+    ;;
+  *)
+    echo "Usage: /etc/init.d/myservice {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+```
+
+권한설정
+
+* sudo chmod 755 myservice
+
+* update-rc.d 로 설정   ( sudo update-rc.d myservice defaults) 
