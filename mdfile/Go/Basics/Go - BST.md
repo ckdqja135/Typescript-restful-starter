@@ -144,7 +144,7 @@ package main
 import (
 	"./dataStruct"
 )
-
+ 
 func main() {
 	tree := dataStruct.NewBinaryTree(5) // 1
 	tree.Root.AddNode(3) // 2
