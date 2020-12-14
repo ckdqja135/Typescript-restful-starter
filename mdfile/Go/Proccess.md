@@ -27,7 +27,7 @@ C는 스케줄링 관련 필드인데 짧은 기간 동안의 CPU 사용률을 �
 kill 명령어는 프로세스에게 SIGNAL(신호)을 전달하는 명령어로서 kil -l을 입력하면 kill에 관한 신호의 종류가 나옵니다. <br />
 사용 방법은 kill - `[번호/SIGNAL]` `[PID/작업번호]`입니다. <br />
 
-보통 주로 사용하는 신호는 2번 SIGINT, 9번 SIGKiLL, 15번 SIGKILL, 15번 SIGTERM, 18번 SIGCONT, 19번 SIGSTOP이 있습니다. <br />
+보통 주로 사용하는 신호는 2번 SIGINT, 9번 SIGKILL, 15번 SIGTERM, 18번 SIGCONT, 19번 SIGSTOP이 있습니다. <br />
 시간 관계상 이 신호들에 대한 설명은 생략하도록 하겠습니다. <br />
 그래서 100번의 PID를 가진 프로세스를 종료하고 싶으면 kill -9 100, kill -SIGKILL 100 으로 사용합니다. <br />
 그 외에도 sleep명령어는 입력한 시간동안 대기하는 상태 프로세스를 생성하는 명령어도 있습니다. <br />
