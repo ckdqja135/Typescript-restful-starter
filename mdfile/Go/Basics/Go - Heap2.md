@@ -9,4 +9,5 @@ Go에서는 Slice라고 한다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102062422-0e10ba00-3e38-11eb-8af1-1e8efe278b6d.png" width = 70%> </img></p>
 그래서 아래와 같은 배열이 구성된다. <br />
 
-|1|2|3|
+|9|7|8|3|4|6|7||
+|------|---|---|---|---|---|---|
