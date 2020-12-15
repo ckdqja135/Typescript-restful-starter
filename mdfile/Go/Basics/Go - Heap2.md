@@ -123,6 +123,65 @@ func main() {
 
 이제 Pop을 구현해보자! <br />
 ``` Go
+func (h *Heap) Pop() int { // 1
+	if len(h.list) == 0 { // 2
+		return 0
+	}
+
+	top := h.list[0] // 3
+	last := h.list[len(h.list)-1] // 4
+	h.list = h.list[:len(h.list)-1] // 5
+
+	h.list[0] = last // 6
+	idx := 0 // 7
+	for idx < len(h.list) { // 8
+		leftIdx := idx*2 + 1 // 14
+
+		if leftIdx >= len(h.list) { // 19
+			break
+		}
+
+		left := h.list[leftIdx] // 9
+		rightIdx := idx*2 + 2 // 14
+		right := h.list[rightIdx] // 10
+
+		if left > last && left >= right { // 11
+			h.list[idx], h.list[leftIdx] = h.list[leftIdx], h.list[idx] // 12
+			idx = leftIdx // 13
+		} else if right > last { // 15
+			h.list[idx], h.list[rightIdx] = h.list[rightIdx], h.list[idx] // 16
+			idx = rightIdx // 17
+		} else { // 18
+			break
+		}
+	}
+}
+```
+1 : Pop()의 함수를 만들어주는데 return값은 Pop된 값이 나오게 된다. <br />
+2 : Heap이 아예 비어있는 경우. 0을 return 시켜준다. <br />
+3 : 맨 위에 있는 값(h.list[0])을 가져온다. <br />
+4 : 맨 마지막에 있는 값을 가져온다. last의 값은 heap의 항목 길이 -1번째가 가장 뒤에 있는 값이다. <br />
+5 : heap 끝을 잘라내서 list를 하나 줄여준다. <br /> 
+    이렇게 하면 맨 마지막 애를 잘라내는 효과를 낸다. <br />
+6 : 맨 마지막에 있는 애를 맨 처음에 올려주고 <br />
+7 : 현재 index는 맨 처음으로 해준다. <br />
+8 : index가 전체 길이보다 작은 경우. 자식 노드로 가면서 자식 중에 가장 큰 애랑 바꾸게 된다. <br />
+9 : 왼쪽 자식 Node를 가져온다. <br />
+10 : 오른쪽 자식 Node를 가져온다. <br />
+11 : 이랬을 때 현재 나의 Node보다 내 자식 노드가 큰 경우 바꾸게 되는데 <br />
+12 : h의 list의 현재 Node값과 Swap하게 된다. <br />
+13 : Index를 leftIdx로 바꾸어준다. <br />
+14 : idx * 2 + 1, idx * 2 + 2 부분이 반복되므로 변수로 묶어서 관리하도록 해준다. <br />
+15 : 만약에 right가 last보다 큰 경우 이 때는 left가 last보다 크지 않거나 left가 right보다 크지 않는 경우인데 <br />
+     즉, 부모 Node보다 크고, left보다 크다는 이야기인데 <br />
+16 : 이 때는 right랑 바꾸어준다. <br />
+17 : 그 후 Index값은 rightIdx값으로 바꾸어준다. <br />
+18 : 현재 값이 자식노드보다 작지 않은경우 바꿀 필요가 없기 때문에 break로 나간다. <br />
+19 : 내 자식Node가 현재 길이보다 더 큰 경우에도 비교할 필요가 없으므로(자식이 없다는 소리니까...) break로 빠져나온다. <br />
+
+그 이후에도 right부분도 없을 경우도 19번과 마찬가지로 바꾸어주어야 하는데 코드가 복잡해지기 때문에 다시 코드를 수정해준다. <br />
+
+``` Go
 func (h *Heap) Pop() int {
 	if len(h.list) == 0 {
 		return 0
@@ -135,25 +194,40 @@ func (h *Heap) Pop() int {
 	h.list[0] = last
 	idx := 0
 	for idx < len(h.list) {
-		leftIdx := idx*2 + 1
-
-		if leftIdx >= len(h.list) {
+		swapIdx := -1 // 4
+		leftIdx := idx*2+1 // 1
+		if leftIdx >= len(h.list) { // 2	
+				break
+		}
+		if h.list[leftIdx] > h.list[idx] { // 3
+				swapIdx = leftIdx // 5
+		}
+		
+		rightIdx := idx*2+2 // 6
+		if rightIdx >= len(h.list) { // 7
+				if h.list[rightIdx] > h.list[idx] { // 8
+						if swapIdx >= 0 && h.list[swapIdx] < h.list[rightIdx] { // 9
+								swapIdx = rightIdx // 10
+						}
+				}
+		}
+		
+		if swapIdx < 0 { // 11
 			break
 		}
-
-		left := h.list[leftIdx]
-		rightIdx := idx*2 + 2
-		right := h.list[rightIdx]
-
-		if left > last && left >= right {
-			h.list[idx], h.list[leftIdx] = h.list[leftIdx], h.list[idx]
-			idx = leftIdx
-		} else if right > last {
-			h.list[idx], h.list[rightIdx] = h.list[rightIdx], h.list[idx]
-			idx = rightIdx
-		} else {
-			break
-		}
+	h.list[idx], h.list[swapIdx]
 	}
 }
 ```
+1 : leftIdx 값.
+2 : leftIdx가 길이보다 크거나 같다면 -> 자식노드가 없다면 break를 해준다. <br />
+3 : leftIdx가 현재꺼보다 큰 경우 바꾸어준다. <br />
+4 : 바꾼 것을 표시해주기 위해 swapIdx를 추가 해준 뒤에 <br />
+5 : 여기어 넣어 준다. <br />
+6 : rightIdx 추가. <br />
+7 : 마찬가지로 rightIdx가 list길이보다 작은 경우. <br />
+8 : 안에 right 자식 Node가 있는 경우를 비교. <br />
+9 : swapIdx가 0보다 크거나 같으면서 현재 내 right 자식 Node가 left 자식 Node보다 큰지 비교한다. -> 커야 바꾸기 때문. <br />
+10 : 그 때 swapIdx를 왼쪽이 아닌 오른쪽 값으로 바꾸도록 하고 <br />
+11 : swapIdx가 0보다 작은 경우 swap할 값이 없다는 뜻이기 때문에 break를 해주고 <br />
+
