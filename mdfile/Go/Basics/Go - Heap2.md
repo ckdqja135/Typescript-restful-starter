@@ -296,6 +296,7 @@ func main() {
 
 }
 ```
+
 이렇게 하고 값을 확인해보면 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102198380-a88aff00-3f05-11eb-85b2-c1a877e7b755.png" width = 70%> </img></p>
 Heap 처리 되어 나오는 것을 알 수 있다. <br />
