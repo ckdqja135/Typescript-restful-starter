@@ -204,9 +204,9 @@ func (h *Heap) Pop() int {
 		}
 		
 		rightIdx := idx*2+2 // 6
-		if rightIdx >= len(h.list) { // 7
+	  if rightIdx < len(h.list) { // 7
 				if h.list[rightIdx] > h.list[idx] { // 8
-						if swapIdx >= 0 && h.list[swapIdx] < h.list[rightIdx] { // 9
+						if swapIdx < 0 || swapIdx >= 0 && h.list[swapIdx] < h.list[rightIdx] { // 9
 								swapIdx = rightIdx // 10
 						}
 				}
@@ -215,11 +215,13 @@ func (h *Heap) Pop() int {
 		if swapIdx < 0 { // 11
 			break
 		}
-	h.list[idx], h.list[swapIdx]
+		h.list[idx], h.list[swapIdx] = h.list[swapIdx], h.list[idx] // 12
+		idx = swapIdx // 13
 	}
+	return top // 14
 }
 ```
-1 : leftIdx 값.
+1 : leftIdx 값. <br />
 2 : leftIdx가 길이보다 크거나 같다면 -> 자식노드가 없다면 break를 해준다. <br />
 3 : leftIdx가 현재꺼보다 큰 경우 바꾸어준다. <br />
 4 : 바꾼 것을 표시해주기 위해 swapIdx를 추가 해준 뒤에 <br />
@@ -227,7 +229,73 @@ func (h *Heap) Pop() int {
 6 : rightIdx 추가. <br />
 7 : 마찬가지로 rightIdx가 list길이보다 작은 경우. <br />
 8 : 안에 right 자식 Node가 있는 경우를 비교. <br />
-9 : swapIdx가 0보다 크거나 같으면서 현재 내 right 자식 Node가 left 자식 Node보다 큰지 비교한다. -> 커야 바꾸기 때문. <br />
+9 : swapIdx가 0보다 작거나 swapIdx에 해당하는 값이 현재 내 값과 작은 경우를 비교한다.<br />
 10 : 그 때 swapIdx를 왼쪽이 아닌 오른쪽 값으로 바꾸도록 하고 <br />
 11 : swapIdx가 0보다 작은 경우 swap할 값이 없다는 뜻이기 때문에 break를 해주고 <br />
+12 : 그렇지 않은경우 서로 swap 시켜준다. <br />
+13 : 위에서 바꾸었기 때문에 Index값을 swapIdx로 바꾸어 준 뒤 for문으로 다시 돌아간다. <br />
+14 : 이렇게 for문에 돌아가 다시 비교를 해준 뒤 마지막에 아까 뽑아놓았던 top값을 retrun하여 끝낸다. <br />
 
+그 후 print를 확인하자. <br />
+<code>main.go</code>
+``` Go
+package main
+
+import (
+	"fmt"
+
+	"./dataStruct"
+)
+
+func main() {
+	h := &dataStruct.Heap{}
+
+	h.Push(9)
+	h.Push(8)
+	h.Push(7)
+	h.Push(6)
+	h.Push(5)
+
+	h.Print()
+
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
+
+}
+```
+출력값을 확인하자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102198067-46ca9500-3f05-11eb-813b-01f8c837c816.png" width = 70%> </img></p>
+맨 앞의 값부터 나오는 것을 확인할 수 있다. <br />
+어떻게 보면 list에 값을 넣고, list에 있는 값을 순서대로 뽑아내는거 아니냐?고 생각할 수 있는데 이걸 확인하는 방법은 <br />
+처음에 넣을 때 값을 무작위로 넣어보겠다. <br />
+<code>main.go</code>
+``` Go
+package main
+
+import (
+	"fmt"
+
+	"./dataStruct"
+)
+
+func main() {
+	h := &dataStruct.Heap{}
+
+	h.Push(2)
+	h.Push(7)
+	h.Push(1)
+	h.Push(4)
+	h.Push(9)
+
+	h.Print()
+
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
+
+}
+```
+이렇게 하고 값을 확인해보면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102198380-a88aff00-3f05-11eb-85b2-c1a877e7b755.png" width = 70%> </img></p>
+Heap 처리 되어 나오는 것을 알 수 있다. <br />
