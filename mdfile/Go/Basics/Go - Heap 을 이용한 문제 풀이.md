@@ -74,4 +74,32 @@ y축이 속도, x축이 항목 갯수인데 보게 되면 항목갯수가 늘어
 격차가 점점 줄어들다가 항목갯수가 16개 일 때 역전이 되는 것을 알 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102331412-2c102300-3fce-11eb-9adc-1fd19bfe6825.png" width = 70%> </img></p> 
 
-그러므로 일반적인 경우에 x\cdot\log_{2}\left(x\right)
+그러므로 일반적인 경우에 x * log2(x)이 더 느리지만 m이 커질 경우엔 x * log2(x)이 더 빨리 끝난다는 것을 알 수 있다. <br />
+
+이거보다 더 빠르게 끝나는 방법은 Heap을 사용하는 방법이다. 그래서 최대값, 최소값, 몇 번째 큰 값이라는 문제가 있을 때 Heap을 사용해야 한다고 떠올려야 한다. <br />
+푸는 방법은 큰 값을 찾을 때는 Min Heap을 사용하고, 작은 값을 찾을 때는 Max Heap을 사용한다. <br />
+
+Input : [-1, 3, -1, 5, 4], 2 <br /> 
+의 예시가 있을 때 Min Heap에 값을 넣으면 **가장 작은 값이 위로 올라가게 된다.** <br />
+그리고 3이 들어올 때 3이 더 작기 때문에 -1 Node의 자식 Node로 들어가게 된다. <br />
+그래서 이 Min Heap의 갯수를 2개만 유지 하는 것이다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102332412-629a6d80-3fcf-11eb-8bc8-682027348a10.png" width = 70%> </img></p> 
+그랬을 때 -1을 또 넣게 되면 -1이 같으니까 밑에 집어 넣는다. 그렇게 되면 Tree가 3개가 되는데 2개가 될 때까지 빼버리는 것이다.<br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102332568-9b3a4700-3fcf-11eb-923d-57a96cf4759e.png" width = 70%> </img></p>
+그러면 맨 위에 있는 -1을 빼버리고 자식 Node인 -1이 올라가니까 아래와 같아진다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102332709-cf156c80-3fcf-11eb-896d-2e19777192b6.png" width = 70%> </img></p> 
+
+그 다음 5를 집어 넣을 때 3과 5가 Swap되서 자리를 바꾸어준다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102332832-f5d3a300-3fcf-11eb-84cb-cf23d9b19d98.png" width = 70%> </img></p> 
+그 다음 4가 들어오게 되고 4는 3보다 크기 때문에 오른쪽 자식 Node로 들어오게 될 것이고 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102332956-1c91d980-3fd0-11eb-96ef-217b747dd638.png" width = 70%> </img></p> 
+3개가 되었기 때문에 3이 빠지고 4가 들어가 아래와 같이 된다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102333037-359a8a80-3fd0-11eb-9ce1-cbe9af05eac1.png" width = 70%> </img></p>
+그랬을 때 맨 위에 있는 Root Node가 답이 된다. <br />
+
+이렇게 풀었을 때 어떤 이득이 있는지 살펴보자. <br />
+각 배열의 요소를 돌면서 Heap에 Push를 하게 되고, 그 다음 Heap안에 자식의 갯수를 Count를 했을 때 찾고 싶은 값이 N일 때 <br />
+Count는 N보다 큰 경우엔 Pop하게 된다. 그러니까 Count == N이 될 때 까지 Pop하게 된다. 그 다음 Push하고, Count가 N보다 크면 Pop하고, 다음노드로 넘어가는 형태를 반복하게 된다. <br />
+저번 시간에 Heap에서 Push는 log2^N이라고 말했었다. Pop도 마찬가지로 log2^N이다. <br />
+이렇게 보았을 때 배열의 갯수가 N개이고, Heap갯수 M인 Heap에 Push와 Pop을 한다 했을 때 Push, Pop을 한번씩 하게 되기 때문에
+log2^M이 되고, 2번 반복해야 하니까 2 * log2^M이 되고, 이것을 N번 반복해야 하니까 2 * N log2^M이 된다. <br />
