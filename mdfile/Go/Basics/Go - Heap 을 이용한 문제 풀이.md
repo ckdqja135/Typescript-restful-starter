@@ -103,3 +103,235 @@ Count는 N보다 큰 경우엔 Pop하게 된다. 그러니까 Count == N이 될 
 저번 시간에 Heap에서 Push는 log2^N이라고 말했었다. Pop도 마찬가지로 log2^N이다. <br />
 이렇게 보았을 때 배열의 갯수가 N개이고, Heap갯수 M인 Heap에 Push와 Pop을 한다 했을 때 Push, Pop을 한번씩 하게 되기 때문에
 log2^M이 되고, 2번 반복해야 하니까 2 * log2^M이 되고, 이것을 N번 반복해야 하니까 2 * N log2^M이 된다. <br />
+
+그랬을 때 그래프로 그려보면 3번째 방법이 제일 빠르다는 것을 알 수 있다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102466502-72c75100-4092-11eb-93c2-0b6773ac2a9e.png" width = 70%> </img></p> 
+왜냐하면 항목이 늘어날 수록 M과 N의 격차는 벌어지기 때문이다. <br />
+
+정리해보면 배열이 있을 때 그 배열 안에 M번째 값을 찾는다. 첫번째 값은 N개의 배열을 만든 다음에 각 항목을 다 비교하여 정렬해가며 하는 방법이 있고 <br />
+두 번째로 먼저 정렬을 한 다음에 M번째에 있는 값을 꺼내오는 방법이 있고 <br />
+세 번째 방법으로 Heap을 만들어서 M개의 Tree만 가질 수 있는 Heap을 만든 다음에 그 안에 항목을 넣고 빼고를 반복하는 방법이 있다. <br />
+
+그래서 알고리즘은 한가지 방법으로만 풀 수 있는 경우는 없고 그 중에 가장 최적인 것을 사용한다. <br />
+
+이제 코드로 넘어와 구현을 해보자. <br />
+
+<code>heap.go</code>로 와서 코드를 수정하는데 지난번에 만들었던 것은 MaxHeap이다. 이것을 MinHeap으로 바꿔주는 방법은 부등호만 변경 시켜주면 된다. <br />
+기존에 있던 Push 부분과 Pop부분을 아래와 같이 부등호만 변경시켜주면 되지만 저 2개의 함수를 따로 만들었다. <br />
+
+``` Go
+func (h *Heap) MinHeap(v int) {
+	h.list = append(h.list, v)
+
+	idx := len(h.list) - 1
+	for idx >= 0 {
+		parantIdx := (idx - 1) / 2
+		if parantIdx < 0 {
+			break
+		}
+		if h.list[idx] < h.list[parantIdx] {
+			h.list[idx], h.list[parantIdx] = h.list[parantIdx], h.list[idx]
+			idx = parantIdx
+		} else {
+			break
+		}
+	}
+}
+
+func (h *Heap) MinHeapPop() int {
+	if len(h.list) == 0 {
+		return 0
+	}
+
+	top := h.list[0]
+	last := h.list[len(h.list)-1]
+	h.list = h.list[:len(h.list)-1]
+
+	h.list[0] = last
+	idx := 0
+
+	for idx < len(h.list) {
+		swapIdx := -1
+		leftIdx := idx*2 + 1
+		if leftIdx >= len(h.list) {
+			break
+		}
+		if h.list[leftIdx] < h.list[idx] {
+			swapIdx = leftIdx
+		}
+
+		rightIdx := idx*2 + 2
+		if rightIdx < len(h.list) {
+			if h.list[rightIdx] < h.list[idx] {
+				if swapIdx < 0 || h.list[swapIdx] > h.list[rightIdx] {
+					swapIdx = rightIdx
+				}
+			}
+		}
+
+		if swapIdx < 0 {
+			break
+		}
+		h.list[idx], h.list[swapIdx] = h.list[swapIdx], h.list[idx]
+		idx = swapIdx
+	}
+	return top
+}
+```
+이렇게 추가해준 뒤 <code>main.go</code>로 넘어와 코드를 수정해준다. <br />
+
+``` Go
+package main
+
+import (
+	"fmt"
+
+	"./dataStruct"
+)
+
+func main() {
+	h := &dataStruct.Heap{}
+
+	// [-1, 3, -1, 5, 4], 2번째 큰 값
+	nums := []int{-1, 3, -1, 5, 4} // 1
+	
+  for i := 0; i < len(nums); i++ { // 2
+    h.Push(nums[i])
+  }
+}
+```
+1 : nums라는 슬라이스를 생성한 뒤 그 안에 우리가 풀어야 할 수를 써준다. <br />
+2 : for문을 사용하여 값들을 Heap에 Push해준다. <br />
+
+이제 heap의 count를 가져와야하는데 그 부분이 없기 때문에 count를 반환하는 함수를 써주자! <br />
+<code>heap.go</code>
+``` Go
+func (h *Heap) Count() int {
+	return len(h.list)
+}
+```
+
+이제 main부분을 이어서 작성하자! <br />
+``` Go
+func main() {
+	h := &dataStruct.Heap{}
+
+	// [-1, 3, -1, 5, 4], 2번째 큰 값
+	nums := []int{-1, 3, -1, 5, 4}
+	
+  for i := 0; i < len(nums); i++ {
+    h.MinHeap(nums[i])
+    if h.Count() > 2 { // 1
+      h.MinHeapPop()
+    }
+  }
+  fmt.Println(h.MinHeapPop())
+}
+```
+1 : count가 2개 이상이면 하나를 빼준다. <br />
+그리고 맨 위에 있는 값을 Pop을 해서 출력하면 2번째로 큰 값이 나오게 된다. <br />
+이제 실행시켜보자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102468573-07cb4980-4095-11eb-885f-cd82da9f9c37.png" width = 70%> </img></p>
+
+이제 다른 문제도 풀어보자! <br />
+
+``` Go
+func main() {
+	h := &dataStruct.Heap{}
+
+	// [2, 4, -2, -3, 8], 1번째 큰 값
+	nums := []int{2, 4, -2, -3, 8}
+
+	for i := 0; i < len(nums); i++ {
+		h.MinHeap(nums[i])
+		if h.Count() > 1 {
+			h.MinHeapPop()
+		}
+	}
+	fmt.Println(h.MinHeapPop())
+}
+```
+여기서 이렇게 실행하면 아래와 같은 오류가 뜬다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102468915-77413900-4095-11eb-9ef9-7705f2eeb862.png" width = 70%> </img></p>
+
+출력할 때 MinHeapPop을 하는데 이 갯수가 하나인데 MinHeapPop을 해서 list가 비어버리기 때문에 MinHeapPop()에서 자식Node를 맨 위로 올리는 과정이 있는데 그 자식Node가 없기 때문에 에러가 나게 되는 것이다. MinHeapPop()코드를 수정해주자!<br />
+<code>heap.go</code>
+``` Go
+func (h *Heap) MinHeapPop() int {
+	if len(h.list) == 0 {
+		return 0
+	}
+
+	top := h.list[0]
+	last := h.list[len(h.list)-1]
+	h.list = h.list[:len(h.list)-1]
+
+	if len(h.list) == 0 { // 수정된 부분.
+		return top
+	}
+
+	h.list[0] = last
+	idx := 0
+
+	for idx < len(h.list) {
+		swapIdx := -1
+		leftIdx := idx*2 + 1
+		if leftIdx >= len(h.list) { 
+			break
+		}
+		if h.list[leftIdx] < h.list[idx] {
+			swapIdx = leftIdx
+		}
+
+		rightIdx := idx*2 + 2
+		if rightIdx < len(h.list) {
+			if h.list[rightIdx] < h.list[idx] {
+				if swapIdx < 0 || h.list[swapIdx] > h.list[rightIdx] {
+					swapIdx = rightIdx
+				}
+			}
+		}
+
+		if swapIdx < 0 {
+			break
+		}
+		h.list[idx], h.list[swapIdx] = h.list[swapIdx], h.list[idx]
+		idx = swapIdx
+	}
+	return top
+}
+```
+
+이제 실행을 시키면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102469348-f9c9f880-4095-11eb-859b-52a1a9acabe3.png" width = 70%> </img></p>
+
+이제 그 아래에 코드를 더 추가하여 3번째 문제도 풀어보자! <br />
+``` Go
+func main() {
+	h := &dataStruct.Heap{}
+
+	// [2, 4, -2, -3, 8], 1번째 큰 값
+	nums := []int{2, 4, -2, -3, 8}
+
+	for i := 0; i < len(nums); i++ {
+		h.MinHeap(nums[i])
+		if h.Count() > 1 {
+			h.MinHeapPop()
+		}
+	}
+	fmt.Println(h.MinHeapPop())
+
+	// Input : [-5, 3, 1], 3번째 큰 값.
+	nums = []int{-5, 3, 1}
+	for i := 0; i < len(nums); i++ {
+		h.MinHeap(nums[i])
+		if h.Count() > 3 {
+			h.MinHeapPop()
+		}
+	}
+	fmt.Println(h.MinHeapPop())
+}
+```
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102469523-33026880-4096-11eb-94aa-b571385660f5.png" width = 70%> </img></p>
+
+정상적으로 나오는 것을 알 수 있다. 이 처럼 Heap을 사용해서 문제를 풀 수 있다. <br />
