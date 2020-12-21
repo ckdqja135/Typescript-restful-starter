@@ -16,3 +16,4 @@
 16. [Go - Heap](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Heap.md)
 17. [Go - Heap2](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Heap2.md)
 18. [Go - Heap 을 이용한 문제 풀이](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Heap%20%EC%9D%84%20%EC%9D%B4%EC%9A%A9%ED%95%9C%20%EB%AC%B8%EC%A0%9C%20%ED%92%80%EC%9D%B4.md)
+19. [Go - Map 과 Hash 의 관계](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Map%20%EA%B3%BC%20Hash%20%EC%9D%98%20%EA%B4%80%EA%B3%84.md)
