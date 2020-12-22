@@ -252,6 +252,6 @@ Seed값은 time의 now의 UnixNano()를 많이 사용한다고 되어 있다. <b
 
 ```
 
-이제 다시 빌드해보자! <br/ >
+이제 다시 빌드해보자! <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/97143396-f7d66e00-17a5-11eb-985a-d64ac748f080.png" width = 70%> </img></p>
 같은 값이 나오지 않는 것을 확인 할 수 있다. <br />
