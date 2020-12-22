@@ -185,10 +185,10 @@ func (m *Map) Get(key string) string { // 6
 
 ```
 1 : KeyValue struct 생성. <br />
-2 : 먼저 Map이라는 struct를 생성시켜주고, 이 안에 3571개의 Array를 넣어주고, 다시 List로 들어가 Key-Value값을 넣어주도록한다. <br />
+2 : 먼저 Map이라는 struct를 생성시켜주고, 이 안에 각 hash값에 해당하는 범위인 3571개의 Array를 넣어주고, 그 Array의 항목에는 Key와 ValueList를 갖는 들어간다.<br />
 3 : 그 후 Add라는 함수를 만들어서 key와 value를 입력받아 add 할 수 있게 해준다. <br />
-4 : 먼저 Hash값을 구하고 <br />
-5 : hash에 해당하는 곳에 keyValue를 만들어서 append 시켜주고, append한 결과를 `m.KeyArray[h]`에 넣어준다. <br />
+4 : 먼저 key에 해당하는 Hash값을 뽑아주고 <br />
+5 : hash에 해당하는 Index에 keyValue를 append 시켜주고, append한 결과를 `m.KeyArray[h]`에 넣어준다. <br />
 이렇게 되면 Hash()에 key를 넣고 돌린 h라는 값에 해당하는 List가 있을텐데 그 List에 keyValue를 추가하고, 추가된 List를 다시 재정의 하는 부분으로 보면 된다. <br />
 6 : 이제 가져오는 key를 입력받아 value를 가져오는 Get함수를 생성해준다. <br />
 7 : 마찬가지로 key에 대한 hash값을 구해주고 <br />
@@ -231,4 +231,16 @@ func main() {
 마지막에 넣지 않는 key값을 조회시켜 어떤 일이 일어나는지도 살펴보자! <br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102855193-8ba37e00-4467-11eb-8fef-e1ca5a31bcaf.png" width = 70%> </img></p>
-넣었던 값들은 정상적으로
+넣었던 값들은 정상적으로 출력이 되고, 넣지 않은 값은 정상적으로 출력이 되지 않는 것을 알 수 있다. <br />
+
+이렇게 Map을 만들었다! <br />
+Map은 List와 함께 보편적으로 사용되는 struct 중 하나이다. <br />
+Map의 장점은 key와 value형태로 되어있는 data struct에서 Find, Add, Remove가 모두 O(1)로 끝나기 때문에 속도가 빠르다는 점이다. <br />
+
+단점은 Hash value는 순서가 없어서 정렬된 형태로 사용할 수 없다는 점인데 어떤 입력값이 들어왔을 때 어떤 결과값이 나오는지 알 수 없기 때문에 Hash의 결과값이 정렬 되어있는 상태가 아니라는 점이다. <br />
+그래서 Hash의 값이 작다고 해서 입력값이 작은게 아니고, 크다고 해서 큰 것이 아니기 때문에 key를 정렬되게 뽑을 수가 없다. <br />
+그래서 정렬 하고 싶다면 Sorted Map을 사용하면 되지만, 이 때 속도는 O(1)이 아니라 O(log2^N)이 된다는 점을 알아두어야 한다. <br />
+
+이것을 외울게 아니라 왜 HashMap은 add와 Remove와 Fined가 O(1)인지, 왜 Sorted Map은 Add와 Remove와 Fined가 O(log2^N)인지 이해해야 한다. 원리를 알아야 한다. <br />
+이 부분이 이해가 되지 않는다면 앞에 다 설명을 했기 때문에 다시 보는 것을 추천한다. <br />
+간략하게 말하자면 HashMap은 Hash를 사용하기 때문에 O(1), Sorted Map은 BST를 사용하기 때문에(반절씩 버리고 가기 때문에) O(log2^N)이 된다. <br />
