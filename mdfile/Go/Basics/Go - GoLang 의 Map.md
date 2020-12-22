@@ -126,5 +126,143 @@ func main() {
 }
 
 ```
-그랬을 때 asc의 value인 aaa가 출력 되는 것을 알 수 있다. <br />
+그랬을 때 key값 asc의 value인 aaa가 출력 되는 것을 알 수 있다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102858654-040d3d80-446e-11eb-9977-66f9905325bd.png" width = 70%> </img></p>
+
+이 외에도 선언과 대입 동시에 가능한 선언대입문 사용도 가능한데 <br />
+``` Go
+package main
+
+import "fmt"
+
+func main() {
+	var m map[string]string
+	m = make(map[string]string)
+
+	m["asc"] = "aaa"
+	m["abc"] = "bbb"
+
+	fmt.Println(m["asc"])
+
+	m1 := make(map[int]string)
+	m1[11] = "vvv"
+	fmt.Println(m1[11])
+	
+}
+```
+
+위와 같이 해준 뒤 출력하면 <br />
+
+정상적으로 출력 되는 것을 알 수 있다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102859019-94e41900-446e-11eb-8cba-db0ab2539702.png" width = 70%> </img></p>
+
+한가지 재밌는 것은 Golang에서는 값을 대입하지 않는 값을 출력하고자 할 경우 기본 값이 출력이 된다. <br />
+``` Go
+package main
+
+import "fmt"
+
+func main() {
+	var m map[string]string
+	m = make(map[string]string)
+
+	m["asc"] = "aaa"
+	m["abc"] = "bbb"
+
+	fmt.Println(m["asc"])
+
+	m1 := make(map[int]string)
+	m1[11] = "vvv"
+	fmt.Println(m1[11])
+	fmt.Println(m1[22])
+}
+```
+이렇게 했을 때 m1에 22는 Setting을 해주지 않았기 때문에 없는 값인데 이 값의 기본 값인 빈 문자열이 나오게 된다. 확인해보자! <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102859187-de346880-446e-11eb-9584-b4a005484463.png" width = 70%> </img></p>
+
+이번엔 key, value가 int인 map을 만들어본 뒤 위와 같이 했을 때 어떤 기본값이 나오는지 확인해보자! <br />
+``` Go
+func main() {
+	var m map[string]string
+	m = make(map[string]string)
+
+	m["asc"] = "aaa"
+	m["abc"] = "bbb"
+
+	fmt.Println(m["asc"])
+
+	m1 := make(map[int]string)
+	m1[11] = "vvv"
+	fmt.Println(m1[11])
+	fmt.Println(m1[22])
+
+	m2 := make(map[int]int)
+	m2[4] = 4
+
+	fmt.Println(m2[5])
+}
+```
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102859436-3f5c3c00-446f-11eb-8f82-276dad299869.png" width = 70%> </img></p>
+int형의 기본값은 0이기 때문에 0이 출력되는 것을 볼 수 있다. <br />
+
+이 성질을 이용해서 C++에서 제공하는 Set과 같은 것을 만들어 낼 수 있다. <br />
+set이라는 것은 어떤 값이 항목에 있는지 없는지를 검사하는 것이다. <br />
+
+``` Go
+func main() {
+	var m map[string]string
+	m = make(map[string]string)
+
+	m["asc"] = "aaa"
+	m["abc"] = "bbb"
+
+	fmt.Println(m["asc"])
+
+	m1 := make(map[int]string)
+	m1[11] = "vvv"
+	fmt.Println(m1[11])
+	fmt.Println(m1[22])
+
+	m2 := make(map[int]int)
+	m2[4] = 4
+
+	fmt.Println(m2[5])
+
+	m3 := make(map[int]bool)
+	m3[4] = true
+
+	fmt.Println(m3[4], m3[5])
+}
+```
+
+그래서 이렇게 하면 이 m3안에 어떤 key값이 Setting이 되어 있는지 없는지를 알기 위해 사용하는 방법인데 그 값이 true, false를 보면 그 값이 Setting되어 있는지, 아닌지, 존재하는지 안하는지를 알 수 있다. <br />
+그래서 이 부분을 출력하게 되면 <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102859776-ec36b900-446f-11eb-9625-5a4637527089.png" width = 70%> </img></p>
+true, false가 나온 것을 볼 수 있는데, m3의 4는 미리 Setting을 했고, m3의 5는 Setting을 하지 않았기 때문인데, bool형의 기본 값은 false이기 때문에 false가 나온 것이다.<br />
+
+이렇게 했을 경우 한가지 문제가 생기는데 이 기본값이 내가 설정한 기본값인지, 아니면 key가 존재하지 않아 나온 기본값인지 알 수 없다는 점이다. <br />
+위의 코드를 예로 들어 보면 <br />
+``` Go
+	m2 := make(map[int]int)
+	m2[5] = 0
+	fmt.Println(m2[5])
+	fmt.Println(m2[6])
+```
+
+이렇게 하면 둘 다 0이 나오게 된다. 하지만 두개는 차이가 있는데 `m2[5]`는 0으로 설정했기 때문에 0이 나온것이고, `m2[6]`은 그 값이 비었기 때문에 기본값인 0이 나온 것이다. <br />
+그래서 내가 이 값을 설정했는지 안했는지를 보기 위해서 Golang에서는 읽기에서 value만 제공하는 게 아니라 그 값이 있는지 없는지도 제공해주고 있다. <br />
+``` Go
+	m2 := make(map[int]int)
+	m2[4]= 4
+	m2[5] = 0
+	
+	v := m2[5]
+	v1 :=	m2[4]
+	fmt.Println(v, v1)
+```
+그래서 위와 같이 v에 `m2[5]`를 대입했을 때 v값은 `m2[5]`의 값인 0이 대입이 되고, v1은 `m2[4]`의 값인 4가 대입이 된다. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102861115-74b65900-4472-11eb-88ba-f453b98f9b26.png" width = 70%> </img></p>
+
+
