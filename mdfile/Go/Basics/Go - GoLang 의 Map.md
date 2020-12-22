@@ -259,10 +259,134 @@ true, false가 나온 것을 볼 수 있는데, m3의 4는 미리 Setting을 했
 	m2[5] = 0
 	
 	v := m2[5]
-	v1 :=	m2[4]
+	v1 := m2[4]
 	fmt.Println(v, v1)
 ```
 그래서 위와 같이 v에 `m2[5]`를 대입했을 때 v값은 `m2[5]`의 값인 0이 대입이 되고, v1은 `m2[4]`의 값인 4가 대입이 된다. <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102861115-74b65900-4472-11eb-88ba-f453b98f9b26.png" width = 70%> </img></p>
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102861368-e1c9ee80-4472-11eb-9f67-97f16c821401.png" width = 70%> </img></p>
 
+마찬가지로 아래와 같이 했을 때도 0은 그대로 나오게 된다. <br />
+``` Go
+	m2 := make(map[int]int)
+	m2[4]= 4
+	m2[5] = 0
+	
+	v := m2[5]
+	v1 := m2[4]
+	v2 := m2[10]
+	fmt.Println(v, v1, v2)
+```
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102861512-25245d00-4473-11eb-9dee-733089848b9d.png" width = 70%> </img></p>
+이 때 값이 있는지 없는 지 확인하려면 2번째 값을 넣으면 되는데 Golang에서는 map을 읽기로 Access했을 때는 두 개의 값을 반환하는데 <br />
+첫번째 값엔 Value, 두번재 값엔 Bool형이 나온다. 그래서 아래와 같이 수정을 하면 확인이 가능하다. <br />
+``` Go
+	m2 := make(map[int]int)
+	m2[4]= 4
+	m2[5] = 0
+	
+	v, ok1 := m2[5]
+	v1 := m2[4]
+	v2, ok2 := m2[10]
+	fmt.Println(v, ok1, v1, v2, ok2)
+```
+
+이렇게 해서 결과를 확인하면 <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102862031-d9be7e80-4473-11eb-9436-5ac46527773e.png" width = 70%> </img></p>
+존재 여부를 확인 할 수 있는 것을 알 수 있다. <br />
+그래서 값의 여부를 확인할 때는 value값이 아니라 bool형 타입 값을 넣어 확인해야 한다는 것을 알 수 있다. <br />
+
+이번에는 값을 지우는 부분을 해보자! 값을 지울 때는 delete(mapname, key)를 넣어서 지울 수 있다.<br />
+
+``` Go
+func main() {
+	var m map[string]string
+	m = make(map[string]string)
+
+	m["asc"] = "aaa"
+	m["abc"] = "bbb"
+
+	fmt.Println(m["asc"])
+
+	m1 := make(map[int]string)
+	m1[11] = "vvv"
+	fmt.Println(m1[11])
+	fmt.Println(m1[22])
+
+	m2 := make(map[int]int)
+	m2[4] = 4
+
+	fmt.Println(m2[5])
+
+	m3 := make(map[int]bool)
+	m3[4] = true
+
+	fmt.Println(m3[4], m3[5])
+	
+	m2[5] = 0
+	v, ok1 := m2[5]
+	v1 := m2[4]
+	v2, ok2 := m2[10]
+	fmt.Println(v, ok1, v1, v2, ok2)
+	
+	delete(m2, 5)
+	v, ok1 = m2[5]
+	fmt.Println(v, ok1, v1, v2, ok2)
+}
+```
+
+key값 5를 지우고 나서 다시 출력하면 어떻게 될지 확인해보자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102862392-66693c80-4474-11eb-9718-90aba0cc2484.png" width = 70%> </img></p>
+
+false로 바뀐 것을 알 수 있다. <br />
+
+마지막으로 순회 하는 부분이 남았는데 순회 하는 방법은 반복문을 사용하면 되는데 key와 value가 나오는데 대입선언문으로 range를 쓰고, map을 적어주게 되면 map의 모든 항목을 반복하면서 key와 value를 알려주게 된다. <br />
+
+``` Go
+func main() {
+	var m map[string]string
+	m = make(map[string]string)
+
+	m["asc"] = "aaa"
+	m["abc"] = "bbb"
+
+	fmt.Println(m["asc"])
+
+	m1 := make(map[int]string)
+	m1[11] = "vvv"
+	fmt.Println(m1[11])
+	fmt.Println(m1[22])
+
+	m2 := make(map[int]int)
+	m2[4] = 4
+
+	fmt.Println(m2[5])
+
+	m3 := make(map[int]bool)
+	m3[4] = true
+
+	fmt.Println(m3[4], m3[5])
+	m2[5] = 0
+	v, ok1 := m2[5]
+	v1 := m2[4]
+	v2, ok2 := m2[10]
+	fmt.Println(v, ok1, v1, v2, ok2)
+
+	delete(m2, 5)
+	v, ok1 = m2[5]
+	fmt.Println(v, ok1, v1, v2, ok2)
+
+	m2[2] = 72
+	m2[10] = 456
+
+	for key, value := range m2 {
+		fmt.Println(key, " = ", value)
+	}
+}
+```
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102862696-d37cd200-4474-11eb-84fd-7bd27eae672e.png" width = 70%> </img></p>
+
+여기서 한가지 더 눈여겨 보아야 할게 2, 10, 4 순으로 나왔는데 작은 값 ~ 큰 값 순으로 나오지 않았다는 점이다. <br />
+저번에도 Hash함수 설명할 때 크기와 상관없이 key값이 정렬되어 나오지 않는다고 설명했는데 여기서도 무작위로 나왔다는 것을 알 수 있다. <br />
 
