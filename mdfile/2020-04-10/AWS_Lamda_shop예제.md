@@ -143,8 +143,6 @@ npm --version
 
 ```
 
-```
-
 # 2 단계 : 코드 추가
 
 1.  AWS Cloud9 IDE에서라는 파일을 생성하십시오 `hello.ts`.
@@ -157,9 +155,6 @@ npm --version
     npm install @types/node
 
     ```
-
-
-```
 
 이로써 `hello.ts` 파일과 동일한 디렉토리에 `node_modules/@types/node` 폴더가 추가됩니다.  
 이 새 폴더에는 나중에 `hello.ts` 파일에 추가할 `console.log` 및 `process.argv` 속성에 대해 TypeScript에 필요한 Node.js 유형 정의가 포함되어 있습다.
@@ -179,8 +174,6 @@ npm --version
     
     ```
     
-
-```
 
 # 3 단계 : 코드 실행
 
@@ -231,10 +224,9 @@ SDK는 AWS 서비스와 상호 작용하려면 이러한 자격 증명이 필요
 AWS Cloud9 IDE의 터미널 세션에서 [3단계: 코드 실행](https://docs.aws.amazon.com/cloud9/latest/user-guide/sample-typescript.html#sample-typescript-run)의 `hello.js` 파일과 동일한 디렉토리에서 npm을 실행하여 Node.js에 JavaScript용 AWS SDK를 설치합니다.
 
 ```
-
 npm install aws-sdk
 
-\`\`\`
+```
 
 이 명령은 [3단계: 코드 실행](https://docs.aws.amazon.com/cloud9/latest/user-guide/sample-typescript.html#sample-typescript-run)의 `node_modules` 폴더에 여러 폴더를 추가합니다.  
 이러한 폴더에는 Node.js의 JavaScript용 AWS SDK에 대한 소스 코드 및 종속성이 포함되어 있습니다. 자세한 내용은 AWS SDK for JavaScript 개발자 가이드에서 [SDK for JavaScript 설치](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/installing-jssdk.html)를 참조하시기 바랍니다.
@@ -362,10 +354,9 @@ Node.js에서 AWS SDK for JavaScript를 사용하여 AWS 서비스를 호출 할
     
     ```
     tsc s3.ts --lib es6
-    
     ```
     
-    TypeScript는 `s3.ts` 파일, Node.js의 AWS SDK for JavaScript, 비동기 라이브러리 및 일련의 ECMAScript 6(ES6) 라이브러리 파일을 사용하여 `s3.ts` 파일의 TypeScript 코드를 `s3.js`라는 파일의 동등한 JavaScript 코드로 변환합니다.
+TypeScript는 `s3.ts` 파일, Node.js의 AWS SDK for JavaScript, 비동기 라이브러리 및 일련의 ECMAScript 6(ES6) 라이브러리 파일을 사용하여 `s3.ts` 파일의 TypeScript 코드를 `s3.js`라는 파일의 동등한 JavaScript 코드로 변환합니다.
     
 2.  환경 창에서 `s3.js` 파일을 엽니다.
     
