@@ -104,9 +104,6 @@ code>npm을 설치하려면 Node Version Manager (`nvm`)를 사용하십시오.
     nvm install node
     
     ```
-    
-
-```
 
 8.  `--version` 옵션을 사용하여 Node.js의 명령줄 버전을 실행하여 Node.js가 설치되었는지 확인하십시오.
 
@@ -133,7 +130,7 @@ npm --version
     ```
 
 
-```
+
 
 11.  명령줄 TypeScript 컴파일러를 `-version` 옵션으로 실행하여 TypeScript가 설치되었는지 확인하십시오.
 
