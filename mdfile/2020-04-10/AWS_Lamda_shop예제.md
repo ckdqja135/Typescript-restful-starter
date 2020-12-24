@@ -1,301 +1,409 @@
-# Typescript와 AWS Lambda로 모니터링에 유용한 API 패턴 구성하기
-
-<img src ="https://miro.medium.com/max/2000/1*IpBul-jWnVtTU0LTPhY3yg.png" width="90%"></img>
-
-람다를 크게 세 부분으로 나눕니다.
-  * 사용자로부터 받은 데이터를 검증해주는 컨트롤러
-  * 비즈니스로직을 구성하는 서비스
-  * API나 데이터베이스와 연결되는 레파지토리
-  
-그럼 상품을 구매하는 Shop 예제를 통해 차근차근 보겠습니다.
-
-# Shop예제
-## shop.ts
-```typescript
-const repo: ShopRepository = new ShopRepository();
-const service: ShopService = new ShopService(repo);
-const controller: ShopController = new ShopController(service);
-
-export const purchaseItem = controller.purchaseItem
-```
-위 이미지처럼 컨트롤러는 생성자로 서비스를, 서비스는 생성자로 레파지토리를 가지고있고 handler 메서드를 export하는형태로 구성되어있습니다.
-
-# 컨트롤러에서 검증하기
-## ShopController1.ts 
-```typescript
-export class ShopController {
-
-    /* 생성자로 서비스를 가지고있습니다.*/
-    public constructor(private readonly _service: ShopService) {
-
-    }
-
-
-    public purchaseItem: APIGatewayProxyHandler = async (event, context) => {
-
-        /* QueryString을 검증합니다. */
-        if (
-            event.queryStringParameters &&
-            event.queryStringParameters.userId &&
-            event.queryStringParameters.itemId
-        ) {
-
-            const {userId, itemid} = event.queryStringParameters
-
-            const apiGatewayResult = await this._service.purchaseItem(userId, itemid).then((user: User) => {
-                /* 성공한경우 Proxy에 맞게 데이터를 리턴해줍니다.*/
-            }).catch((err: ErrorType) => {
-                /* 에러에대한 처리*/
-            })
-
-            return apiGatewayResult
-
-        } else {
-            return {statusCode: 400, body: JSON.stringify("잘못된 요청입니다.")}
-
-        }
-    }
-
-}
-```
-**Lambda**에서 최상위 **Handler**의 역활을 하는것이 컨트롤러입니다. 
-요청받은 **queryString**이나 **JSON**데이터가 올바른 형식인지를 검증하고 문제가 없다면 서비스에 파라미터로 전달합니다.
-**PurchaseItem** 메서드로 **event**객체를 통해 **queryStringParamter**를 받습니다. 
-이 때 요청한 형식이 올바르게 요청했는지를 검증한 후 그렇지 않다면 400에러를 요청을 제대로 하였다면 
-생성자로 가지고있던 **Service**의 **purchaseItem**으로 전달됩니다.
-
-# 서비스로 로직 처리하기
-## ShopService.ts 
-```typescript
-export class ShopService {
-
-    public constructor(private readonly _repo: ShopRepository) {
-
-    }
-
-    public async purchaseItem(userId: string, itemId: string): Promise<User> {
-        const user = this._repo.getUser(userId)
-        const product = this._repo.getItemDetail(itemId)
-
-        /* 유저정보가 없다면 */
-        if (!user) throw ErrorType.NO_USERDATA
-
-        /* 상품정보가 없다면 */
-        if (!product) throw ErrorType.NO_PRODUCT_DATA
-
-        /*포인트가 부족하다면 */
-        if (user.point < product.price) throw ErrorType.INSUFFICENT_POINT
-
-        /* 유저의 포인트 정보를 업데이트합니다. */
-        user.point = (user.point - product.price)
-        const isSuccessUser = this._repo.updateUser(user)
-
-        /* 유저정보를 업데이트하는데 실패한다면 */
-        if (!isSuccessUser) throw ErrorType.FAIL_UPDATE_USER
-
-        return user
-
-    }
-
-}
-```
-
-**Controller**로부터 인자를 받은 서비스에서는 데이터를 레포지토리를 통해 검증합니다. 
-예를들어 요청한 사용자가 실제 존재하는 사용자인지 혹은 실제 상품정보가 있는지 그리고 구매할려는 상품과 비교하여 포인트가 충분한지등입니다.
-
-# 레파지토리로 데이터 가져오기
-## ShopRepositrory.ts
-```typescript
-export class ShopRepository {
-    public getUser(userId: string): User | null {
-
-        /* Database를 통해 유저를 가져오는 코드*/
-        return null
-    }
-
-    public getItemDetail(itemId: string): ShopItem | null {
-        /* Database를 통해 상품정보를 가져오는 로직을 처리*/
-        return null
-    }
-
-
-    public updateUser(user: User): boolean {
-
-        /* 유저의 구매정보를 업데이트 하는 로직을 처리*/
-        return true
-    }
-}
-```
-
-데이터베이스 혹은 **API**와 통신하는 **Repository**는 되도록 작은 단위로 쪼개는편이 재사용성에 좋습니다. 
-예를 들어 유저의 정보를 가져오고 업데이트한다면 유저정보를 가져와 업데이트 하는것보다 
-유저정보를 가져오는 부분 업데이트 하는부분을 쪼개어 다른 서비스 메서드 등에서도 사용할 수 있도록하면 좋습니다. 
-(물론 트랜잭션처리가 필요하다면 묶어서 작업합니다)
-
-# 컨트롤러 에러처리
-## ShopController.ts
-```typescript
-export class ShopController {
-
-    public constructor(private readonly _service: ShopService) {
-
-    }
-
-    public purchaseItem: APIGatewayProxyHandler = async (event, context) => {
-        if (
-            event.queryStringParameters &&
-            event.queryStringParameters.userId &&
-            event.queryStringParameters.itemId
-        ) {
-
-            const {userId, itemid} = event.queryStringParameters
-
-            const apiGatewayResult = await this._service.purchaseItem(userId, itemid).then((user: User) => {
-                /* 성공한경우 Proxy에 맞게 데이터를 리턴해줍니다.*/
-                return {
-                    statusCode: 200,
-                    body: JSON.stringify("data no")
-                }
-            }).catch((err: ErrorType) => {
-                switch (err) {
-                    case ErrorType.FAIL_UPDATE_USER:
-                        return {statusCode: 500, body: JSON.stringify("유저정보를 업데이트할 수 없습니다.")}
-                    case ErrorType.INSUFFICENT_POINT:
-                        return {statusCode: 400, body: JSON.stringify("포인트가 부족합니다.")}
-                    case ErrorType.NO_PRODUCT_DATA:
-                        return {statusCode: 404, body: JSON.stringify("상품정보를 찾을 수 없습니다.")}
-                    case ErrorType.NO_USERDATA:
-                        return {statusCode: 404, body: JSON.stringify("유저정보를 찾을 수 없습니다.")}
-                    default:
-                        /* unhandled 에러에대한 로그를 console.log 혹은 슬랙등을 통해 따로 처리*/
-                        return {statusCode: 500, body: JSON.stringify("서버에서 처리할 수 없는 에러입니다. ")}
-                }
-            })
-
-            return apiGatewayResult
-
-        } else {
-            return {statusCode: 400, body: JSON.stringify("잘못된 요청입니다.")}
-
-        }
-    }
-}
-```
-조금 전 서비스 코드를보면 데이터에 문제가 있을때 **Throw Error**를통해 컨트롤러의 **Catch**에서 처리하도록 위임합니다. 
-이때 받은 에러의 유형을 **Enum**값으로 분류하여 에러의 유형에 맞게 상태코드와 메세지를 리턴합니다. 
-만약 핸들링할 수 없는 에러라면 에러로그를 **Console**등으로 기록하여 클라우드와치에서 관리할 수 있어야합니다.
-
-# 에러모니터링
-<img src = "https://miro.medium.com/max/1400/1*zxCbxx7pU04OGB5rgXt-1Q.png" width = 90%></img>
-
-상태코드를 잘활용하면 **X-RAY**를 통해서도 모니터링 할 수 있고 **VPC FLows** 와 같은 서비스를 통해서도 문제상황을 알 수 있습니다. 
-예를들어 실수로 상품정보나 유저정보 등이 삭제되었지만 배너를 통해서 계속 요청이 들어올 때 
-간헐적으로 발생한다면 운영할 때 문제를 알아차리기 쉽지 않지만 **StatusCode**별로 모니터링한다면 
-갑작스레 **404**에러나 **500**에러등이 급증하는것을 기반으로 요청에 문제가 생겼다는것을 알 수 있습니다.
-
-<img src = "https://miro.medium.com/max/1400/1*NGFxQ9-xAZN3HhI-y4Ji7g.png" width=90%></img>
-
-# 서비스 테스트코드 작성
-## shop.service.spec.ts
-```typescript
-
-describe('ShopService', () => {
-
-    const shopRepoMock = mock(ShopRepository)
-    const shopRepoMockInstance = instance(shopRepoMock)
-
-    let service:ShopService
-    beforeEach(() => {
-        /* 테스트 전 주입해주기*/
-        reset(shopRepoMockInstance)
-        service = new ShopService(shopRepoMockInstance)
-
-    })
-
-    it("ShopService", async () => {
-
-    })
-})
-
-```
-
-서비스에서는 [ts-mockito](https://www.npmjs.com/package/ts-mockito)라는 테스트라이브러리를 사용하였습니다.
-
-아무래도 자바테스트코드를 짜다보면 **mochito**라는 테스트라이브러를 많이사용해서 선택하게되었는데 컨트롤러를 테스트할때는 몇가지 문제가 있습니다. 
-이 부분은 차후 설명하겠습니다. 레파지토리 클래스를 **Mocking**한 후 인스턴스를 만들어 서비스에 주입해줍니다. 
-서비스를 테스트할때 **Repository**에 대한 의존성 없이 하기 위함인데
-만약 **Repository**에서 리턴해야하는 데이터가 필요하다면 아래와같은 형태로 미리 정의해줍니다.
-
-```typescript
-
-when(repository.getUser).thenReturn(리턴할데이터);
-
-```
-
-반대로 **repository**로 전달한 인자에대한 데이터를 검증하고싶다면 **capture**를 사용합니다.
-
-```typescript
-
-capture(repository.getUser).last()
-
-```
-위 코드는 **Service**에서 **Repository**의 **getUser**로 전달한 파라미터의 마지막 값을 가져옵니다.
-
-# 컨트롤러 테스트코드 작성
-
-**ts-mochito**는 **interface**를 **mocking**할 수 없는데 콜백등을 활용하여 비슷하게 구현하거나 혹은 **Lambda-mock**등과 같은 라이브러를 사용해볼 수 있지만
-필자는 **TypeMoq**이라는 라이브러리를 이용하였습니다.
-
-## ShopController.spec.ts
-```typescript
-describe('ShopController Test', () => {
-
-
-    const shopServiceMock = mock(ShopService)
-    const shopServiceMockInstance = instance(shopServiceMock)
-    let controller: ShopController
-
-    /* 매 테스트마다 새로운 Controller가 생성되도록 합니다.*/
-    beforeEach(() => {
-        reset(shopServiceMockInstance)
-    })
-
-    /* 필요한 event값을 주지않아 404 에러가 나도록 합니다. */
-    it("it should return 400 Error Code", async () => {
-
-        /* ProxyEvent를 Mocking합니다.*/
-        const proxyEvent = TypeMoq.Mock.ofType<APIGatewayProxyEvent>()
+이 샘플은 **AWS Cloud9** 개발 환경에서 **TypeScript**를 사용하는 방법을 보여줍니다.
+
+이 샘플을 생성하면 AWS 계정에 요금이 부과 될 수 있습니다. 여기에는 Amazon EC2 및 Amazon S3와 같은 서비스에 대한 가능한 요금이 포함됩니다.  
+자세한 내용은 [Amazon EC2 요금](https://aws.amazon.com/ko/ec2/pricing/)을 참조하십시오. 및 [Amazon S3 요금](https://aws.amazon.com/ko/s3/pricing/).
+
+## 목차
+
+> -   전제 조건
+> -   1 단계 : 필요한 도구 설치
+> -   2 단계 : 코드 추가
+> -   3 단계 : 코드 실행
+> -   4 단계 : Node.js에서 AWS SDK for JavaScript 설치 및 구성
+> -   5 단계 : AWS SDK 코드 추가
+> -   6 단계 : AWS SDK 코드 실행
+> -   7 단계 : 정리
+
+# 전제 조건
+
+이 샘플을 사용하기 전에 다음 요구 사항을 충족해야합니다.
+
+-   **기존 AWS Cloud9 EC2 개발 환경이 있어야합니다.**
+    
+    이 샘플에서는 Amazon Linux 또는 Ubuntu Server를 실행하는 Amazon EC2 인스턴스에 연결된 EC2 환경이 이미 있다고 가정합니다.  
+    다른 유형의 환경 또는 운영 체제가있는 경우 관련 도구를 설정하기 위해이 샘플의 지시 사항을 조정해야합니다.  
+    자세한 내용 은 [AWS Cloud9에서 환경 생성](https://docs.aws.amazon.com/cloud9/latest/user-guide/create-environment.html) 을 참조하십시오.
+    
+-   **기존 환경에 대한 AWS Cloud9 IDE가 이미 열려 있습니다.**
+    
+    환경을 열면 AWS Cloud9가 웹 브라우저에서 해당 환경에 대한 IDE를 엽니다.  
+    자세한 내용은 [AWS Cloud9에서 환경 열기](https://docs.aws.amazon.com/cloud9/latest/user-guide/open-environment.html) 를 참조하십시오.
+    
+
+# 1 단계 : 필요한 도구 설치
+
+이 단계에서는 Node Package Manager (`npm`)를 사용하여 TypeScript를 설치 합니다.  
+code>npm을 설치하려면 Node Version Manager (`nvm`)를 사용하십시오.  
+`nvm`이없는 경우 먼저이 단계에서 설치하십시오.
+
+1.  AWS Cloud9 IDE의 터미널 세션에서 `--version`옵션 과 함께 명령 줄 TypeScript 컴파일러를 실행하여 TypeScript가 이미 설치되어 있는지 확인하십시오 .
+    
+    새 터미널 세션을 시작하려면 메뉴 표시 줄에서 Window , New Terminal을 선택하십시오 . 성공하면 출력에 TypeScript 버전 번호가 포함됩니다. TypeScript가 설치된 경우 [2 단계 : 코드 추가](https://docs.aws.amazon.com/cloud9/latest/user-guide/sample-typescript.html#sample-typescript-code)로 건너 뜁니다 .
+    
+    ```
+    tsc --version
+    
+    ```
+    
+2.  `--version` 옵션으로 실행하여 `npm`이 이미 설치되어 있는지 확인 하십시오.  
+    성공하면 출력에 `npm`버전 번호가 포함됩니다.  
+    `npm`가 설치되어 있으면 이 절차의 10단계로 건너뛰어 `npm`을 사용하여 TypeScript를 설치하십시오.
+    
+    ```
+    npm --version
+    
+    ```
+    
+3.  (Amazon Linux)에 대한 `yum update` 또는 (Ubuntu Server) 명령에 대한 `apt update`를 실행하여 최신 보안 업데이트 및 버그 수정을 설치하십시오.
+    
+
+-   Amazon Linux의 경우 :
+    
+    ```
+     sudo yum -y update
+    
+    ```
+    
+-   우분투 서버의 경우 :
+    
+    ```
+     sudo apt update
+    
+    ```
+    
+    4.  `npm`을(를) 설치하려면 먼저 다음 명령을 실행하여 노드 버전 관리자(`nvm`)를 다운로드하십시오.
         
-        /* queryStringParamters의 값을 지정해줍니다. */
-        proxyEvent.object.queryStringParameters = {"userId": "harry"}
+        (`nvm`)는 노드.js 버전을 설치하고 관리하는 데 유용한 간단한 Bash 셸 스크립트입니다.
         
-        /* Context를 Mocking합니다. */
-        const contextMock = TypeMoq.Mock.ofType<Context>()
+        자세한 내용은 GitHub 웹 사이트의 [노드 버전 관리자](https://github.com/nvm-sh/nvm/blob/master/README.md)를 참조하십시오.)
         
+        ```
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+        ```
         
-        controller.purchaseItem(proxyEvent.object, TypeMoq.Mock.ofType<Context>().object, (status, result) => {
-            /* 데이터검증*/    
-        })
+    5.  `nvm` 사용을 시작하려면 터미널 세션을 닫고 다시 시작하거나,`nvm`을 로드하는 명령이 포함된 `~/.bashrc` 파일을 소스화하십시오.
+        
+    
+    ```
+     . ~/.bashrc
+    
+    ```
+    
+    6.  `--version` 옵션을 사용하여 `nvm`을 실행하여 `nvm`이(가) 설치되었는지 확인하십시오.
+        
+        ```
+        nvm --version
+        
+        ```
+        
 
-    })
-})
+7.  `nvm`을 실행하여 최신 버전의 Node.js를 설치하십시오(`npm`은 Node.js에 포함됨).
+    
+    ```
+    
+    nvm install node
+    
+    ```
+    
+
 ```
-[typemoq](https://github.com/florinn/typemoq)는 **interface**를 사용하여 **Mocking**할 수 있는 오브젝트를 생성해줍니다. 
-또한 미리 원하는값으로 오버라이딩할 수 있습니다.
 
-# 마치며
-**Lambda**의 **ProxyHander**혹은 **DynamoDB Stream Handler**를 **Mocking**하는 방법에 대해서는 되도록 위처럼 여러가지의 라이브러리를 혼용하는 방법은 유지보수면에서 좋지 않을 것 같습니다. 
-타입스크립트에대한 내공이 많이 부족하여 조금 더 매끄럽게 테스트코드를 처리할 수 있는 방법에대한 공부가 필요할것같습니다.
+8.  `--version` 옵션을 사용하여 Node.js의 명령줄 버전을 실행하여 Node.js가 설치되었는지 확인하십시오.
 
-위와 같이 되도록 **StatusCode**로 에러를 분기하고 **StatusCode**로 모니터링하는 방법은 문제가 생기고있지만 에러가 나지않아 모니터링되지않는 문제점들을 찾는데 유용합니다.
+```
+
+node --version
+
+```
+
+9.  `--version` 옵션을 사용하여 `npm`을 실행하여 `npm`이(가) 설치되었는지 확인하십시오.
+
+```
+
+npm --version
+
+```
+
+10.  `-g` 옵션으로 `npm` 을 실행하여 TypeScript를 설치하십시오.  
+    이것은 환경에 TypeScript를 글로벌 패키지로 설치합니다.
+
+    ```
+    npm install -g typescript
+
+    ```
 
 
+```
+
+11.  명령줄 TypeScript 컴파일러를 `-version` 옵션으로 실행하여 TypeScript가 설치되었는지 확인하십시오.
+
+```
+
+ tsc --version
+
+```
+
+```
+
+# 2 단계 : 코드 추가
+
+1.  AWS Cloud9 IDE에서라는 파일을 생성하십시오 `hello.ts`.
+
+    (파일을 만들려면 메뉴 막대에서 **파일** , **새 파일**을 선택 하십시오 . 파일을 저장하려면 **파일 , 저장**을 선택 하십시오 .)
+
+2.  IDE의 터미널에서 `hello.ts` 파일과 동일한 디렉토리에서 `npm`을 실행하여 `@types/node` 라이브러리를 설치하십시오.
+
+    ```
+    npm install @types/node
+
+    ```
 
 
+```
 
+이로써 `hello.ts` 파일과 동일한 디렉토리에 `node_modules/@types/node` 폴더가 추가됩니다.  
+이 새 폴더에는 나중에 `hello.ts` 파일에 추가할 `console.log` 및 `process.argv` 속성에 대해 TypeScript에 필요한 Node.js 유형 정의가 포함되어 있습다.
 
+3.  `hello.ts` 파일에 다음 코드를 추가하십시오.
+    
+    ```
+    
+    console.log('Hello, World!');
+    
+    console.log('The sum of 2 and 3 is 5.');
+    
+    const sum: number = parseInt(process.argv[2], 10) + parseInt(process.argv[3], 10);
+    
+    console.log('The sum of ' + process.argv[2] + ' and ' +
+     process.argv[3] + ' is ' + sum + '.');
+    
+    ```
+    
 
+```
 
+# 3 단계 : 코드 실행
+
+1.  터미널에서 `hello.ts` 파일과 동일한 디렉토리에서 TypeScript 컴파일러를 실행합니다.  
+    포함할 `hello.ts` 파일과 추가 라이브러리를 지정합니다.
+
+    ```
+    tsc hello.ts --lib es6
+
+    ```
+
+    TypeScript는 `hello.ts` 파일과 일련의 ECMAScript 6(ES6) 라이브러리 파일을 사용하여 `hello.ts` 파일의 TypeScript 코드를 `hello.ks`라는 파일에 해당하는 JavaScript 코드로 변환합니다.
+
+2.  **환경** 창에서 `hello.js` 파일을 엽니다.
+
+3.  메뉴 모음에서 **실행**, **실행 구성**, **새 실행** **구성**을 선택합니다.
+
+4.  \[New\] - Idle탭에서 Runner:자동을 선택한 다음 Node.js를 선택합니다.
+
+5.  명령에 `hello.js` 5 9를 입력합니다.  
+    코드에서 `5`는 `process.argv[2]`를 나타내고 `9`는 `process.argv[3]`을 나타냅니다.  
+    (`process.argv[0]`은 런타임(`노드`)의 이름을 나타내고 `process.argv[1]`은 파일 이름(`hello.js`)을 나타냅니다.
+
+6.  **실행**을 선택하고 출력을 비교합니다. 완료되면 **중지**를 선택합니다.
+
+    ```
+    Hello, World!
+    The sum of 2 and 3 is 5.
+    The sum of 5 and 9 is 14.
+
+    ```
+
+    ![](https://docs.aws.amazon.com/cloud9/latest/user-guide/images/ide-nodejs-simple.png)
+
+    -   IDE에서 새 실행 구성을 생성하는 대신 터미널에서 `hello.js` 5 9 명령 노드를 실행하여 이 코드를 실행할 수도 있습니다.
+
+# 4 단계 : Node.js에서 AWS SDK for JavaScript 설치 및 구성
+
+Node.js에서 AWS SDK for JavaScript를 사용하여 Amazon S3 버킷을 생성하고 사용 가능한 버킷을 나열한 다음 방금 생성 한 버킷을 삭제하도록이 샘플을 향상시킬 수 있습니다.
+
+이 단계에서는 Node.js에서 AWS SDK for JavaScript를 설치하고 구성합니다.  
+SDK는 JavaScript 코드에서 Amazon S3와 같은 AWS 서비스와 편리하게 상호 작용할 수있는 방법을 제공합니다.  
+Node.js에 JavaScript 용 AWS SDK를 설치 한 후 환경에서 자격 증명 관리를 설정해야합니다.  
+SDK는 AWS 서비스와 상호 작용하려면 이러한 자격 증명이 필요합니다.
+
+# Node.js에서 AWS SDK for JavaScript를 설치하려면
+
+AWS Cloud9 IDE의 터미널 세션에서 [3단계: 코드 실행](https://docs.aws.amazon.com/cloud9/latest/user-guide/sample-typescript.html#sample-typescript-run)의 `hello.js` 파일과 동일한 디렉토리에서 npm을 실행하여 Node.js에 JavaScript용 AWS SDK를 설치합니다.
+
+```
+
+npm install aws-sdk
+
+\`\`\`
+
+이 명령은 [3단계: 코드 실행](https://docs.aws.amazon.com/cloud9/latest/user-guide/sample-typescript.html#sample-typescript-run)의 `node_modules` 폴더에 여러 폴더를 추가합니다.  
+이러한 폴더에는 Node.js의 JavaScript용 AWS SDK에 대한 소스 코드 및 종속성이 포함되어 있습니다. 자세한 내용은 AWS SDK for JavaScript 개발자 가이드에서 [SDK for JavaScript 설치](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/installing-jssdk.html)를 참조하시기 바랍니다.
+
+# 환경에서 자격 증명 관리를 설정하려면
+
+Node.js에서 AWS SDK for JavaScript를 사용하여 AWS 서비스를 호출 할 때마다 호출과 함께 자격 증명 세트를 제공해야합니다.  
+이 자격 증명은 Node.js의 AWS SDK for JavaScript가 해당 호출을 수행 할 수있는 적절한 권한을 가지고 있는지 여부를 결정합니다.  
+자격 증명에 적절한 권한이 없으면 통화가 실패합니다.
+
+이 단계에서는 환경 내에 자격 증명을 저장합니다.  
+이렇게하려면 [AWS Cloud9 환경에서 AWS 서비스 호출](https://docs.aws.amazon.com/cloud9/latest/user-guide/credentials.html)의 지침을 따른 다음이 주제로 돌아갑니다.
+
+자세한 내용 은 AWS SDK for JavaScript 개발자 안내서의 [Node.js](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html)에서 [자격 증명 설정](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html)을 참조하십시오 .
+
+# 5 단계 : AWS SDK 코드 추가
+
+이 단계에서는 코드를 추가합니다.  
+이번에는 Amazon S3와 상호 작용하여 버킷을 생성하고 사용 가능한 버킷을 나열한 다음 방금 생성 한 버킷을 삭제합니다.  
+나중에이 코드를 실행합니다.
+
+1.  AWS Cloud9 IDE는 이전 단계의 `hello.js` 파일과 동일한 디렉토리에 `s3.ts`라는 파일을 생성합니다.
+    
+2.  AWS Cloud9 IDE의 터미널에서 `s3.ts` 파일과 동일한 디렉토리에 있는 코드가 `npm`을 두 번 실행하여 TypeScript용 비동기 라이브러리와 JavaScript용 비동기 라이브러리를 설치하여 Amazon S3 작업을 비동기식으로 호출하도록 설정합니다.
+    
+    ```
+    npm install @types/async # For TypeScript.
+    npm install async        # For JavaScript.
+    
+    ```
+    
+3.  `s3.ts` 파일에 다음 코드를 추가합니다.
+    
+    ```
+    import * as async from 'async';
+    import * as AWS from 'aws-sdk';
+    
+    if (process.argv.length < 4) {
+    console.log('Usage: node s3.js <the bucket name> <the AWS Region to use>\n' +
+     'Example: node s3.js my-test-bucket us-east-2');
+    process.exit(1);
+    }
+    
+    const AWS = require('aws-sdk'); // To set the AWS credentials and AWS Region.
+    const async = require('async'); // To call AWS operations asynchronously.
+    
+    const s3: AWS.S3 = new AWS.S3({apiVersion: '2006-03-01'});
+    const bucket_name: string = process.argv[2];
+    const region: string = process.argv[3];
+    
+    AWS.config.update({
+    region: region
+    });
+    
+    const create_bucket_params: any = {
+    Bucket: bucket_name,
+    CreateBucketConfiguration: {
+     LocationConstraint: region
+    }
+    };
+    
+    const delete_bucket_params: any = {
+    Bucket: bucket_name
+    };
+    
+    // List all of your available buckets in this AWS Region.
+    function listMyBuckets(callback): void {
+    s3.listBuckets(function(err, data) {
+     if (err) {
+    
+     } else {
+       console.log("My buckets now are:\n");
+    
+       for (let i: number = 0; i < data.Buckets.length; i++) {
+         console.log(data.Buckets[i].Name);
+       }
+     }
+    
+     callback(err);
+    });
+    }
+    
+    // Create a bucket in this AWS Region.
+    function createMyBucket(callback): void {
+    console.log("\nCreating a bucket named '" + bucket_name + "'...\n");
+    
+    s3.createBucket(create_bucket_params, function(err, data) {
+     if (err) {
+       console.log(err.code + ": " + err.message);
+     }
+    
+     callback(err);
+    });
+    }
+    
+    // Delete the bucket you just created.
+    function deleteMyBucket(callback): void {
+    console.log("\nDeleting the bucket named '" + bucket_name + "'...\n");
+    
+    s3.deleteBucket(delete_bucket_params, function(err, data) {
+     if (err) {
+       console.log(err.code + ": " + err.message);
+     }
+    
+     callback(err);
+    });
+    }
+    
+    // Call the AWS operations in the following order.
+    async.series([
+    listMyBuckets,
+    createMyBucket,
+    listMyBuckets,
+    deleteMyBucket,
+    listMyBuckets
+    ]);
+    
+    ```
+    
+
+# 6 단계 : AWS SDK 코드 실행
+
+1.  터미널에서 `s3.ts` 파일과 동일한 디렉토리에서 TypeScript 컴파일러를 실행합니다.  
+    포함할 `s3.ts` 파일과 추가 라이브러리를 지정합니다.
+    
+    ```
+    tsc s3.ts --lib es6
+    
+    ```
+    
+    TypeScript는 `s3.ts` 파일, Node.js의 AWS SDK for JavaScript, 비동기 라이브러리 및 일련의 ECMAScript 6(ES6) 라이브러리 파일을 사용하여 `s3.ts` 파일의 TypeScript 코드를 `s3.js`라는 파일의 동등한 JavaScript 코드로 변환합니다.
+    
+2.  환경 창에서 `s3.js` 파일을 엽니다.
+    
+3.  메뉴 모음에서 **실행**, **실행 구성**, **새 실행 구성**을 선택합니다.
+    
+4.  **\[New\]** - **Idle** 탭에서 **Runner:자동**을 선택한 다음 **Node.js**를 선택합니다.
+    
+5.  **명령**에 `s3.js YOUR_BUKET_NAME THE_AWS_REGION`을 입력합니다.  
+    여기서 `YOUR_BUKet_NAME`은 생성 후 삭제하려는 버킷의 이름이고, `THE_AWS_REGION`은 버킷을 생성할 AWS 영역의 ID입니다.  
+    예를 들어, 미국 동부(오하이오) 지역의 경우 `us-east-2`를 사용합니다.  
+    자세한 ID는 Amazon Web Services General Reference에서 [Amazon Simple Storage Service(Amazon S3)](https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region) 참조하시기 바랍니다.
+    
+
+-   Note  
+    Amazon S3 버킷 이름은 AWS 계정뿐만 아니라 AWS 전체에서 고유해야 합니다.
+
+6.  Choose **Run**, and compare your output. When you're done, choose **Stop**.
+    
+    ```
+    My buckets now are:
+    
+    Creating a new bucket named 'my-test-bucket'...
+    
+    My buckets now are:
+    
+    my-test-bucket
+    
+    Deleting the bucket named 'my-test-bucket'...
+    
+    My buckets now are:
+    
+    ```
+    
+
+# 7 단계 : 정리
+
+이 샘플을 사용한 후 **AWS**계정에 계속 청구되는 것을 방지하려면 환경을 삭제해야합니다.  
+지침은 [AWS Cloud9에서 환경 삭제](https://docs.aws.amazon.com/cloud9/latest/user-guide/delete-environment.html)를 참조하십시오.
 
 
 # Reference 
