@@ -251,12 +251,201 @@ Del RegA RegB, &a.balance
 이렇게해서 CPU는 3개의 연산을 하게 되고, 각 연산마다 한번에 처리하지 않고 3번의 Operation(조작)으로 수행하게 되는 것이다. <br />
 그 이야기는 CPU가 이 것들을 수행하는 동안에 다른 CPU도 다른일을 할 수 있다는 점이다. <br />
 
-조금 복잡하게 들릴 수 있는데 CPU1이 있고, CPU2가 있다 가정하면 <br />
+조금 복잡하게 들릴 수 있는데 CPU1이 있고, CPU2가 있다 가정하고, 1에서 2를 500을 보낸다 가정해보자 <br />
 CPU1가 <br />
-``` Text
-1 : 1000 2 : 1000
+``` Text 
+          500
+1 : 1000 ----> 2 : 1000
 Load RegA 1000
 Load RegB 500
 Del RegA RegB &a.balance
 ```
-이 것들을 하는 과정에서 CPU1에서는 1 -> 2로 보낸다고 가정해보자. <br />
+이 것들을 하는 과정에서 CPU2에서는 2에서 1로 200을 보낸다고 가정해보자. <br />
+
+그러면 CPU2는 시작 값은 시작하는 지점이 같으므로 똑같다. <br />
+``` Text
+        200
+2: 1000 ----> 1: 1000
+Load RegA 1000               
+Load RegB 200
+Del RegA RegB &b.balance
+```
+
+이렇게 돌렸을 때 결과는 어떻게 될까? <br />
+a.balance 주소가 500이 되니 CPU1의 1은 500이되고, CPU2는 b.balance가 800이 되니 CPU2의 2는 800이 된다. <br />
+이런 일이 일어나니까 이 연산을 동시에 수행 했을 때 결과적으로 보면 <br />
+CPU1의 1은 500이 되고, 2에 800이 되는 것이다. 2000에서 똑같은 값을 보냈는데 합계가 1300이 되어버리는 것이다. <br />
+
+이런 일은 같은 메모리에 2개의 CPU가 동시에 마구잡이로 건드리다 보니 엉망진창이 되는 것이다. <br />
+CPU1작업을 다하고 CPU2작업을 했으면, 그러니까 스레드 하나로 돌아갔다면 CPU1에서 1500이 되고, CPU2의 RegA값이 1000이 아니라 1500이 되었을 것이다. <br />
+그런데 동시에 돌아가다보니 1500이 아닌 1000이 이미 Load가 된 상태에서 다른 애가 건드렸기 때문에 해결이 안된것이다. <br />
+
+그럼 이 동기화 문제를 어떻게 풀까? <br />
+
+가장 대표적인 방법은 Lock을 거는 것이다. <br />
+어떤 하나의 자원에 접근을 할 때 그 자원에 자물쇠를 걸어서 다른 애들이 접근할 수 없게 만든 뒤 내가 그 자원을 다 사용하고 난 다음에 그 자물쇠를 풀어주는 것이다. <br />
+그럼 다른 사람이 들어와서 그 자원을 사용할 것이다. 이런식으로 Lock을 걸어 해결하는 게 대표적인 동기화 해결 방법이다. <br />
+
+Lock을 걸어주는 방법중에 Mutex가 있고, Mutex라는 것은 똑같이 Lock을 거는 것인데 어떤 A가 Mutex를 잡으면 다른 B는 A에게 접근을 못하고 있다가 A가 다쓰고 풀어주면 B가 들어가는 것이다.
+
+그러면 Golang에선 Mutex를 어떻게 쓰는지 확인해보자! <br />
+[mutex](https://mingrammer.com/gobyexample/mutexes/)여기서 확인해보면 된다. <br />
+
+이 mutex를 써서 기존 코드를 바꿔보자! <br />
+우리가 어떤 자원을 보호 해야 하는데 메모리 영역을 보호 해주어야 한다. <br />
+``` Go
+type Account struct {
+	balance int
+}
+```
+실제로 이 부분과 <br />
+
+``` Go
+var accounts []*Account
+```
+이 배열 부분이 있는데 이 배열 값은 변하지 않기 때문에(지금은 20개로 잡았기 때문에) 보호해줄 필요가 없고, 스레드들이 balance부분을 마구잡이로 헝크러트리고 있기 때문에 <br />
+``` Go
+type Account struct {
+	balance int
+}
+```
+이 부분을 보호해준다. <br />
+
+``` Go
+type Account struct {
+	balance int
+	mutex   *sync.Mutex
+}
+```
+이렇게 mutex변수를 만들어 준 뒤 처음 생성되는 부분에도 mutex를 추가해준다.<br />
+
+``` Go
+func main() {
+	for i := 0; i < 20; i++ {
+		accounts = append(accounts, &Account{balance: 1000, mutex:&sync.Mutex{}})
+	}
+```
+
+그 후 자원에 접근 할 때 Lock을 걸고 mutex를 반환해준다. <br />
+``` Go
+func (a *Account) Widthdraw(val int) {
+	a.mutex.Lock()
+	a.balance -= val
+	a.mutex.Unlock()
+}
+
+func (a *Account) Deposit(val int) {
+	a.mutex.Lock()
+	a.balance += val
+	a.mutex.Unlock()
+}
+
+func (a *Account) Balance() int {
+	a.mutex.Lock()
+	balance := a.balance
+	a.mutex.Unlock()
+
+	return balance
+}
+```
+사실 Balance()부분은 굳이 Lock을 안 잡아도 되긴 하지만 안정상 잡아주고 <br />
+이 때는 Lock()을 하고 반드시 Unlock()을 해주어야 하는데 return하면 Unlock()을 할 기회가 없어지기 때문에 위와 같이 코드를 작성했고<br />
+Go에서는 defer라는 golang에서 제공하는 것이 있는데 아직 defer를 배우지 않았기 때문에 우선은 변수에 값을 대입한 다음에 Unlock을 해주도록 했다. <br />
+이렇게 하면 balace를 Lock을 통해 보호 할 수 있게 되었다. <br />
+
+그 후 main()에서 다음 스레드를 1개에서 10개로 수정 한 뒤에 이제 어떻게 바뀌는지 확인해보자. <br />
+
+``` Go
+func main() {
+	for i := 0; i < 20; i++ {
+		accounts = append(accounts, &Account{balance: 1000, mutex: &sync.Mutex{}})
+	}
+
+	PrintTotalBalance()
+
+	for i := 0; i < 10; i++ {
+		go GoTransfer()
+	}
+
+	for {
+		PrintTotalBalance()
+		time.Sleep(100 * time.Millisecond)
+	}
+}
+```
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/103433087-4f71d980-4c2e-11eb-9aa5-218b29f2a96c.png" width = 70%> </img></p>
+값이 조금씩 튀긴 하지만 전과 다르게 값이 거의 유지가 되는 형태로 되는 것을 알 수 있다. <br />
+
+이게 이렇게 되는 이유는 
+``` Go
+func Transfer(sender, receiver int, money int) {
+	accounts[sender].Widthdraw(money)
+	accounts[receiver].Deposit(money)
+}
+
+func GetTotalBalance() int {
+	total := 0
+	for i := 0; i < len(accounts); i++ {
+		total += accounts[i].Balance()
+	}
+	return total
+}
+```
+이 Transfer() 때문 인데 `accounts[sender].Widthdraw(money)` 여기서 뺴고, `accounts[receiver].Deposit(money)`여기서 넣는데 <br />
+`.Widthdraw(money)`로 빼고 난 다음에 입금하기 전에 전체값을 출력하는 GetTotalBalance()가 찍히면 빼고난 다음에 찍히니까 값이 더 적게 나오게 되고, <br />
+`.Deposit(money)`로 입금한 다음에 출력하게 되면 더 많이 나올 수 도 있게 되기 때문에 저 두 부분이 서로 순서가 맞지 않아 생긴 현상이다. <br />
+
+그래서 여기에서도 Lock을 사용해야한다. <br />
+
+``` Go
+var globalLock *sync.Mutex
+
+func Transfer(sender, receiver int, money int) {
+	globalLock.Lock()
+	accounts[sender].Widthdraw(money)
+	accounts[receiver].Deposit(money)
+	globalLock.Unlock()
+}
+
+func GetTotalBalance() int {
+	globalLock.Lock()
+	total := 0
+	for i := 0; i < len(accounts); i++ {
+		total += accounts[i].Balance()
+	}
+	globalLock.Unlock()
+	return total
+}
+
+func main() {
+	for i := 0; i < 20; i++ {
+		accounts = append(accounts, &Account{balance: 1000, mutex: &sync.Mutex{}})
+	}
+	globalLock = &sync.Mutex{}
+	PrintTotalBalance()
+
+	for i := 0; i < 10; i++ {
+		go GoTransfer()
+	}
+
+	for {
+		PrintTotalBalance()
+		time.Sleep(100 * time.Millisecond)
+	}
+}
+```
+
+그래서 globalLock이라는 Lock을 만들었고, 이제 어떤 결과가 나타나는지 확인해보자. <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/103433153-6c5adc80-4c2f-11eb-8f49-03848864a960.png" width = 70%> </img></p>
+값이 변동이 되지 않는 것을 알 수 있다. <br />
+
+그러면 이제 머리가 복잡해질 수 있다. Lock을 어느정도로 잡아야 하고, 어디에 걸어야 하는지에 대해 말이다. 이런 문제들은 실제 실무에서도 굉장히 빈번하게 발생하는 문제이다. <br />
+어떤걸, 얼만큼 보호해야 하는가?에 대해 말이다. <br />
+
+위의 송금 예제도 사실 balance부분만 잡으면 될 줄 알았는데, 입금, 송금하는 과정도 보호를 해주어야 했었다. <br />
+이거는 실무에서는 복잡한 문제를 발생 시키고 있고, Locking이 무조건 좋은 것은 아니다. 데드 락 문제가 발생하기 때문이다. <br />
+
+그래서 스레드를 다룬다는건, 멀티 프로세스, 멀티 스레드 프로그래밍을 한다는건 굉장히 복잡한 문제가 있지만 Golang에서는 이것을 쉽게 할 수 있도록 채널이라는 것을 제공해주고 있어서 <br />
+이 채널을 이용하면 좀 더 쉽게 사용할 수 있지만 뭐든지 그렇지만 또 채널이 정답은 아니다. <br />
+다른 방식으로 멀티 스레드를 접근하는 것이지 Lock과 같은 역할을 하는 것은 아니다. <br />
+두 개가 서로 다른 것이라는 것을 알면 되고, 다음 시간에 채널과 데드 락에 대해 알아보도록 하겠다. <br />
