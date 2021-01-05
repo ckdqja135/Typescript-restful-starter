@@ -69,6 +69,7 @@ func main() {
 ```
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102858126-120e8e80-446d-11eb-8cb3-e7f0c4e48f31.png" width = 70%> </img></p>
+
 결과를 보면 panic이 일어나는 것을 알 수 있다. <br />
 
 초기화를 해주려면 slice를 사용해서 초기화를 해줄 수 있다. <br />
@@ -86,12 +87,14 @@ func main() {
   m["abc"] = "bbb"
 }
 ```
+
 이제 이것을 실행시켜보면 <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102858313-674aa000-446d-11eb-886f-e40d68c88a36.png" width = 70%> </img></p>
 에러없이 프로그램이 종료되는 것을 알 수 있다. <br />
 
 이제 Map에 set을 해줄건데 <br />
 map쓰고 []안에 key를 넣고 = 한 뒤 value를 넣어주면된다. <br />
+
 ``` Go
 package main
 
@@ -107,8 +110,11 @@ func main() {
   m["abc"] = "bbb"
 }
 ```
+
 이렇게! <br />
+
 이렇게 Setting해주면 되고, 읽는 것은 map을 쓰고 []안에 key값을 넣어주면 된다. <br />
+
 ``` Go
 package main
 
@@ -126,7 +132,9 @@ func main() {
 }
 
 ```
+
 그랬을 때 key값 asc의 value인 aaa가 출력 되는 것을 알 수 있다. <br />
+
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102858654-040d3d80-446e-11eb-9977-66f9905325bd.png" width = 70%> </img></p>
 
 이 외에도 선언과 대입 동시에 가능한 선언대입문 사용도 가능한데 <br />
@@ -244,6 +252,7 @@ true, false가 나온 것을 볼 수 있는데, m3의 4는 미리 Setting을 했
 
 이렇게 했을 경우 한가지 문제가 생기는데 이 기본값이 내가 설정한 기본값인지, 아니면 key가 존재하지 않아 나온 기본값인지 알 수 없다는 점이다. <br />
 위의 코드를 예로 들어 보면 <br />
+
 ``` Go
 	m2 := make(map[int]int)
 	m2[5] = 0
@@ -276,9 +285,12 @@ true, false가 나온 것을 볼 수 있는데, m3의 4는 미리 Setting을 했
 	v2 := m2[10]
 	fmt.Println(v, v1, v2)
 ```
+
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102861512-25245d00-4473-11eb-9dee-733089848b9d.png" width = 70%> </img></p>
+
 이 때 값이 있는지 없는 지 확인하려면 2번째 값을 넣으면 되는데 Golang에서는 map을 읽기로 Access했을 때는 두 개의 값을 반환하는데 <br />
 첫번째 값엔 Value, 두번재 값엔 Bool형이 나온다. 그래서 아래와 같이 수정을 하면 확인이 가능하다. <br />
+
 ``` Go
 	m2 := make(map[int]int)
 	m2[4]= 4
@@ -293,6 +305,7 @@ true, false가 나온 것을 볼 수 있는데, m3의 4는 미리 Setting을 했
 이렇게 해서 결과를 확인하면 <br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/102862031-d9be7e80-4473-11eb-9436-5ac46527773e.png" width = 70%> </img></p>
+
 존재 여부를 확인 할 수 있는 것을 알 수 있다. <br />
 그래서 값의 여부를 확인할 때는 value값이 아니라 bool형 타입 값을 넣어 확인해야 한다는 것을 알 수 있다. <br />
 
