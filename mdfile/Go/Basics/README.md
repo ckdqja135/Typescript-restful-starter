@@ -22,3 +22,4 @@
 22. [Go - Thread](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Thread.md)
 23. [Go - Thread2](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Thread2.md)
 24. [Go - DeadLock & channel](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20%20DeadLock%20%26%20channel.md)
+25. [Go - Channel](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Channel.md)
