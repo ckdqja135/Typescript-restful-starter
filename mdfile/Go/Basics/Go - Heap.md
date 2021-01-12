@@ -2,20 +2,28 @@
 ## 들어가기전에...
 
 지난 번에 아래와 같은 Tree를 그렸는데 <br />
+
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101614147-ee504f00-3a4f-11eb-89ed-2ab2bb740d0d.png" width = 70%> </img></p>
+
 맨위의 root 값이 왜 5인지 궁금해 할 것이다. 왜 가운데 값이 root에 들어갈까? <br />
 생각해보면 1~10까지를 갖는 Tree가 있는데 아래와 같은 형태로 그려진다 했을 때 <br />
+
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101614607-80585780-3a50-11eb-8367-58752110d034.png" width = 70%> </img></p>
+
 위와 같이 오른쪽으로만 이어진 Tree도 BST가 맞다. 자기 값보다 큰 값이 오른쪽이 들어가 있기 때문이다. <br />
 그래서 1~10까지 Node를 집어 넣을 때 순서대로 집어 넣는다 할 때 위와 같이 한 줄로 나오게 된다. <br />
 반대로 10~1까지 거꾸로 집어넣으면 왼쪽으로만 값이 들어가질 것이다. <br />
+
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101615019-ff4d9000-3a50-11eb-84a4-ad11a725d680.png" width = 70%> </img></p>
+
 당연히 위의 형태도 BST가 맞다. 하지만 BST의 장점이 어떤 값을 찾을 때 반절을 버리고 찾는다는 것에 있는데 <br />
 위의 형태에서 6을 찾는다 하면 버릴 Node들이 없어서 모든 Node들을 탐색하기 때문에 BST로서 갖는 이득이 없게 된다. <br />
 위의 형태로 찾을 때 O(N)의 속도를 갖게된다. 그러므로 위와 같은 형태의 Tree도 BST이지만 잘못된, 비효율적인 BST가 된다. <br />
 
 이거를 효율적인 Tree로 바꾸려면 아래와 같이 가운데 값이 위에 올라가는 형태로 가야한다. <br />
+
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101614147-ee504f00-3a4f-11eb-89ed-2ab2bb740d0d.png" width = 70%> </img></p>
+
 아까 비효율적인 Tree와 차이가 있다면 높이가 있다는 점이다. BST에서는 높이(Depth)가 가장 적은 높이로 형성 되는 Tree가 가장 이상적인 Tree이다. <br />
 그래서 이것을 **최소 신장 트리** 라고 한다. 말 그대로 가장 작은 키(Depth)를 갖는 Tree라는 걸 의미하며 가장 효율적인 Tree라고 볼 수 있다. <br />
 
