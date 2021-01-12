@@ -11,8 +11,9 @@
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101614607-80585780-3a50-11eb-8367-58752110d034.png" width = 70%> </img></p>
 
 위와 같이 오른쪽으로만 이어진 Tree도 BST가 맞다. 자기 값보다 큰 값이 오른쪽이 들어가 있기 때문이다. <br />
-그래서 1~10까지 Node를 집어 넣을 때 순서대로 집어 넣는다 할 때 위와 같이 한 줄로 나오게 된다. <br />
-반대로 10~1까지 거꾸로 집어넣으면 왼쪽으로만 값이 들어가질 것이다. <br />
+
+그래서 1 ~ 10까지 Node를 집어 넣을 때 순서대로 집어 넣는다 할 때 위와 같이 한 줄로 나오게 된다. <br />
+반대로 10 ~ 1까지 거꾸로 집어넣으면 왼쪽으로만 값이 들어가질 것이다. <br />
 
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101615019-ff4d9000-3a50-11eb-84a4-ad11a725d680.png" width = 70%> </img></p>
 
