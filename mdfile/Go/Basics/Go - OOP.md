@@ -309,3 +309,74 @@ func MakeSandwitch(breads []*Bread) *Sandwitch {
 사실 절차적 프로그래밍이 문제점만 있는 것이 아니다. 순서가 눈에 보인다는 장점이 있고, 함수 부분들은 복잡하지만 순서 부분은 심플하기 때문에 그 부분만 보면 프로그램의 구조, 흐름이 한 눈에 보이는 장점이 있다.<br />
 
 하지만 분명한 건 이 절차적 프로그래밍은 치명적인 단점이 있고, 그렇기 때문에 OOP가 나온 것인데 이 치명적인 단점은 다음 시간에 알아보도록 하겠다! <br />
+
+## 풀소스
+``` Go 
+package main
+
+import "fmt"
+
+type Bread struct {
+	val string
+}
+
+type StrawbrreyJam struct {
+	opened bool
+}
+
+type SpoonOfStrawberry struct {
+}
+
+type Sandwitch struct {
+	val string
+}
+
+func GetBreads(num int) []*Bread {
+	breads := make([]*Bread, num)
+	for i := 0; i < num; i++ {
+		breads[i] = &Bread{val: "bread"}
+	}
+
+	return breads
+}
+
+func OpenStrawberryJam(jam *StrawbrreyJam) {
+	jam.opened = true
+}
+
+func GetOneSpoon(_ *StrawbrreyJam) *SpoonOfStrawberry {
+	return &SpoonOfStrawberry{}
+}
+
+func PutJamOnBread(bread *Bread, jam *SpoonOfStrawberry) {
+	bread.val += " + Strawberry Jam"
+}
+
+func MakeSandwitch(breads []*Bread) *Sandwitch {
+	sandwitch := &Sandwitch{}
+	for i := 0; i < len(breads); i++ {
+		sandwitch.val += breads[i].val + " + "
+	}
+	return sandwitch
+}
+
+func main() {
+	// 1. 빵 두개를 꺼낸다.
+	breads := GetBreads(2)
+
+	jam := &StrawbrreyJam{}
+	// 2. 딸기잼 뚜껑을 연다.
+	OpenStrawberryJam(jam)
+
+	// 3. 딸기잼을 한 스푼 퍼서 빵위에 올린다.
+	spoon := GetOneSpoon(jam)
+
+	// 4. 딸기잼을 잘 바른다.
+	PutJamOnBread(breads[0], spoon)
+
+	// 5. 빵을 덮는다.
+	sandwitch := MakeSandwitch(breads)
+	// 6. 완성.
+	fmt.Println(sandwitch.val)
+}
+```
