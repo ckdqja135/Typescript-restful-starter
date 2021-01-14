@@ -68,26 +68,244 @@ OOP는 말 그대로 OOP이다. 기술적인 것이기 때문에 기술적으로
 예전에 '순서도'라는 게 있었다. <br />
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/104546015-a46e1080-566e-11eb-9c0d-2367bbfe5af4.png" width = 70%> </img></p>
 
+이렇게 어떤 절차, 순서에 따라 코딩 하는 것을 절차적 방법인데 이 절차적 방법을 코딩을 해보자! <br />
+이게 가장 이해하기 쉽고, 눈에 잘 들어오는 방법이기도 하고, 컴퓨터가 이해하는데도 좋다. <br />
+컴퓨터라는 것은 명령어를 한줄씩 한줄씩 실행하기 때문에 항상 순서가 있기 때문에 컴퓨터도 좋고, 우리에게도 좋다. <br />
 
+코딩이라는 것을 기계어로 부터 시작을 했는데 기계어는 한 줄로 된 명령어 다발 이였기 때문에 순서대로 프로그래밍 하는 게 자연스러운 상황이였다. <br />
+이 때는 이게 절차적 프로그래밍이라는 것이라 생각하지 못했고, 그냥 프로그램은 이렇게 하는 거라고 생각을 했었다. OOP가 나온 후로 이러한 방법을 절차적 프로그래밍이라고 표현하기 시작했다. <br />
 
+이 절차적 프로그래밍을 이용해서 딸기잼 샌드위치 만드는 프로그램을 만들어보자! 순서는 아래와 같다.<br />
 
+> 1. 빵 두개를 꺼낸다. <br />
+> 2. 딸기잼 뚜껑을 연다. <br />
+> 3. 딸기잼을 한 스푼 퍼서 빵위에 올린다. <br />
+> 4. 딸기잼을 잘 바른다. <br />
+> 5. 빵을 덮는다. <br />
+> 6. 완성. <br />
 
+먼저 sandwitch라는 폴더를 만들어 main.go파일을 생성해주자 <br />
 
+``` Go
+package main
 
+func main() {
+	// 1. 빵 두개를 꺼낸다.
+	// 2. 딸기잼 뚜껑을 연다.
+	// 3. 딸기잼을 한 스푼 퍼서 빵위에 올린다. 
+	// 4. 딸기잼을 잘 바른다.
+	// 5. 빵을 덮는다. 
+	// 6. 완성. 
+}
+```
+만드는 방법은 주석 그대로 만들어 주면 된다. <br />
 
+대략적인 틀을 잡자면 아래와 같다. <br />
 
+``` Go
+package main
 
+func main() {
+	// 1. 빵 두개를 꺼낸다.
+	breads := GetBreads(2)
+	
+	// 2. 딸기잼 뚜껑을 연다.
+	OpenStrawberryJam(jam)
+	
+	// 3. 딸기잼을 한 스푼 퍼서 빵위에 올린다.
+	spoon := GetOneSpoon(jam)
+	
+	// 4. 딸기잼을 잘 바른다.
+	PutJamOnBread(breads[0], spoon)
 
+	// 5. 빵을 덮는다.
+	sandwitch := MakeSandwitch(breads)
+	// 6. 완성.
+	fmt.Println(sandwitch)
+}
+```
 
+이제 할 일은 저기 있는 함수들을 만들어 주기만 하면 된다. <br />
 
+먼저 1번을 만들어주자! <br />
 
+``` Go
+type Bread struct {
+	val string
+}
 
+func GetBreads() []Bread {
+	breads := make([]Bread, 2)
+	breads[0].val = "bread"
+	breads[1].val = "bread"
+	return breads
+}
+```
 
+빵이 필요하기 때문에 빵을 struct로 만들어주고, GetBreads()에서 2개 만들어서 넘겨주면 되기 때문에 위와 같이 작성했다. <br />
 
+그 다음 2번을 만들어주자! <br />
 
+``` Go
 
+type StrawbrreyJam struct {
+	opened bool 
+}
 
+func OpenStrawberryJam(jam *StrawbrreyJam) {
+	jam.opened = true
+}
 
+```
+뚜껑을 열었는지만 판단하면 되기 때문에 StrawbrreyJam struct에 bool형을 넣어 주었고, OpenStrawberryJam()에서는 true를 넣어주었다. <br />
+추가적으로 GetBreads()도 포인터로 수정했다. <br />
 
+``` Go
+func GetBreads() []Bread {
+	breads := make([]*Bread, 2)
+	breads[0] = &Bread{val : "bread"}
+	breads[1] = &Bread{val : "bread"}
+	return breads
+}
+```
 
+그 후 3번을 작성하자! <br />
 
+``` Go
+type SpoonOfStrawberry struct {
+}
+
+func GetOneSpoon(_ *StrawbrreyJam) *SpoonOfStrawberry {
+	return &SpoonOfStrawberry{}
+}
+
+```
+
+한 스푼의 잼이 있다고 가정하고 GetOneSpoon()으로 한 스푼을 뜨기 때문에 SpoonOfStrawberry을 반환시켜준다. <br />
+
+그 다음 4번을 작성하자! <br />
+
+``` Go
+func PutJamOnBread(bread *Bread, jam *SpoonOfStrawberry) {
+	bread.val += " + Strawberry Jam"
+}
+```
+
+그 다음 5번을 작성하자! <br />
+
+``` Go
+type Sandwitch struct {
+	val string
+}
+
+func MakeSandwitch(breads []*Bread) *Sandwitch {
+	sandwitch := &Sandwitch{}
+	for i := 0; i < len(breads); i++ {
+		sandwitch.val += breads[0].val + " + "
+	}
+	return sandwitch
+}
+
+func main() {
+	// 1. 빵 두개를 꺼낸다.
+	breads := GetBreads(2)
+
+	// 2. 딸기잼 뚜껑을 연다.
+	OpenStrawberryJam(jam)
+
+	// 3. 딸기잼을 한 스푼 퍼서 빵위에 올린다.
+	spoon := GetOneSpoon(jam)
+
+	// 4. 딸기잼을 잘 바른다.
+	PutJamOnBread(breads[0], spoon)
+
+	// 5. 빵을 덮는다.
+	sandwitch := MakeSandwitch(breads)
+	// 6. 완성.
+	fmt.Println(sandwitch.val)
+}
+```
+
+이렇게 작성 후 저장을 하고, 오류가 있는 지 체크를 해보자! <br />
+
+``` Go
+func GetBreads() []Bread {
+	breads := make([]*Bread, 2)
+	breads[0] = &Bread{val : "bread"}
+	breads[1] = &Bread{val : "bread"}
+	return breads
+}
+```
+여기서 에러가 날텐데 retrun type이 포인터 이므로 수정해주고, num를 받을 수 있도록 수정해보자! <br />
+
+``` Go
+func GetBreads(num int) []*Bread {
+	breads := make([]*Bread, num)
+	for i := 0; i < num; i++ {
+		breads[i] = &Bread{val: "bread"}
+	}
+
+	return breads
+}
+```
+
+그 후 아래와 같이 undefined: jam이라는 에러를 수정해주자! <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/104549416-31689800-5676-11eb-84d4-f7175bd73d89.png" width = 70%> </img></p>
+
+``` Go
+func main() {
+	// 1. 빵 두개를 꺼낸다.
+	breads := GetBreads(2)
+
+	jam := &StrawbrreyJam{}
+	// 2. 딸기잼 뚜껑을 연다.
+	OpenStrawberryJam(jam)
+
+	// 3. 딸기잼을 한 스푼 퍼서 빵위에 올린다.
+	spoon := GetOneSpoon(jam)
+
+	// 4. 딸기잼을 잘 바른다.
+	PutJamOnBread(breads[0], spoon)
+
+	// 5. 빵을 덮는다.
+	sandwitch := MakeSandwitch(breads)
+	// 6. 완성.
+	fmt.Println(sandwitch.val)
+}
+```
+이렇게 수정하면 기본적인 에러는 없는 상태가 된다. <br />
+실행시켜보자! <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/104549538-71c81600-5676-11eb-9086-c90719aca2ed.png" width = 70%> </img></p>
+결과를 보면 Strawberry Jam이 한 번만 나와야 하는데 2번이 나왔다. 그 이유는 
+
+``` Go
+func MakeSandwitch(breads []*Bread) *Sandwitch {
+	sandwitch := &Sandwitch{}
+	for i := 0; i < len(breads); i++ {
+		sandwitch.val += breads[0].val + " + "
+	}
+	return sandwitch
+}
+```
+여기에서 `breads[i]`인데 `breads[0]`로 했기 때문이다. <br />
+
+``` Go
+func MakeSandwitch(breads []*Bread) *Sandwitch {
+	sandwitch := &Sandwitch{}
+	for i := 0; i < len(breads); i++ {
+		sandwitch.val += breads[i].val + " + "
+	}
+	return sandwitch
+}
+```
+
+위와 같이 수정해준다. <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/104549745-ca97ae80-5676-11eb-8834-6071a1afa911.png" width = 70%> </img></p>
+그래서 샌드위치가 완성이 되었다! <br />
+
+이렇게 정해진 순서대로 프로그래밍 하는게 절차적 프로그래밍이다. <br />
+사실 절차적 프로그래밍이 문제점만 있는 것이 아니다. 순서가 눈에 보인다는 장점이 있고, 함수 부분들은 복잡하지만 순서 부분은 심플하기 때문에 그 부분만 보면 프로그램의 구조, 흐름이 한 눈에 보이는 장점이 있다.<br />
+
+하지만 분명한 건 이 절차적 프로그래밍은 치명적인 단점이 있고, 그렇기 때문에 OOP가 나온 것인데 이 치명적인 단점은 다음 시간에 알아보도록 하겠다! <br />
