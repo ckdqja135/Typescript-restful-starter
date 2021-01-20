@@ -26,3 +26,4 @@
 26. [Go - Select](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20Select.md)
 27. [Go - OOP](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20OOP.md)
 28. [Go - OOP(Object란?)](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20%20OOP(Object%EB%9E%80%3F).md)
+29. [Go - OOP3, Interface 란?](https://github.com/ckdqja135/Typescript-restful-starter/blob/master/mdfile/Go/Basics/Go%20-%20OOP3%2C%20Interface%20%EB%9E%80%3F.md)
