@@ -237,4 +237,87 @@ func main() {
 ```
 ##
 
-인터페이스의 가장 대표적인 활용법중에 하나가 `Println`을 보는 것인데 <br />
+인터페이스의 가장 대표적인 활용법중에 하나가 `Println`을 보는 게 대표적인 활용법인데 이게 어떻게 되어 있는지 보자!<br />
+우리가 지난시간에 `Println`을 써보았었는데 <br />
+
+``` Go
+package main
+
+import (
+	"fmt"
+)
+
+type StructA struct {
+	val string
+}
+
+func main() {
+	a := &StructA{val: "AAA"}
+	fmt.Println(a)
+}
+```
+
+이렇게 StructA라는 struct를 만들어주고, 그 안에 string값이 들어갈 수 있게 만들어준다. 그 후 main()에서 val값을 AAA로 넣어 출력하게 되면 <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/105439788-cee04f00-5ca8-11eb-8d2c-ee6bead881db.png" width = 70%> </img></p>
+
+이렇게 주소형객체이고, AAA값을 갖고 있다고 출력이 되는데 여기에 메소드를 추가해보자! <br />
+
+``` Go
+func (s *StructA) String() string {
+	return "Val :" + s.val
+}
+```
+
+이렇게 string을 반환하는 String이라는 메소드를 만들어 주고 출력하게 되면 어떻게 될까? <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/105439981-2a124180-5ca9-11eb-8747-08ae64fef0eb.png" width = 70%> </img></p>
+
+출력값이 다르게 된 것을 알 수있는데 지금은 String()의 return값을 출력하고 있는 것이다. <br />
+
+`Println`의 동작 방법이 어떻게 되냐면 어떤 객체를 넘겼을 때 그 객체가 string이라는 interface가 없으면 그 값을 출력시키는데 string이라는 interface가 있으면 그 string객체의 return값을 출력하게 된다. <br />
+
+이걸 자세히 보면 이렇게 된다고 보면 된다. <br />
+
+``` Go
+package main
+
+import (
+	"fmt"
+)
+
+type StructA struct {
+	val string
+}
+
+type Printable interface {
+	String() string
+}
+
+func Println(p Printable) {
+	fmt.Println(p.String())
+}
+
+func (s *StructA) String() string {
+	return "Val :" + s.val
+}
+
+func main() {
+	a := &StructA{val: "AAA"}
+	Println(a)
+}
+```
+Printable라는 interface를 만들어주고, String()을 관계로 맺고, return 값을 string으로 해준 뒤 <br />
+Println이라는 함수를 만들어 Printable이라는 interface를 결과로 받으면 출력은 p의 String()함수를 출력한 것과 같다고 보면 된다. <br />
+main에서 Println함수를 쓰면 결과는 똑같다. <br />
+
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/105440573-2337fe80-5caa-11eb-9fa0-2bd99edfff3b.png" width = 70%> </img></p>
+
+Struct를 만든 이유가 종속성을 낮추고 응집성을 낮추겠다는데에 있는데 프로그램의 과정 또한 마찬가지이고, 좋은 코딩이 가져야할 모습이 이것이다. <br />
+그래서 Interface라는 것은 이것을 하기 위한 도구라고 보면 된다. <br />
+여기서 응집성이라는 것은 관계에 있는 상태와 기능을 묶었다는 의미이다. <br />
+
+그래서 빵은 빵으로 묶이고, 잼은 잼으로 묶인 그 형태를 의미한다. <br />
+관계있는 것들은 묶어주고, 독립시켜줘야 할 것은 독립시켜주는 것이다. 그렇게 되면 확장성이 좋아지는데 이것이 Interface의 목적이고, Object의 목적이고, OOP의 목적이고, 더 나아가서는 좋은 프로그래밍의 목적이다. <br />
+
+다음 시간에는 OOP의 디자인 법칙(원칙)이 있는데 OOP 프로그래밍 할 때 5가지 설계의 원칙에 대해 얘기해보자! <br />
