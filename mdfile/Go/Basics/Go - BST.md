@@ -180,14 +180,16 @@ func (t *BinaryTree) Print() { // 1
 1 : 출력을 위한 Print함수를 생성해준다. <br />
     이 때 BFS를 사용해서 출력을 할 것이다. <br />
 2 :  BFS는 큐(Queue)를 사용하므로 먼저 큐를 생성해준다. <br />
-출력 값을 보게 되면 <br />
-<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101361730-b4ae0580-38e2-11eb-8f3a-439ec6a0effb.png" width = 70%> </img></p>
-출력이 뭔가 이상하게 되었다. 이 부분은 <code>binaryTree.go</code>에서 add할 때 <br />
 3 : 큐에 Push한다. <br />
 4 : 큐가 비어있지 않았으면 for문을 돈다. <br />
 4-1 : 첫번째 노드를 저장할 변수를 선언 한다. <br />
 4-2 : 첫번째 노드와 큐를 갱신시켜준다. <br />
-      first는 큐의 첫번째 값이고, q값은 큐를 첫번째의 값을 뺀 값을 넣어주어야 하므로 두번째 부터 넣어준다. <br />
+      
+      
+출력 값을 보게 되면 <br />
+<p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/101361730-b4ae0580-38e2-11eb-8f3a-439ec6a0effb.png" width = 70%> </img></p>
+출력이 뭔가 이상하게 되었다. 이 부분은 <code>binaryTree.go</code>에서 add할 때 <br />
+first는 큐의 첫번째 값이고, q값은 큐를 첫번째의 값을 뺀 값을 넣어주어야 하므로 두번째 부터 넣어준다. <br />
 
 그 다음 현재 노드를 집어넣어야 하는데 현재 나온 노드가 몇번째 층에 나온 노드인지 알기 위해서 코드를 수정해준다. <br />
 <code>binaryTree.go</code>
