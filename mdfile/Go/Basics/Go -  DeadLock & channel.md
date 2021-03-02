@@ -227,7 +227,7 @@ func Transfer(sender, receiver int, money int) {
 <p align = "center"> <img src = "https://user-images.githubusercontent.com/33046341/103847993-c0106e80-50e4-11eb-818c-c0f8774563c8.png" width = 70%> </img></p>
 1, 0 번을 잡았는데 그 이후로 진행이 되지 않는 모습을 볼 수 있다. <br />
 프로그램이 동작하지 않는 모습을 보여주고 있는데 지금 상태가 Lock이 막혔기 때문에 더 이상 진행이 되지 않는 것이다. <br />
-이것이 바로 **DeadLock** 현상이다. <br />
+이것이 바로 DeadLock 현상이다. <br />
 
 그러면 이 DeadLock이 왜 발생한 것인지 알아보자! <br />
 DeadLock을 설명할 때 가장 대표적으로 드는 예가 **철학자의 식사시간**이라는 것이 있는데 <br />
