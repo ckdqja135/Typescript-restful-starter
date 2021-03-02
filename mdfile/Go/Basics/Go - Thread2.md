@@ -141,7 +141,7 @@ func main() { // 11
 7 : 그 다음 전체 잔액량을 가져오는 함수를 만들어준다. <br />
 8 : RandomTranfer함수를 만들어주는데 account중에 랜덤하게 뽑은 sender의 돈을 뽑아서 랜덤하게 뽑은 receiver에게 돈을 보내는 함수이다. 송금을 막 해보는 거라 생각 하면 된다.<br />
     [rand](https://golang.org/pkg/math/rand/)는 여기에서 참고하여 사용했다. <br />
-    이것을 저장하면 자동으로 Visual Studio가 자동으로 import 시켜줄 것이다. <br 
+    이것을 저장하면 자동으로 Visual Studio가 자동으로 import 시켜줄 것이다. <br />
     sender를 무작위로 뽑은다음에 이 sender가 잔액이 있는지 부터 확인해 준다. 잔액이 있는 sender를 찾을 때까지 무한히 반복한다. <br />
     그 다음 receiver를 찾을 것인데 sender와 같으면 안되니까 서로 다른 애를 찾을 때 까지 무한히 반복한다. <br />
     그리고 송금하는 양도 랜덤하게 뽑아주는데 보내는 사람의 잔액만큼보다 작게 송금시켜준다. <br />
